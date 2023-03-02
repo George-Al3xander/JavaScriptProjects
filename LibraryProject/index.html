@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Library</title>
+	<link rel="stylesheet" href="styles.css" type="text/css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lora:wght@500&family=Roboto:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<!-- Button div -->	
+	<div class="controls">
+		<div class="new-book-button">
+		<button onclick="showForm()">add new book</button>
+		</div>	
+	</div>
+<script src="main.js"></script>
+
+<!-- Clickable form for adding new book -->
+<div class="book-form">
+	<form id="formBook" action="biba.php">
+		<fieldset>
+			<legend>Title</legend>
+			<input   id="bookTitle"  type="text" placeholder=" Enter book's title"  />
+		</fieldset>
+		<fieldset>
+			<legend>Author</legend>
+			<input   id="bookAuthor" type="text" placeholder="Enter book's author"  />
+		</fieldset>
+		<fieldset>
+			<legend>Pages</legend>
+			<input   id="bookPages" type="number" placeholder="How many pages are there?"  />
+		</fieldset>
+		<fieldset>
+			<legend>Did you read that book?</legend>
+
+			Yes
+			<input  id="yes" checked="checked" name="ReadStatus" type="radio" value="Yes"  />
+
+			Not yet
+			<input id="no" checked="checked" name="ReadStatus" type="radio" value="no" />
+
+		</fieldset>
+		<input type="submit" onclick="addNewBook()">
+		<button onclick="closeForm()" class="close-button">Close</button>		
+	</form>	
+</div>
+ <!-- Background color for form --> 
+<div class="book-background" onclick="closeForm()"></div>	
+</body>
+</html>

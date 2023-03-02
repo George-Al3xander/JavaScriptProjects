@@ -1,0 +1,188 @@
+
+body {
+	display: flex;
+	justify-content: center;
+	font-family: 'Mynerve', cursive;
+	margin:0px auto;
+	transition:visibility 1s ease;
+}
+
+
+.gameboard table,.gameboard tr,.gameboard td {
+	border:3px solid black;
+	border-spacing: 0px;
+}
+
+.gameboard {
+	padding:50px;
+	display:flex;
+}
+
+td {
+	height:250px;
+	width:250px;
+	text-align: center;
+	font-size:180px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+td:hover {
+	cursor: pointer;
+	background-color: gold;
+	transition: background-color .4s ease;
+}
+
+.menu-heading,.start-menu fieldset {	
+	background-color:gold;
+	border-radius: 50px;
+	border:0px;
+}
+.menu-heading {
+	width: 300px;
+	height:80px;
+	text-align:center;
+	position: absolute;
+	margin:40px;
+}
+
+.start-menu fieldset{ 
+	width: 400px;	
+	height:160px;	
+	padding:20px 50px;
+}
+
+.start-menu, .winning-board {
+	font-family: 'Roboto', sans-serif;
+	position: absolute;
+	display:flex;	
+	justify-content:center;
+	width: 100%;
+	height:100%;	
+	background: 
+	linear-gradient(90deg, rgba(2,0,36,1) 0%, 
+	rgba(0,0,0,0.700717787114846) 0%);	
+}
+
+.start-menu form , .result-window {
+	text-align:center;
+	border-radius: 50px ;
+	margin:150px;
+}
+
+.start-menu form {
+	text-transform:uppercase;
+	font-size:20px;
+	font-weight:bold;
+}
+
+.start-menu input[type=name]  {
+	background:none;
+	border:none;
+	border-bottom:2px solid black;
+	margin:15px;
+	outline: none;
+	width:180px;
+}
+
+.start-menu input[type=submit]  {
+	text-transform:uppercase;
+	width: 100px;	
+	height:40px;
+	background-color:black;
+	color:white;	
+	border-radius:50px;
+
+}
+.start-menu input[type=submit]:hover {
+	background-color:white;
+	color:black;
+	border:none;
+	width: 150px;	
+	height:50px;
+	font-size:20px;
+	cursor: pointer;
+}
+
+.start-menu input[type=submit],.start-menu input[type=submit]:hover {
+	transition:background-color 1s  ease;
+	transition:color 1s  ease;
+	transition:width 1s  ease;
+	transition:height 1s  ease;	
+	transition:font-size .1s  ease;
+}
+
+::placeholder {
+	font-size:15px;
+	text-transform:capitalize;
+	word-spacing: 5px;
+	font-family: cursive;
+}
+
+.winning-board, .result-window {
+	visibility: hidden;
+}
+
+.result-window {	
+	width:500px;
+	height:230px;
+	background-color:white;
+	position: absolute;
+
+
+}
+
+.draw-window h1 {
+	margin: 50px 0px 30px 0px;
+}
+
+.result-window button {
+	font-size:30px;
+	width:300px;
+	height:50px;	
+	font-weight:bold;
+	color:gold;
+	background-color:black;
+	border:0px;
+}
+
+
+
+.result-window button, .side-span{
+	text-transform:uppercase;
+}
+
+.result-window button:hover {
+	color:black;;
+	background-color:gold;
+	
+	border-radius:150px;
+	cursor:pointer;
+}
+
+.result-window button, .result-window button:hover {
+	transition:background-color 1s ease;
+	transition:color 1s ease;
+	transition:border-radius 1s ease;	
+}
+
+.result-window button {
+	transition:border-radius .5s ease;
+}
+
+.win-window h1{
+	color:gold;	
+}
+
+.win-window h2 {
+	opacity: 0.5;
+}
+
+.win-window h3 {
+	opacity: 0.8;
+}
+
+
+
+
+

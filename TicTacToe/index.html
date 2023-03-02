@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tic Tac Toe</title>
+	<link rel="stylesheet" href="styles.css" type="text/css">
+
+	 <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mynerve&display=swap" rel="stylesheet">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+
+	<div class="start-menu">
+		<div class="menu-heading">
+			<h1>Greetings!</h1>
+		</div>
+
+		<div class="form-div">
+			<form id="form" action="biba.php">
+			<fieldset>
+				First player<input id="first-player" placeholder='Enter "X" player name' type="name">
+				<br>
+				Second player<input id="second-player"  placeholder='Enter "O" player name' type="name">
+				<br>
+				<br>
+				<input onclick="gameboard.startGame()" type="submit" value="start">
+			</fieldset>			
+		</form>	
+		</div>					
+	</div>
+	
+	<div class="gameboard">
+		<table>
+		<tr id="firstRow">
+			<td onclick="gameboard.play('f1')" id="f1"></td>
+			<td onclick="gameboard.play('f2')" id="f2"></td>
+			<td onclick="gameboard.play('f3')" id="f3"></td>
+		</tr>
+
+		<tr id="secondRow">
+			<td onclick="gameboard.play('s1')" id="s1"></td>
+			<td onclick="gameboard.play('s2')" id="s2"></td>
+			<td onclick="gameboard.play('s3')" id="s3"></td>
+		</tr>
+
+		<tr id="thirdRow">
+			<td onclick="gameboard.play('t1')" id="t1"></td>
+			<td onclick="gameboard.play('t2')" id="t2"></td>
+			<td onclick="gameboard.play('t3')" id="t3"></td>
+		</tr>
+	</table>
+
+		
+
+	</div>
+
+	<div class="winning-board">
+		<div class="win-window result-window">
+			<h2 id="winner-h2">Congratulations!</h2>
+			<h1 id="winner-h1" ><span id="winnerPlace" ></span></h1>			
+			<h3 id="winner-h3"></h3>
+			<button onClick="window.location.reload();">Restart</button>	
+		</div>	
+
+		<div class="draw-window result-window">			
+			<h1 id="draw-h1" >Draw :/</h1>
+			<h3 id="draw-h3" ></h3>
+			<button onClick="window.location.reload();">Restart</button>	
+		</div>		
+	</div>
+
+
+	<script src="main.js"></script>
+</body>
+</html>
