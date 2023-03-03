@@ -110,9 +110,10 @@ function changeReadStatus (bookId,buttonId) {
 function closeForm() {
 	let formDiv = document.querySelector(".book-form");
 	let backgroundDiv = document.querySelector(".book-background");
-	formDiv.style.visibility = "hidden";
-	backgroundDiv.style.visibility = "hidden";
-
+	formDiv.style.scale = "0";
+	setTimeout(()=>{
+		backgroundDiv.style.visibility = "hidden";
+	},300);
 	let formBook = document.getElementById('formBook');
 	formBook.addEventListener("submit",function(e) {
 		e.preventDefault();
@@ -122,12 +123,32 @@ function closeForm() {
 function showForm() {
 	let formDiv = document.querySelector(".book-form");
 	let backgroundDiv = document.querySelector(".book-background");
-	formDiv.style.visibility = "visible";
+	formDiv.style.scale = "1";
 	backgroundDiv.style.visibility = "visible";	
 }
 
-function addNewBook() {
+function addNewBook() {	
+
 	let count = JSON.parse(localStorage.getItem("count"));
+
+	function checkInputs(title,author,pages) {		
+		return new Promise(function(resolve,reject) {
+			for(let i=1;i<=count;i++) {
+				let storageItem = JSON.parse(localStorage.getItem(("book-" + i)));	
+				let storageTitle = storageItem.author.toLowerCase();
+					if(( storageTitle == title || title === "" || author === "" || pages === ""  || pages === "") && (pages <=0 )) {				
+						reject("                                     CHECK ENTRED INFO AGAIN! \n \n Maybe you missing something  or you already have that book in your library?")
+					} 
+					else if( storageTitle == title || title === "" || author === "" || pages === ""  || pages === "" || pages <=0 ) {				
+						reject("Check entred info again!")
+					}
+					else {
+						resolve(title,author,pages);
+					}
+				}					
+			}
+		)
+	}	
 	let bookTitle = document.getElementById("bookTitle").value;
 	let bookAuthor = document.getElementById("bookAuthor").value;
 	let bookPages = document.getElementById("bookPages").value;
@@ -140,21 +161,24 @@ function addNewBook() {
 	}  if(no.checked) {
 		bookReadStatus = "unread";	
 	}
-
-	let formBook = document.getElementById('formBook');
-	formBook.addEventListener("submit",function(e) {
-		e.preventDefault();
-	})	
 	
-	localStorage.setItem("book-" + (count+1),JSON.stringify(new Book(bookTitle,bookAuthor,bookPages,bookReadStatus)));
+	checkInputs(bookTitle,bookAuthor,bookPages)
+	.then(()=>{		
+	localStorage.setItem("book-" + (count+1),JSON.stringify(new Book(bookTitle,bookAuthor,bookPages,bookReadStatus,(count+1))));
 	localStorage.setItem("count" ,JSON.stringify(count+1));			
 	alert("Book added!");		
 	formBook.reset();	
 	closeForm();
+	},
+	(data)=>{alert(data)}
+	);
+	let formBook = document.getElementById('formBook');
+	formBook.addEventListener("submit",function(e) {
+		e.preventDefault();
+	});	
 }
 
-(function() {
-	let storageItem;
+(function() {	
 	let count = JSON.parse(localStorage.getItem("count"));
 	for(let i=1;i<=count;i++) {
 	let storageItem = JSON.parse(localStorage.getItem(("book-" + i)));		
