@@ -76,16 +76,17 @@ td:hover {
 	font-weight:bold;
 }
 
-.start-menu input[type=name]  {
+.start-menu input[type=text]  {
 	background:none;
 	border:none;
 	border-bottom:2px solid black;
 	margin:15px;
 	outline: none;
 	width:180px;
+	transition: border .5s ease;
 }
 
-.start-menu input[type=submit]  {
+.start-menu button  {
 	text-transform:uppercase;
 	width: 100px;	
 	height:40px;
@@ -94,7 +95,7 @@ td:hover {
 	border-radius:50px;
 
 }
-.start-menu input[type=submit]:hover {
+.start-menu button:hover {
 	background-color:white;
 	color:black;
 	border:none;
@@ -104,7 +105,7 @@ td:hover {
 	cursor: pointer;
 }
 
-.start-menu input[type=submit],.start-menu input[type=submit]:hover {
+.start-menu button,.start-menu button:hover {
 	transition:background-color 1s  ease;
 	transition:color 1s  ease;
 	transition:width 1s  ease;
@@ -119,7 +120,7 @@ td:hover {
 	font-family: cursive;
 }
 
-.winning-board, .result-window {
+.winning-board, .result-window {	
 	visibility: hidden;
 }
 
@@ -182,6 +183,22 @@ td:hover {
 	opacity: 0.8;
 }
 
+#span1, #span2 {
+	position: absolute;
+	font-size: .5em;
+	color: red;
+	left: 50%;	
+	transition: scale .5s ease;
+	
+}
+
+#span1 {
+	scale: 0;
+}
+
+#span2 {
+	scale: 0;
+}
 
 
 

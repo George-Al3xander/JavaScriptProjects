@@ -22,14 +22,16 @@
 		</div>
 
 		<div class="form-div">
-			<form id="form" action="biba.php">
+			<form id="form" >
 			<fieldset>
-				First player<input id="first-player" placeholder='Enter "X" player name' type="name">
+				<span id="span1">Please, enter valid name!</span>
+				First player<input id="first-player"    placeholder='Enter "X" player name' type="text">
 				<br>
-				Second player<input id="second-player"  placeholder='Enter "O" player name' type="name">
+				<span id="span2">Please, enter valid name!</span>
+				Second player<input id="second-player"   placeholder='Enter "O" player name' type="text">
 				<br>
 				<br>
-				<input onclick="gameboard.startGame()" type="submit" value="start">
+				<button onclick="gameboard.startGame()">start</button> 
 			</fieldset>			
 		</form>	
 		</div>					

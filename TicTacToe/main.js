@@ -9,6 +9,15 @@ let firstPlayer;
 let secondPlayer;
 let counterX = 0;
 let counterO = 0;
+const letters = /^[A-Za-z]+$/;
+let p1 = document.getElementById("first-player");
+let p2 = document.getElementById("second-player");
+
+const span1 = document.getElementById("span1");
+const span2 = document.getElementById("span2");
+
+
+
 
 function showElement(el) {
 	el.style.visibility = "visible";
@@ -18,14 +27,69 @@ function hideElement(el) {
 	el.style.visibility = "hidden";
 }
 
+	
+	
+
+
+	p1.addEventListener("input",function(e){
+		let name =	e.target.value;
+		let valid = letters.test(name);
+				if(!valid) {
+					span1.style.scale = "1";
+					p1.style.borderBotom = "2px solid red";
+					
+				} 
+				else if(valid) {
+					span1.style.scale = "0";	
+					p1.style.borderBotom = "2px solid black";					
+					
+				}
+	});
+
+
+	p2.addEventListener("input",function(e){
+		let name =	e.target.value;
+		let valid = letters.test(name);
+		if(!valid) {
+			span2.style.scale = "1";
+			p2.style.borderBotom = "2px solid red";
+			
+		} 
+		else if(valid) {
+			span2.style.scale = "0";	
+			p2.style.borderBotom = "2px solid black";					
+			
+		}
+	});
+
+
+
+function checkNames(name1 , name2){	
+		return new Promise((resolve,reject) => {	
+			if((name1.value === "" || name1.value === null) || (name2.value === "" || name2.value === null)) {
+				reject("Enter all names !")
+			} 
+			else {
+				resolve([name1, name2]);
+			}
+		})
+}
+function onErr(err) {
+	alert(err);
+}
 
 function startGame() {
-	firstPlayer = document.getElementById("first-player").value;
-	secondPlayer = document.getElementById("second-player").value;
 	form.addEventListener("submit", function(e){
-	e.preventDefault();
-	});	
-	hideElement(startMenu);
+		e.preventDefault()});
+		firstPlayer = document.getElementById("first-player").value;
+		secondPlayer = document.getElementById("second-player").value;
+			
+	checkNames(p1,p2).then(()=>{
+		hideElement(startMenu);			
+	}).catch(onErr);
+	
+	
+	
 }
 
 function gameboardCreate () {	
@@ -56,18 +120,6 @@ function gameboardCreate () {
 	let isGameWon = false;	
 
 	function player(side,name) {
-
-		/*
-		function incrementCounter() {
-			 counter+1;
-		}
-
-		function getCounter() {
-			return counter;
-		}
-		*/
-		
-
 		function getSide() {
 			return side;
 		}
@@ -98,8 +150,7 @@ function gameboardCreate () {
 			cellChoice.style.cssText = "cursor:not-allowed;background-color: white;";
 			console.log(gameboard);	
 			console.log("X: " + counterX);
-			console.log("O: " + counterO);	
-			
+			console.log("O: " + counterO);				
 		}
 		return{doMove,getSide,getName}
 	}	
@@ -126,9 +177,7 @@ function gameboardCreate () {
 			} else {
 			winnerText.innerHTML = name  + " WON!"; 	
 			winnerMoves.innerHTML = "By " + counter + " clicks";		
-			}
-			
-							
+			}							
 		}	
 
 		//Horizontal  wins
@@ -198,13 +247,6 @@ function gameboardCreate () {
 
 }
 let gameboard = gameboardCreate();
-
-
-
-
-
-
-
 
 
 
