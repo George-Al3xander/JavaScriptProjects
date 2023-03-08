@@ -16,6 +16,8 @@ let p2 = document.getElementById("second-player");
 const span1 = document.getElementById("span1");
 const span2 = document.getElementById("span2");
 
+const startButton = document.getElementById("start-button");
+
 
 
 
@@ -37,9 +39,14 @@ function hideElement(el) {
 				if(!valid) {
 					span1.style.scale = "1";
 					p1.style.borderBotom = "2px solid red";
+
+					startButton.disabled = true;	
+					startButton.style.cssText = "cursor:not-allowed;";
 					
 				} 
 				else if(valid) {
+					startButton.disabled = false;	
+					startButton.style.cssText = "cursor:pointer;";
 					span1.style.scale = "0";	
 					p1.style.borderBotom = "2px solid black";					
 					
@@ -53,11 +60,16 @@ function hideElement(el) {
 		if(!valid) {
 			span2.style.scale = "1";
 			p2.style.borderBotom = "2px solid red";
+
+			startButton.setAttribute("onclick","");	
+			startButton.style.cssText = "cursor:not-allowed;";
 			
 		} 
 		else if(valid) {
 			span2.style.scale = "0";	
-			p2.style.borderBotom = "2px solid black";					
+			p2.style.borderBotom = "2px solid black";	
+			startButton.setAttribute("onclick","gameboard.startGame()");	
+			startButton.style.cssText = "cursor:pointer;";				
 			
 		}
 	});
@@ -74,22 +86,18 @@ function checkNames(name1 , name2){
 			}
 		})
 }
-function onErr(err) {
-	alert(err);
-}
 
-function startGame() {
+async function startGame() {
 	form.addEventListener("submit", function(e){
 		e.preventDefault()});
 		firstPlayer = document.getElementById("first-player").value;
-		secondPlayer = document.getElementById("second-player").value;
-			
-	checkNames(p1,p2).then(()=>{
-		hideElement(startMenu);			
-	}).catch(onErr);
-	
-	
-	
+		secondPlayer = document.getElementById("second-player").value;		
+	try {
+		const res = await checkNames(p1,p2);
+		hideElement(startMenu);		
+	} catch(err) {
+		alert(err);
+	}	
 }
 
 function gameboardCreate () {	
