@@ -17,9 +17,7 @@ body {
 }
 
 
- .book {
-	width: 12em;
-	height:19em;
+ .book {	
 	background-color: red;
 	margin:4em;
 	text-align: center;
@@ -86,10 +84,14 @@ body {
 	position:fixed;
 	opacity:1;
 	top:20%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	text-align: left;
 }
 
 .book-form form {	
-	width: 50em;
+	width: min(50em,70%);
 	height: 24em;	
 }
 

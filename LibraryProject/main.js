@@ -1,6 +1,18 @@
 let library = [];
 let getBody = document.body;
 
+
+function getCount() {
+	let count = JSON.parse(localStorage.getItem("count"));
+	return count
+}
+
+function getFromStorage(name) {
+	let obj = JSON.parse(localStorage.getItem(name));
+	return obj
+}
+
+
 class Book {
 	constructor(title,author,pages,readStatus, number) {
 		this.title = title;
@@ -44,8 +56,7 @@ class Book {
 		newPages.appendChild(fullPages);
 		newPages.appendChild(pagesSpan);
 
-		//Read status button
-		let bookReadStatus = readStatus;
+		//Read status button	
 		let newReadButton = document.createElement("button");
 		newReadButton.setAttribute('onclick','changeReadStatus("book-'+number+'","button-' + number +'")');
 		newReadButton.setAttribute('id', ("button-" +number));
@@ -77,19 +88,22 @@ class Book {
 }
 
 function removeBook(bookId) {		
-	let count = JSON.parse(localStorage.getItem("count"));	
+	let count = getCount();	
+	console.log(count);
 	let lastBook = JSON.parse(localStorage.getItem("book-" + count));
+	console.log(lastBook);
 	let lastBookId = ("book-" + count);
+	console.log(lastBookId);
 	localStorage.removeItem(bookId);
 	localStorage.setItem(bookId ,JSON.stringify(lastBook));
 	localStorage.removeItem(lastBookId);
-	let bookDiv = document.getElementById(lastBookId);
+	let bookDiv = document.getElementById(bookId);
 	bookDiv.remove();
 	localStorage.setItem("count" ,JSON.stringify(count-1));
 }
 
 function changeReadStatus (bookId,buttonId) {	
-	let book = JSON.parse(localStorage.getItem(bookId));
+	let book = getFromStorage(bookId);
 	let readStatusCheck = book.readStatus;
 	let buttonText = document.getElementById(buttonId);	
 
@@ -127,28 +141,59 @@ function showForm() {
 	backgroundDiv.style.visibility = "visible";	
 }
 
-function addNewBook() {	
+function checkInputs(title,author,pages) {		
+	return new Promise(function(resolve,reject) {				
+				if(( title === "" || author === "" || pages === ""  || pages === "") && (pages <=0 )) {				
+					reject("Please, fill ALL the textfields")
+				} 
+				else if(title === "" || author === "" || pages === ""  || pages === "" || pages <=0 ) {				
+					reject("Check entred info again!")
+				}
+				else {
+					resolve([title,author]);
+				}									
+		}
+	)
+}	
 
-	let count = JSON.parse(localStorage.getItem("count"));
-
-	function checkInputs(title,author,pages) {		
-		return new Promise(function(resolve,reject) {
-			for(let i=1;i<=count;i++) {
+function checkBook(array){
+	let isBookExist = false;
+	let count = getCount();
+	let title = array[0].toLowerCase();	
+	let author = array[1].toLowerCase();		
+	return new Promise((resolve,reject)=>{		
+		for(let i=1;i<=count;i++) {
 				let storageItem = JSON.parse(localStorage.getItem(("book-" + i)));	
-				let storageTitle = storageItem.author.toLowerCase();
-					if(( storageTitle == title || title === "" || author === "" || pages === ""  || pages === "") && (pages <=0 )) {				
-						reject("                                     CHECK ENTRED INFO AGAIN! \n \n Maybe you missing something  or you already have that book in your library?")
-					} 
-					else if( storageTitle == title || title === "" || author === "" || pages === ""  || pages === "" || pages <=0 ) {				
-						reject("Check entred info again!")
-					}
-					else {
-						resolve(title,author,pages);
-					}
-				}					
+				let storageTitle = storageItem.title.toLowerCase();	
+				let storageAuthor = storageItem.author.toLowerCase();	
+			if(title == storageTitle && author == storageAuthor) {
+				isBookExist = true;					
+				console.log(isBookExist);				
+				break;
+			} else if(author != storageAuthor) {
+				isBookExist = false;				
+				console.log(isBookExist);				
 			}
-		)
-	}	
+		}
+
+		if(isBookExist) {
+			reject("You already have that book in your library!");	
+			console.log(isBookExist);
+		} else if(!isBookExist) {
+			resolve();
+			console.log(isBookExist);
+		}
+	});	
+		
+}
+
+async function addNewBook() {	
+	let count = getCount();	
+	let formBook = document.getElementById('formBook');
+	formBook.addEventListener("submit",function(e) {
+		e.preventDefault();
+	});	
+
 	let bookTitle = document.getElementById("bookTitle").value;
 	let bookAuthor = document.getElementById("bookAuthor").value;
 	let bookPages = document.getElementById("bookPages").value;
@@ -161,31 +206,31 @@ function addNewBook() {
 	}  if(no.checked) {
 		bookReadStatus = "unread";	
 	}
-	
-	checkInputs(bookTitle,bookAuthor,bookPages)
-	.then(()=>{		
-	localStorage.setItem("book-" + (count+1),JSON.stringify(new Book(bookTitle,bookAuthor,bookPages,bookReadStatus,(count+1))));
-	localStorage.setItem("count" ,JSON.stringify(count+1));			
-	alert("Book added!");		
-	formBook.reset();	
-	closeForm();
-	},
-	(data)=>{alert(data)}
-	);
-	let formBook = document.getElementById('formBook');
-	formBook.addEventListener("submit",function(e) {
-		e.preventDefault();
-	});	
+
+	try {		
+		let res = await checkInputs(bookTitle,bookAuthor,bookPages);
+		await checkBook(res);
+			localStorage.setItem("book-" + (count+1),JSON.stringify(new Book(bookTitle,bookAuthor,bookPages,bookReadStatus,(count+1))));
+			localStorage.setItem("count" ,JSON.stringify(count+1));			
+			alert("Book added!");		
+			formBook.reset();	
+			closeForm();				
+	} catch(error) {
+		alert(error)	
+	}	
 }
 
 (function() {	
-	let count = JSON.parse(localStorage.getItem("count"));
+	let count = getCount();
 	for(let i=1;i<=count;i++) {
-	let storageItem = JSON.parse(localStorage.getItem(("book-" + i)));		
+	let storageItem = getFromStorage("book-" + i);		
 	  new Book(storageItem.title,storageItem.author,storageItem.pages,storageItem.readStatus,i);
 	}
 })();
-	
+
+
+
+
 	
 
 	
