@@ -18,9 +18,6 @@ const span2 = document.getElementById("span2");
 
 const startButton = document.getElementById("start-button");
 
-
-
-
 function showElement(el) {
 	el.style.visibility = "visible";
 }
@@ -29,52 +26,47 @@ function hideElement(el) {
 	el.style.visibility = "hidden";
 }
 
-	
-	
-
-
+(function() {
 	p1.addEventListener("input",function(e){
 		let name =	e.target.value;
 		let valid = letters.test(name);
-				if(!valid) {
-					span1.style.scale = "1";
-					p1.style.borderBotom = "2px solid red";
+			if(!valid) {
+				span1.style.scale = "1";
+				p1.style.borderBotom = "2px solid red";
 
-					startButton.disabled = true;	
-					startButton.style.cssText = "cursor:not-allowed;";
-					
-				} 
-				else if(valid) {
-					startButton.disabled = false;	
-					startButton.style.cssText = "cursor:pointer;";
-					span1.style.scale = "0";	
-					p1.style.borderBotom = "2px solid black";					
-					
-				}
+				startButton.disabled = true;	
+				startButton.style.cssText = "cursor:not-allowed;";
+						
+			} 
+			else if(valid) {
+				startButton.disabled = false;	
+				startButton.style.cssText = "cursor:pointer;";
+				span1.style.scale = "0";	
+				p1.style.borderBotom = "2px solid black";					
+						
+			}
 	});
-
-
+	
 	p2.addEventListener("input",function(e){
 		let name =	e.target.value;
 		let valid = letters.test(name);
-		if(!valid) {
-			span2.style.scale = "1";
-			p2.style.borderBotom = "2px solid red";
-
-			startButton.setAttribute("onclick","");	
-			startButton.style.cssText = "cursor:not-allowed;";
-			
-		} 
-		else if(valid) {
-			span2.style.scale = "0";	
-			p2.style.borderBotom = "2px solid black";	
-			startButton.setAttribute("onclick","gameboard.startGame()");	
-			startButton.style.cssText = "cursor:pointer;";				
-			
-		}
+			if(!valid) {
+				span2.style.scale = "1";
+				p2.style.borderBotom = "2px solid red";
+	
+				startButton.setAttribute("onclick","");	
+				startButton.style.cssText = "cursor:not-allowed;";
+				
+			} 
+			else if(valid) {
+				span2.style.scale = "0";	
+				p2.style.borderBotom = "2px solid black";	
+				startButton.setAttribute("onclick","gameboard.startGame()");	
+				startButton.style.cssText = "cursor:pointer;";				
+				
+			}
 	});
-
-
+}());
 
 function checkNames(name1 , name2){	
 		return new Promise((resolve,reject) => {	
@@ -88,16 +80,18 @@ function checkNames(name1 , name2){
 }
 
 async function startGame() {
-	form.addEventListener("submit", function(e){
-		e.preventDefault()});
-		firstPlayer = document.getElementById("first-player").value;
-		secondPlayer = document.getElementById("second-player").value;		
-	try {
-		const res = await checkNames(p1,p2);
-		hideElement(startMenu);		
-	} catch(err) {
-		alert(err);
-	}	
+	form.addEventListener("submit", async function(e){
+		e.preventDefault()
+		const formData = new FormData(form);
+			firstPlayer = formData.get("name1");
+			secondPlayer = formData.get("name2");		
+			try {
+				const res = await checkNames(p1,p2);
+				hideElement(startMenu);		
+			} catch(err) {
+				alert(err);
+			}
+		});			
 }
 
 function gameboardCreate () {	
@@ -166,7 +160,6 @@ function gameboardCreate () {
 	function checkWin(player) {	
 		let side = player.getSide();
 		let name = player.getName();
-		
 
 		function won() {
 			isGameWon = true;	
@@ -252,7 +245,6 @@ function gameboardCreate () {
 			}
 	}
 	return{play,startGame}
-
 }
 let gameboard = gameboardCreate();
 
