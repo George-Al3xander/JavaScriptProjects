@@ -184,29 +184,28 @@ function checkBook(array){
 			console.log(isBookExist);
 		}
 	});	
-		
 }
 
 async function addNewBook() {	
+	let bookTitle;
+	let bookAuthor;
+	let bookPages;
+	let bookReadStatus;
 	let count = getCount();	
 	let formBook = document.getElementById('formBook');
-	formBook.addEventListener("submit",function(e) {
+	formBook.addEventListener("submit", async function(e) {
 		e.preventDefault();
-	});	
-
-	let bookTitle = document.getElementById("bookTitle").value;
-	let bookAuthor = document.getElementById("bookAuthor").value;
-	let bookPages = document.getElementById("bookPages").value;
-	let bookReadStatus;	
+		const formData =  new FormData(formBook);
+		bookTitle = formData.get("title");
+		bookAuthor = formData.get("author");
+		bookPages = formData.get("pages");				
 	let yes = document.getElementById("yes");
 	let no = document.getElementById("no");
-
 	if(yes.checked) {
 		bookReadStatus = "read";
 	}  if(no.checked) {
 		bookReadStatus = "unread";	
 	}
-
 	try {		
 		let res = await checkInputs(bookTitle,bookAuthor,bookPages);
 		await checkBook(res);
@@ -217,7 +216,8 @@ async function addNewBook() {
 			closeForm();				
 	} catch(error) {
 		alert(error)	
-	}	
+	}		
+	});	
 }
 
 (function() {	
