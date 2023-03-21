@@ -1,0 +1,157 @@
+
+/* Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property */
+*:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
+    all: unset;
+    display: revert;
+  }
+ 
+  /* Preferred box-sizing value */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  /*
+    Remove list styles (bullets/numbers)
+    in case you use it with normalize.css
+  */
+  ol, ul {
+    list-style: none;
+  }
+  
+  /* For images to not be able to exceed their container */
+  img {
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* Removes spacing between cells in tables */
+  table {
+    border-collapse: collapse;
+  }
+  
+  /* Revert the 'white-space' property for textarea elements on Safari */
+  textarea {
+    white-space: revert;
+  }
+
+
+  :root {
+    --fs-default: 1rem;
+    --fs-medium: calc(var(--fs-default) * 1.5);
+    --fs-large: calc(var(--fs-default) * 2);
+
+    --clr-accent: rgb(247, 241, 229);
+    --clr-primary: rgb(231, 177, 10);
+    --clr-secondary: rgb(137, 129, 33);
+    --clr-secondary-dark: rgb(76, 75, 22);
+
+  }
+
+  
+
+  html {
+    width: 100%;     
+    background-image: url("background.avif");    
+ }
+
+body {    
+  text-align: center;
+    font-family: 'Oswald', sans-serif;   
+    margin-inline: auto;    
+    background-color: var(--clr-secondary-dark);
+    width: min(80%, 50rem);    
+}
+
+nav {
+  background-color: var(--clr-secondary);
+}
+
+nav ul {
+    font-size: var(--fs-large);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap:2rem;
+    padding: 2rem;
+    
+}
+
+nav ul li {
+    background-color: var(--clr-primary);
+    border-radius: 20px;
+    padding: 1rem 3rem;
+    transition: all .5s ease;
+}
+
+nav ul li:hover {
+  cursor: pointer;
+  background-color: var(--clr-accent);
+  color: var(--clr-secondary-dark);
+  transition: all .5s ease;
+}
+
+
+#content {  
+  gap:1rem;
+  display: flex;
+  justify-content: center;  
+  flex-direction: column;  
+}
+
+#content h1, #content h2 {
+  color:var(--clr-secondary);
+  font-weight: 300;
+  font-size: var(--fs-large);
+}
+
+#content > * {
+  padding: 2rem;
+  margin: var(--fs-default) 0; 
+}
+
+
+
+#content h1 {
+  color:var(--clr-primary);
+  font-weight: 700;
+  font-style: italic;
+}
+
+#content p, #content ul li {
+  font-size: var(--fs-medium);
+  color: var(--clr-accent);
+}
+
+
+.header  {
+  background-color: var(--clr-accent);
+  color: black;
+  border-radius: 10px;
+  text-align: center;
+}
+
+
+.food {
+  display: flex;
+  flex-direction: row;
+  margin: 2rem;
+
+}
+
+
+.food > *{
+  flex-basis: 100%;
+  
+}
+
+.food img {
+  width: 50%;
+  border-radius: 1100vw;
+}
+
+section > *:not(:first-child)  {
+  border-top: 3px groove var(--clr-primary);
+}
