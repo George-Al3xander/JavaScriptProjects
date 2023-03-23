@@ -1,0 +1,349 @@
+
+/* Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property */
+*:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
+    all: unset;
+    display: revert;
+  }
+ 
+  /* Preferred box-sizing value */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  /*
+    Remove list styles (bullets/numbers)
+    in case you use it with normalize.css
+  */
+  ol, ul {
+    list-style: none;
+  }
+  
+  /* For images to not be able to exceed their container */
+  img {
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* Removes spacing between cells in tables */
+  table {
+    border-collapse: collapse;
+  }
+  
+  /* Revert the 'white-space' property for textarea elements on Safari */
+  textarea {
+    white-space: revert;
+  }
+  
+  :root {
+    --clr-primary:rgb(102, 52, 127);
+    --clr-secondary:rgb(158, 71, 132);
+    --clr-dark:rgb(55, 48, 107);
+    --clr-accent:rgb(210, 118, 133);
+
+    --clr-low-light: rgb(0, 255, 0, .2);
+    --clr-medium-light: rgb(0, 0, 255, .2);
+    --clr-high-light: rgb(255, 255, 0, .2);
+    --clr-critical-light: rgb(255, 0, 0, .2);
+
+    --clr-low-strong: rgb(0, 255, 0);
+    --clr-medium-strong: rgb(0, 0, 255);
+    --clr-high-strong: gold;
+    --clr-critical-strong: rgb(255, 0, 0);
+
+
+
+
+    --fs-average: 1rem;
+    --fs-medium: 1.25rem;
+    --fs-big: 1.5rem;
+    --fs-large: 2rem;
+    
+  }
+
+  .low {
+    background-color: var(--clr-low-light);
+  }
+
+  .medium {
+    background-color: var(--clr-medium-light);
+  }
+
+  .high {
+    background-color: var(--clr-high-light);
+  }
+
+  .critical {
+    background-color: var(--clr-critical-light);
+  }
+
+  .critical span {
+    color: var(--clr-critical-strong);    
+  }
+
+  .high span {
+    color: var(--clr-high-strong);    
+  }
+
+  .medium span {
+    color: var(--clr-medium-strong);    
+  }
+
+  .low span {
+    color: var(--clr-low-strong);    
+  } 
+
+
+  .critical .description p {
+      border-bottom:3px solid var(--clr-critical-light);  
+      border-inline:3px solid var(--clr-critical-light);
+  }
+
+  
+  .high .description p {
+    border-bottom:3px solid var(--clr-high-light);  
+    border-inline:3px solid var(--clr-high-light);
+  }
+
+  .medium .description p {
+    border-bottom:3px solid var(--clr-medium-light);  
+    border-inline:3px solid var(--clr-medium-light);
+  }
+
+  .low .description p {
+    border-bottom:3px solid var(--clr-low-light);  
+    border-inline:3px solid var(--clr-low-light);
+  }
+
+
+
+
+  * {
+    font-family: 'Fira Sans', sans-serif;
+  }
+
+main {
+    width: 100%;    
+}
+
+.container  {
+    margin-inline: auto; 
+    width: min(80%, 50rem);
+}
+
+.list {
+    max-width: 70%;
+    margin-inline: auto;      
+}
+
+.list-top {
+    background-color: var(--clr-dark);
+    color: white;
+    margin-block: auto;
+    
+}
+
+.list-top, .list-middle {
+    padding-inline:2rem;
+}
+
+.list-middle {
+    padding-block: 1rem;
+}
+
+.list-top {
+    padding-top: 1rem;
+}
+
+.nav {
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+}
+
+
+.buttons {
+    font-size: var(--fs-medium);
+    display: flex;
+    justify-content: space-between;
+    gap:1rem;
+}
+
+.buttons button {
+    background-color: var(--clr-accent);
+    padding: .5rem 1.5rem;
+    text-transform: uppercase;
+}
+
+
+.buttons button:hover {
+    transition: all .5s ease;
+    cursor: pointer;
+    background-color: var(--clr-secondary);
+    color: var(--clr-dark);
+}
+
+.nav ul{
+    display: flex;
+    gap: 1rem;
+    text-transform: capitalize;
+}
+
+.task {
+  margin-block: 1rem; 
+}
+
+.task-main  {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;    
+    font-size:var(--fs-medium);   
+    padding: .5rem;
+    padding-bottom: 1rem;
+     
+   
+}
+
+.task-main p{
+    display: inline;
+}
+
+.task-main > div {    
+    display: flex;    
+    align-content: center;
+}
+
+.list-middle {
+    background-color: whitesmoke;
+}
+
+
+.task-main svg:not(:first-child) {
+    margin-inline: 1rem;
+}
+
+.task-main svg:first-child {
+    margin-right: .5rem;
+}
+
+svg {
+    opacity: .6;
+    transition: color .5s ease;
+}
+
+svg:hover {
+    cursor: pointer;
+    opacity: 1;    
+    transition: color .5s ease;
+}
+
+.tick:hover {
+    fill: red;
+}
+
+
+.info {    
+    font-size: var(--fs-average);  
+}
+
+.info span {
+    text-transform: uppercase;
+    margin-right: .3rem;
+}
+
+.current-slide {
+    border-bottom: 2px solid white;
+}
+
+.nav ul li:hover {
+    cursor: pointer;
+    border-bottom: 2px solid white;
+}
+
+.description {    
+    font-size: var(--fs-average);      
+    font-style: italic;
+    display: none;
+}
+
+.description p{
+  padding: 1rem; 
+  background-color: white;
+}
+
+.new-task-form, .background-color {
+  position: absolute;  
+}
+
+.background-color {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  opacity: .7;
+}
+
+
+.new-task-form, .background-color, .main-absolute {
+  visibility: hidden;
+}
+
+.new-task-form {
+  z-index: 11;
+  
+}
+
+.main-absolute {
+  display: grid;
+  justify-items: center;
+}
+
+
+form {   
+  color: white;
+  display: grid;
+}
+
+fieldset {
+  background-color: var(--clr-secondary);
+  padding: 1rem;
+  border-radius: 20px;
+  margin:1rem;
+  text-align:center;
+}
+
+legend{
+  background-color: var(--clr-accent);
+  border-radius: 10px;
+  padding:.5rem 1rem;
+}
+
+input[type=text], textarea {
+  border-bottom: 1px solid black;
+}
+
+input[type=submit]:hover, select:hover,input[type=date]:hover {
+  color: black;  
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+
+input[type=submit] {
+  background-color:var(--clr-secondary);
+  margin-inline: auto;
+  padding: 1rem 3rem;
+  border-radius: 50px;
+  transition: background-color .5s ease;
+}
+
+input[type=submit]:hover {
+  background-color:var(--clr-dark);  
+  transition: background-color .5s ease;
+}
+
+option {
+  color: black; 
+}
+
+

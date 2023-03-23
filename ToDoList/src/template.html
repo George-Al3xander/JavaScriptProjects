@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- REMOVE REMOVE REMOVE --><!-- REMOVE REMOVE REMOVE -->
+    <link rel="stylesheet" href="styles.css"> 
+    <!-- REMOVE REMOVE REMOVE --><!-- REMOVE REMOVE REMOVE -->
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;1,100;1,300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="main-absolute">
+        <div class="background-color"></div>
+        <div class="new-task-form">
+        <form id="task-form">
+            <fieldset>
+                <legend>Title</legend>
+                <input required name="title" type="text">
+            </fieldset>
+
+            <fieldset>
+                <legend>Description</legend>
+                <textarea required name="description" cols="30" rows="3"></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>Due date</legend>
+                <input required name="date" type="date">
+            </fieldset>
+
+            <fieldset>
+                <legend>Priority</legend>                
+                <select required   name="priority" >                    
+                    <option selected="true" disabled value="Select">Select</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                    <option value="critical">Critical</option>
+                </select>            
+            </fieldset>
+
+            <fieldset>
+                <legend>Project</legend>
+                <input  name="project" type="text">
+            </fieldset>
+            
+            <input onclick="newTask()" type="submit">           
+        </form>
+    </div>
+    </div>
+    
+
+
+    <main>
+        <div class="container">
+            <div class="list">
+                <div class="list-top">
+                    <div class="buttons">
+                        <button id="newTaskBtn">new task</button>
+                        <button id="newProjectBtn">new project</button>
+                    </div>
+
+                    <div class="nav">
+                        <ul>
+                            <li class="current-slide">all</li>
+                            <li>projects</li>
+                            <li>select project</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="list-middle">                  
+
+                    <div  class="task critical">
+                        <div class="task-main">
+                            <div>
+                                <svg  class="tick" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M600 816v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120 416H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440 856H200q-33 0-56.5-23.5T120 776V416Zm80 0v360h240V416H200Zm0 0v360-360Z"/></svg>
+                                
+                                <p>Pet my cat</p>   
+                            </div> 
+                            <div>
+                                <p class="info"><span>critical</span>priority<br> due to 26.11.23</p>
+                                <svg onclick="test()" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>                         
+                            </div>
+                        </div>
+
+                       <div class="description">
+                        I just need to pet my cat
+                       </div>                                  
+                    </div>
+
+                    <div  class="task critical">
+                        <div class="task-main">
+                            <div>
+                                <svg  class="tick" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M600 816v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120 416H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440 856H200q-33 0-56.5-23.5T120 776V416Zm80 0v360h240V416H200Zm0 0v360-360Z"/></svg>
+                                
+                                <p>Pet my cat</p>   
+                            </div> 
+                            <div>
+                                <p class="info"><span>critical</span>priority<br> due to 26.11.23</p>
+                                <svg onclick="test()" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>                         
+                            </div>
+                        </div>
+
+                       <div class="description">
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis ducimus, nam consequuntur laudantium aspernatur hic quisquam facilis tenetur provident nostrum, quibusdam nulla! Id quas ab minus animi eligendi, omnis assumenda delectus eveniet aliquam placeat architecto, laboriosam vitae mollitia nostrum, expedita laudantium ut explicabo hic. Doloribus atque commodi aliquid quae repellendus neque consectetur possimus quia doloremque deleniti? Omnis earum nemo adipisci quisquam, et ex, possimus corrupti hic ab similique, quo aut facilis voluptatibus eaque totam perferendis nesciunt alias laudantium excepturi quaerat exercitationem tempora! Voluptatum, eligendi vero, maxime magnam officia sequi odio quos ipsam, sit quae veniam et. Quidem quibusdam nostrum repellat.</p>
+                       </div>
+                                  
+                    </div>
+
+                    <div  class="task critical">
+                        <div class="task-main">
+                            <div>
+                                <svg  class="tick" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M600 816v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120 416H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440 856H200q-33 0-56.5-23.5T120 776V416Zm80 0v360h240V416H200Zm0 0v360-360Z"/></svg>
+                                
+                                <p>Pet my cat</p>   
+                            </div> 
+                            <div>
+                                <p class="info"><span>critical</span>priority<br> due to 26.11.23</p>
+                                <svg onclick="test()" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>                         
+                            </div>
+                        </div>
+
+                       <div class="description">
+                        I just need to pet my cat
+                       </div>
+                                  
+                    </div>
+
+                 
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="index.js"></script>    
+</body>
+
+</html>
