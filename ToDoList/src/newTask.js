@@ -1,12 +1,20 @@
-import {getById,getByClass ,getData } from "./getters.js";
+import {getById, getData } from "./getters.js";
 import {getCount, incrementCount, reduceCount} from "./count.js";
 import {setToStorage, getFromStorage } from "./getters.js";
 import {showTask, hideMenu} from "./dom.js"
 import checkData from "./validation.js";
+import {checkProject} from "./validation.js";
+import { createEl } from "./create.js";
    
 
 let form = getById("task-form");
 form.addEventListener("submit", (e)=>{
+    e.preventDefault();    
+});
+
+
+let form2 = getById("project-form");
+form2.addEventListener("submit", (e)=>{
     e.preventDefault();    
 });
 
@@ -36,6 +44,22 @@ async function newTask() {
     }
 }
 
+async function newProject() {    
+    let formData = new FormData(form2);
+    try {
+        let name = formData.get("title");
+        let storageArray = getFromStorage("projects");
+        for(let i=0; i<=storageArray.length;i++) {          
+            await checkProject(name,storageArray[i]); 
+         };  
+        storageArray.push(name);
+        setToStorage("projects",storageArray); 
+        hideMenu();          
+    } catch (error) {
+        alert(error);        
+    }
+}
+
 function removeTask(num) {    
     let count = getCount();
     let removingItemName = `task${num}`;  
@@ -48,7 +72,6 @@ function removeTask(num) {
     taskDom.remove();
     reduceCount();
 }
-  
 
 
-export {form, newTask, showTask, removeTask}
+export {form, newTask, newProject, showTask, removeTask}

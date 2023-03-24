@@ -1,6 +1,7 @@
 import { createDiv, createEl, createSvg } from "./create.js";
 import { getByClass, getFromStorage, setToStorage} from "./getters.js";
 import { form } from "./newTask.js";
+import { getCount } from "./count.js";
 
 
 let listMiddle = getByClass("list-middle");
@@ -10,7 +11,7 @@ function showTask(count, name, description, date, priority, project) {
     
     let taskId=`task${count}`;
     let taskDiv = createDiv();
-    taskDiv.className = `task ${priority} ${project.toLowerCase()}`;
+    taskDiv.className = `task ${priority}`;
     taskDiv.setAttribute("id",taskId);
 
     let taskMainDiv = createDiv();
@@ -25,6 +26,14 @@ function showTask(count, name, description, date, priority, project) {
     let taskName = createEl("p",name);
     topDiv.appendChild(svgDone);
     topDiv.appendChild(taskName);
+
+    if(project !== "" || project !== null) {
+        let projectDiv = createDiv();
+        projectDiv.className = `project project${count}`;
+        let projectP = createEl("p" , `${project} project`);
+        projectDiv.appendChild(projectP);
+        topDiv.appendChild(projectDiv);
+    }
 
     let bottomDiv = createDiv();  
     
@@ -46,8 +55,7 @@ function showTask(count, name, description, date, priority, project) {
     taskMainDiv.appendChild(topDiv);
     taskMainDiv.appendChild(bottomDiv);
     taskDiv.appendChild(taskMainDiv);
-    if(description != "") {   
-         
+    if(description != "") {          
         svgDots.setAttribute("onclick",`showDescription(${count})`);
         let descriptionDiv = createDiv();
         descriptionDiv.setAttribute("tabindex","-1")
@@ -65,21 +73,53 @@ function showTask(count, name, description, date, priority, project) {
 }
 
 function showDescription(num) {   
+        let project = getByClass(`project${num}`);
         let isShownObj = getFromStorage(`task${num}`); 
-        let isShown = isShownObj[5];  
-        let name = `description${num}`;        
-        let desc = getByClass(`${name}`);
-        if(isShown == false) {               
-            desc.style.display = "inline";        
+        let projectCheck = isShownObj[4];
+
+        if( projectCheck != "") {
+            let isShown = isShownObj[5];  
+            let name = `description${num}`;        
+            let desc = getByClass(`${name}`);
+            if(isShown == false) {               
+            desc.style.display = "inline";  
+            project.style.display = "none";      
             isShown = true;
             setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);
-        }
+            }
     
-        else if(isShown == true) { 
+            else if(isShown == true) { 
             desc.style.display = "none";
+            project.style.display = "inline";
             isShown = false; 
             setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);       
-        } 
+            } 
+        } else if(projectCheck == "") {
+            let isShown = isShownObj[5];  
+            let name = `description${num}`;        
+            let desc = getByClass(`${name}`);
+            if(isShown == false) {               
+            desc.style.display = "inline";                  
+            isShown = true;
+            setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);
+            }
+    
+            else if(isShown == true) { 
+            desc.style.display = "none";            
+            isShown = false; 
+            setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);       
+            } 
+        }
+        
+}
+
+function displayTasks() {
+    let count = getCount();
+    for(let i=1; i<=count;i++) {
+        let storageItem = getFromStorage(`task${i}`);
+        showTask(i, storageItem[0], storageItem[1], storageItem[2], storageItem[3], storageItem[4]);
+        setToStorage(`task${i}`,[storageItem[0], storageItem[1], storageItem[2], storageItem[3], storageItem[4], false]);        
+    };
 }
 
 function hideMenu() {
@@ -102,4 +142,4 @@ function hideElement(el) {
     name.style.visibility = "hidden";
 }
 
-export {showTask, showElement, hideElement, showDescription, hideMenu}
+export {showTask, showElement, hideElement, showDescription, hideMenu, displayTasks}

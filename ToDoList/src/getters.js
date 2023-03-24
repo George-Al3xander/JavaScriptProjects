@@ -22,8 +22,7 @@ function getData(form) {
 }
 
 function getFromStorage(key) {
-    let obj = JSON.parse(localStorage.getItem(key));
-    
+    let obj = JSON.parse(localStorage.getItem(key));    
     return obj
 }
 

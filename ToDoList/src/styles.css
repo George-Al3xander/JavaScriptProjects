@@ -161,6 +161,19 @@ main {
     padding-bottom: 1rem;
 }
 
+.nav ul{
+    display: flex;
+    gap: 1rem;
+    text-transform: capitalize;    
+}
+
+
+
+.nav ul li:hover {
+  cursor: pointer;
+  border-bottom: 2px solid white;
+  /* text-decoration: underline; */
+}
 
 .buttons {
     font-size: var(--fs-medium);
@@ -183,14 +196,10 @@ main {
     color: var(--clr-dark);
 }
 
-.nav ul{
-    display: flex;
-    gap: 1rem;
-    text-transform: capitalize;
-}
 
-.task {
+.task {  
   margin-block: 1rem; 
+  position: relative;
 }
 
 .task-main  {
@@ -250,14 +259,10 @@ svg:hover {
 .info span {
     text-transform: uppercase;
     margin-right: .3rem;
+    
 }
 
 .current-slide {
-    border-bottom: 2px solid white;
-}
-
-.nav ul li:hover {
-    cursor: pointer;
     border-bottom: 2px solid white;
 }
 
@@ -272,11 +277,12 @@ svg:hover {
   background-color: white;
 }
 
-.new-task-form, .background-color {
+.new-task-form, .background-color, .new-project-form {  
   position: absolute;  
 }
 
 .background-color {
+  
   background-color: black;
   width: 100vw;
   height: 100vh;
@@ -284,18 +290,24 @@ svg:hover {
 }
 
 
-.new-task-form, .background-color, .main-absolute {
+.new-task-form, .background-color, .main-absolute, .new-project-form {
   visibility: hidden;
 }
 
-.new-task-form {
-  z-index: 11;
+.select-project-nav select:hover {
+  color: white;
+}
+
+.new-task-form, .new-project-form, .background-color {
+  z-index: 10000;
   
 }
 
-.main-absolute {
-  display: grid;
+.main-absolute {  
+  display: grid;  
   justify-items: center;
+  
+
 }
 
 
@@ -305,6 +317,7 @@ form {
 }
 
 fieldset {
+  
   background-color: var(--clr-secondary);
   padding: 1rem;
   border-radius: 20px;
@@ -345,6 +358,19 @@ input[type=submit]:hover {
 option {
   color: black; 
 }
+
+.project {
+  font-style: italic;
+  font-size: var(--fs-average);
+  position: absolute;
+  bottom:0;
+  left: 2.5rem;
+  
+  opacity: .7;
+  top: 50%;
+}
+
+
 
 legend {
   position: relative;

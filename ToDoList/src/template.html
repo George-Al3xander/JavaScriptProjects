@@ -48,11 +48,31 @@
 
             <fieldset>
                 <legend class="optional">Project</legend>
-                <input  name="project" type="text">
+                
+                    <select class="select-project-form" name="project"  >                    
+                        <option selected="true" disabled value="Select">Select project</option>
+                                                            
+                    </select> 
+                
+                
             </fieldset>
             
             <input onclick="newTask()" type="submit">           
         </form>
+    </div>
+
+    <div class="new-project-form">
+        <form id="project-form">
+            <fieldset>
+                <legend>Enter name of the project</legend>
+                <input  name="title" type="text">
+            </fieldset>
+
+            
+            
+            <input onclick="newProject()" type="submit">           
+        </form>
+
     </div>
     </div>
     
@@ -68,22 +88,32 @@
                     </div>
 
                     <div class="nav">
-                        <ul>
-                            <li class="current-slide">all</li>
+                        <ul id="slide-ul">
+                            <li class="current-slide" >all</li>
                             <li>projects</li>
-                            <li>select project</li>
+                            <li><form class="select-project-nav">
+                                <select  class="select-project-nav-select" >                    
+                                    <option selected="true" disabled value="Select">Select project</option>
+                                                                        
+                                </select> 
+                            </form></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="list-middle">                  
 
-                    <div  class="task critical">
+                    <!-- <div  class="task critical">
                         <div class="task-main">
                             <div>
                                 <svg  class="tick" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M600 816v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120 416H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440 856H200q-33 0-56.5-23.5T120 776V416Zm80 0v360h240V416H200Zm0 0v360-360Z"/></svg>
                                 
-                                <p>Pet my cat</p>   
+                                <p>Pet my cat</p> 
+                                <div class="project">
+                                    <p>Beeba project</p>
+                                </div>
+                                
+                                
                             </div> 
                             <div>
                                 <p class="info"><span>critical</span>priority<br> due to 26.11.23</p>
@@ -132,7 +162,7 @@
                         I just need to pet my cat
                        </div>
                                   
-                    </div>
+                    </div> -->
 
                  
                 </div>

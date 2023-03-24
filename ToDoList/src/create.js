@@ -30,6 +30,14 @@ function createSvg(pathD) {
     return svg
 }
 
+  
+function createOption(value) {
+    let obj = createEl("option", value);
+    obj.setAttribute("value", value);
+
+    return obj
+}
 
 
-export {createEl, createSvg, createDiv}
+
+export {createEl, createSvg, createDiv, createOption}
