@@ -1,8 +1,8 @@
 import {newTask } from "./newTask.js";
 import { getCount} from "./count.js";
 import { showTask, removeTask } from "./newTask.js";
-import { getFromStorage,getById, getByClass } from "./getters.js";
-import { showDescription, showElement, hideElement } from "./dom.js";
+import { setToStorage,getFromStorage,getById, getByClass } from "./getters.js";
+import {showElement, hideElement, showDescription } from "./dom.js";
 
 
 
@@ -17,6 +17,12 @@ let newProjectBtn = getById("newProjectBtn");
 let mainDiv = getByClass("main-absolute");
 let background = getByClass("background-color");
 let newTaskForm = getByClass("new-task-form");
+
+function message() {
+    alert("Sorry no description for that task :(")
+}
+
+window.message = message;
 
 newTaskBtn.addEventListener("click", ()=> {
     
@@ -34,14 +40,20 @@ background.addEventListener("click", ()=> {
 });
 
 
+
+
 (function () {
     let count = getCount();
     for(let i=1; i<=count;i++) {
         let storageItem = getFromStorage(`task${i}`);
         showTask(i, storageItem[0], storageItem[1], storageItem[2], storageItem[3], storageItem[4]);
-    }
-
+        setToStorage(`task${i}`,[storageItem[0], storageItem[1], storageItem[2], storageItem[3], storageItem[4], false]);        
+    };
 }());
+
+
+
+
 
 
 // CONCEPT OF DESCRIPTION SHOWING
@@ -67,8 +79,4 @@ background.addEventListener("click", ()=> {
 // tasks.forEach(task=> task.addEventListener("click",(e)=>{
 //     console.log(e.value);
 // })
-
-
-
-
 

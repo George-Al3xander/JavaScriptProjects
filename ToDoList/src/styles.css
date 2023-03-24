@@ -346,4 +346,12 @@ option {
   color: black; 
 }
 
-
+legend {
+  position: relative;
+}
+.optional::after {
+  content: "(optional field)"; 
+  display: block;
+  font-size: .8em;
+  font-style: italic;
+}

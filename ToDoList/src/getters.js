@@ -18,18 +18,17 @@ function getData(form) {
     let priority  = formData.get("priority");
     let project  = formData.get("project");
 
-    return [title,description,date,priority,project];
+    return [title,description,date,priority,project,false];
 }
 
 function getFromStorage(key) {
     let obj = JSON.parse(localStorage.getItem(key));
-
+    
     return obj
 }
 
 function setToStorage(key, value) {
-    let obj = localStorage.setItem(key, JSON.stringify(value));
-    return obj
+    localStorage.setItem(key, JSON.stringify(value));    
 }
 
 

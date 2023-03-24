@@ -22,22 +22,22 @@
         <form id="task-form">
             <fieldset>
                 <legend>Title</legend>
-                <input required name="title" type="text">
+                <input  name="title" type="text">
             </fieldset>
 
             <fieldset>
-                <legend>Description</legend>
-                <textarea required name="description" cols="30" rows="3"></textarea>
+                <legend class="optional">Description</legend>
+                <textarea  name="description" cols="30" rows="3"></textarea>
             </fieldset>
 
             <fieldset>
                 <legend>Due date</legend>
-                <input required name="date" type="date">
+                <input  name="date" type="date">
             </fieldset>
 
             <fieldset>
                 <legend>Priority</legend>                
-                <select required   name="priority" >                    
+                <select   name="priority" >                    
                     <option selected="true" disabled value="Select">Select</option>
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
@@ -47,7 +47,7 @@
             </fieldset>
 
             <fieldset>
-                <legend>Project</legend>
+                <legend class="optional">Project</legend>
                 <input  name="project" type="text">
             </fieldset>
             
