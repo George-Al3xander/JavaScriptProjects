@@ -18,16 +18,9 @@ form2.addEventListener("submit", (e)=>{
     e.preventDefault();    
 });
 
-
-
-
 // locale storage proto
 //              0       1           2       3       4           5 
 // task+num | [name, description, date, priority, project, desc showStatus]
-
-
-
-
 
 async function newTask() { 
     try {
@@ -49,7 +42,7 @@ async function newProject() {
     try {
         let name = formData.get("title");
         let storageArray = getFromStorage("projects");
-        for(let i=0; i<=storageArray.length;i++) {          
+        for(let i=0; i<storageArray.length;i++) {          
             await checkProject(name,storageArray[i]); 
          };  
         storageArray.push(name);

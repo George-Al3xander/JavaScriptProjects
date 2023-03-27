@@ -43,19 +43,25 @@ function createOption(value) {
 function createPriorityForm() {
     let form = createEl("form","");
     let select = createEl("select","");
+    form.addEventListener("submit", (e)=>{
+        e.preventDefault();
+    });
     
     select.setAttribute("name","priority");
     
-    let test = createOption("Select");
+    let test = createOption("Select priority");
     test.setAttribute("selected","true");
     test.setAttribute("disabled","");
        
     let low = createOption("low");
+    low.className = "low"
     let medium = createOption("medium");
+    medium.className = "medium"
     let high = createOption("high");
+    high.className = "high"
     let critical = createOption("critical");
-    
-    
+    critical.className = "critical"
+        
     form.appendChild(select);
     select.appendChild(test);
     select.appendChild(low);

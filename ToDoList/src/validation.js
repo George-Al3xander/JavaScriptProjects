@@ -10,12 +10,12 @@ function checkData(title,date,priority) {
     })
 }
 
-function checkProject(name, compareName) {
+function checkProject(name, compareName) {    
     return new Promise((resolve,reject)=>{
         if((name.toLowerCase() === compareName.toLowerCase()) || (name == "")) {
             reject("Can't be blank or you already have that project!");
         } else {
-            resolve("");
+            resolve(name);
         }
     })
 }

@@ -29,7 +29,7 @@ function showTask(count, name, description, date, priority, project) {
 
     if(project !== null) {
         let projectDiv = createDiv();
-        projectDiv.className = `project project${count}`;
+        projectDiv.className = `task-project task-project${count}`;
         let projectP = createEl("p" , `${project} project`);
         projectDiv.appendChild(projectP);
         topDiv.appendChild(projectDiv);
@@ -38,7 +38,7 @@ function showTask(count, name, description, date, priority, project) {
     let bottomDiv = createDiv();  
     
     let para = createEl("p","");
-    para.setAttribute("class",`info info${count}`)
+    para.setAttribute("class",`info info${count}`);
     let span = createEl("span",priority);
     let priorText = document.createTextNode("priority");
     let br = createEl("br","");
@@ -79,7 +79,7 @@ function showTask(count, name, description, date, priority, project) {
 }
 
 function showDescription(num) {   
-        let project = getByClass(`project${num}`);
+        let project = getByClass(`task-project${num}`);
         let isShownObj = getFromStorage(`task${num}`); 
         let projectCheck = isShownObj[4];  
 
@@ -135,6 +135,8 @@ function hideMenu() {
     mainDiv.style.visibility = "hidden";
     background.style.visibility = "hidden";
     newTaskForm.style.visibility = "hidden";
+    let newProjectForm = getByClass("new-project-form");
+    newProjectForm.style.visibility = "hidden";
     form.reset();
 }
 
@@ -148,4 +150,4 @@ function hideElement(el) {
     name.style.visibility = "hidden";
 }
 
-export {showTask, showElement, hideElement, showDescription, hideMenu, displayTasks}
+export { listMiddle, showTask, showElement, hideElement, showDescription, hideMenu, displayTasks}

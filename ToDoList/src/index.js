@@ -1,15 +1,17 @@
 import { getCount} from "./count.js";
 import {newProject,newTask , showTask, removeTask } from "./newTask.js";
 import { setToStorage,getFromStorage,getById, getByClass } from "./getters.js";
-import {showElement, hideElement, showDescription,displayTasks } from "./dom.js";
+import {showElement, hideElement, showDescription,displayTasks,listMiddle } from "./dom.js";
 import { createOption } from "./create.js";
 import { setToday } from "./date.js";
 import editTask from "./change.js";
+import { cancel } from "./change.js";
+import acceptChanges from "./accept.js";
+
 
 // Setting today's date
 let today = getByClass("dateToday");
 setToday(today);
-
 
 window.newTask = newTask;
 window.newProject = newProject;
@@ -18,9 +20,10 @@ window.showElement = showElement;
 window.hideElement = hideElement;
 window.removeTask = removeTask;
 window.editTask = editTask;
+window.cancel = cancel;
+window.acceptChanges = acceptChanges;
 
 let nav = getByClass("nav");
-let listMiddle = getByClass("list-middle");
 let slideUl = document.getElementById("slide-ul").children;
 
 nav.addEventListener("click", (e)=> {
@@ -39,7 +42,8 @@ nav.addEventListener("click", (e)=> {
         for(let task of slideUl) {
              task.setAttribute("class", "");
         }
-        e.target.setAttribute("class", "current-slide");     
+        e.target.setAttribute("class", "current-slide");  
+        listMiddle.innerHTML = "";   
     }
 }); 
 
@@ -83,7 +87,7 @@ newProjectBtn.addEventListener("click", ()=> {
 
 //Displaying all tasks
 (function () {
-    displayTasks();
+    //displayTasks();
 }());
 
 

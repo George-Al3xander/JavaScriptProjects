@@ -202,21 +202,75 @@ main {
   position: relative;
 }
 
+.task form {
+  padding: .5rem;
+}
+
+.task form > *{
+  margin: 3%;
+}
+
 .task option, .task select, .task form {
   text-transform: uppercase;
   color: black;
-  width: min-content;
-  
-  text-align: center;
-  
+  width: min-content;  
+  text-align: center;  
 }
 
 .task select {
-  font-style: italic;
+  font-weight: 900;
+  font-style: italic;  
 }
 
 .task option {
   font-style: normal;
+  font-weight: normal;
+}
+
+
+.task input[type=submit] {  
+  padding: 0;
+  border-radius: 0;
+}
+
+.edit-buttons input {
+  margin-right: 5%;
+}
+
+.edit-buttons button {
+  margin-inline: auto;
+}
+
+.task input[type=submit], .task button {
+  color: black;
+  background-color: lightgrey;  
+  padding: 2%;
+  border-radius: 1rem;
+  transition: all .5s ease;
+}
+
+.task input[type=submit]:hover {
+  color: white;
+  background-color: green;
+}
+
+.task button:hover {
+  color: white;
+  cursor: pointer;
+  background-color: red;
+}
+
+.task form {
+  border: 1px solid black;
+}
+
+.task form > *:not(:nth-child(3)) {
+  border-bottom: 1px solid black;
+  opacity: .7;
+}
+
+.task form > *:not(:nth-child(3)):hover {  
+  opacity: 1;
 }
 
 .task-main  {
@@ -226,9 +280,7 @@ main {
     justify-content: space-between;    
     font-size:var(--fs-medium);   
     padding: .5rem;
-    padding-bottom: 1rem;
-     
-   
+    padding-bottom: 1rem;   
 }
 
 .task-main p{
@@ -374,7 +426,7 @@ option {
   color: black; 
 }
 
-.project {
+.task-project {
   font-style: italic;
   font-size: var(--fs-average);
   position: absolute;
@@ -401,8 +453,3 @@ legend {
   margin-left: 1rem;  
 }
 
-.task input[type=submit] {
-  background-color: green;
-  padding: 0;
-  border-radius: 0;
-}
