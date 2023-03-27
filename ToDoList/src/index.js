@@ -3,8 +3,12 @@ import {newProject,newTask , showTask, removeTask } from "./newTask.js";
 import { setToStorage,getFromStorage,getById, getByClass } from "./getters.js";
 import {showElement, hideElement, showDescription,displayTasks } from "./dom.js";
 import { createOption } from "./create.js";
+import { setToday } from "./date.js";
+import editTask from "./change.js";
 
-
+// Setting today's date
+let today = getByClass("dateToday");
+setToday(today);
 
 
 window.newTask = newTask;
@@ -13,6 +17,7 @@ window.showDescription = showDescription;
 window.showElement = showElement;
 window.hideElement = hideElement;
 window.removeTask = removeTask;
+window.editTask = editTask;
 
 let nav = getByClass("nav");
 let listMiddle = getByClass("list-middle");
@@ -94,33 +99,4 @@ let storageArray = getFromStorage("projects");
     };  
 
 
-
-//["Gym stuff","Books reviews","Homework"]
-
-
-
-
-// CONCEPT OF DESCRIPTION SHOWING
-
-// isShown = false;
-
-// function test() {
-//     if(!isShown) {
-//         desc.style.display = "inline";        
-//         isShown = true;
-//     }
-
-//     else if(isShown) {
-//         desc.style.display = "none";        
-//         isShown = false;
-//     }
-    
-// }
-
-
-// let tasks = document.querySelectorAll("svg");
-
-// tasks.forEach(task=> task.addEventListener("click",(e)=>{
-//     console.log(e.value);
-// })
 

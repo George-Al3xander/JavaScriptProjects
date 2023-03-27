@@ -1,3 +1,5 @@
+import { setToday } from "./date.js";
+
 function createEl(type,text) {
     let obj = document.createElement(type);
     let content = document.createTextNode(text);
@@ -38,6 +40,40 @@ function createOption(value) {
     return obj
 }
 
+function createPriorityForm() {
+    let form = createEl("form","");
+    let select = createEl("select","");
+    
+    select.setAttribute("name","priority");
+    
+    let test = createOption("Select");
+    test.setAttribute("selected","true");
+    test.setAttribute("disabled","");
+       
+    let low = createOption("low");
+    let medium = createOption("medium");
+    let high = createOption("high");
+    let critical = createOption("critical");
+    
+    
+    form.appendChild(select);
+    select.appendChild(test);
+    select.appendChild(low);
+    select.appendChild(medium);
+    select.appendChild(high);
+    select.appendChild(critical);
 
+    return form
+}
 
-export {createEl, createSvg, createDiv, createOption}
+function createDateForm() {    
+    let dateInput = createEl("input","");
+    dateInput.setAttribute("name","date");
+    dateInput.setAttribute("type","date");
+    setToday(dateInput);
+
+    
+    return dateInput
+}
+
+export {createEl, createSvg, createDiv, createOption, createDateForm, createPriorityForm}

@@ -1,5 +1,5 @@
 import { createDiv, createEl, createSvg } from "./create.js";
-import { getByClass, getFromStorage, setToStorage} from "./getters.js";
+import { getByClass, getById, getFromStorage, setToStorage} from "./getters.js";
 import { form } from "./newTask.js";
 import { getCount } from "./count.js";
 
@@ -27,7 +27,7 @@ function showTask(count, name, description, date, priority, project) {
     topDiv.appendChild(svgDone);
     topDiv.appendChild(taskName);
 
-    if(project !== "" || project !== null) {
+    if(project !== null) {
         let projectDiv = createDiv();
         projectDiv.className = `project project${count}`;
         let projectP = createEl("p" , `${project} project`);
@@ -38,7 +38,7 @@ function showTask(count, name, description, date, priority, project) {
     let bottomDiv = createDiv();  
     
     let para = createEl("p","");
-    para.setAttribute("class","info")
+    para.setAttribute("class",`info info${count}`)
     let span = createEl("span",priority);
     let priorText = document.createTextNode("priority");
     let br = createEl("br","");
@@ -49,16 +49,22 @@ function showTask(count, name, description, date, priority, project) {
     para.appendChild(br);
     para.appendChild(dateSpan); 
 
-    let svgDots = createSvg("M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"); 
+    let svgDots = createSvg("M240 656q-33 0-56.5-23.5T160 576q0-33 23.5-56.5T240 496q33 0 56.5 23.5T320 576q0 33-23.5 56.5T240 656Zm240 0q-33 0-56.5-23.5T400 576q0-33 23.5-56.5T480 496q33 0 56.5 23.5T560 576q0 33-23.5 56.5T480 656Zm240 0q-33 0-56.5-23.5T640 576q0-33 23.5-56.5T720 496q33 0 56.5 23.5T800 576q0 33-23.5 56.5T720 656Z"); 
+    let svgEdit = createSvg("M200 856h56l345-345-56-56-345 345v56Zm572-403L602 285l56-56q23-23 56.5-23t56.5 23l56 56q23 23 24 55.5T829 396l-57 57Zm-58 59L290 936H120V766l424-424 170 170Zm-141-29-28-28 56 56-28-28Z");
+    svgEdit.setAttribute("onclick", `editTask(${count})`);
+    let svgDiv = createDiv();
+    svgDiv.className = "svg-div";
+    svgDiv.appendChild(svgDots);
+    svgDiv.appendChild(svgEdit);
     bottomDiv.appendChild(para);
-    bottomDiv.appendChild(svgDots);
+    bottomDiv.appendChild(svgDiv);
     taskMainDiv.appendChild(topDiv);
     taskMainDiv.appendChild(bottomDiv);
     taskDiv.appendChild(taskMainDiv);
     if(description != "") {          
-        svgDots.setAttribute("onclick",`showDescription(${count})`);
+        svgDots.setAttribute("onclick",`showDescription(${count})`);        
         let descriptionDiv = createDiv();
-        descriptionDiv.setAttribute("tabindex","-1")
+        descriptionDiv.setAttribute("tabindex","-1");
     
         descriptionDiv.className = `description description${count}`;
         let descPara = createEl("p",description);
@@ -75,9 +81,9 @@ function showTask(count, name, description, date, priority, project) {
 function showDescription(num) {   
         let project = getByClass(`project${num}`);
         let isShownObj = getFromStorage(`task${num}`); 
-        let projectCheck = isShownObj[4];
+        let projectCheck = isShownObj[4];  
 
-        if( projectCheck != "") {
+        if( projectCheck !== null) {
             let isShown = isShownObj[5];  
             let name = `description${num}`;        
             let desc = getByClass(`${name}`);
@@ -94,7 +100,7 @@ function showDescription(num) {
             isShown = false; 
             setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);       
             } 
-        } else if(projectCheck == "") {
+        } else if(projectCheck == null) {
             let isShown = isShownObj[5];  
             let name = `description${num}`;        
             let desc = getByClass(`${name}`);

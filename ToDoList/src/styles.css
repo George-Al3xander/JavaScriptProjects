@@ -202,6 +202,23 @@ main {
   position: relative;
 }
 
+.task option, .task select, .task form {
+  text-transform: uppercase;
+  color: black;
+  width: min-content;
+  
+  text-align: center;
+  
+}
+
+.task select {
+  font-style: italic;
+}
+
+.task option {
+  font-style: normal;
+}
+
 .task-main  {
     display: flex;
     flex-direction: row;
@@ -228,16 +245,14 @@ main {
 }
 
 
-.task-main svg:not(:first-child) {
-    margin-inline: 1rem;
-}
+
 
 .task-main svg:first-child {
     margin-right: .5rem;
 }
 
 svg {
-    opacity: .6;
+    opacity: .5;
     transition: color .5s ease;
 }
 
@@ -370,8 +385,6 @@ option {
   top: 50%;
 }
 
-
-
 legend {
   position: relative;
 }
@@ -380,4 +393,16 @@ legend {
   display: block;
   font-size: .8em;
   font-style: italic;
+}
+
+.svg-div {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;  
+}
+
+.task input[type=submit] {
+  background-color: green;
+  padding: 0;
+  border-radius: 0;
 }
