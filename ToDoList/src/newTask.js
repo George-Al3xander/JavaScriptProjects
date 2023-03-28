@@ -1,10 +1,11 @@
 import {getById, getData } from "./getters.js";
 import {getCount, incrementCount, reduceCount} from "./count.js";
 import {setToStorage, getFromStorage } from "./getters.js";
-import {showTask, hideMenu} from "./dom.js"
+import {showTask, hideMenu, listMiddle} from "./dom.js"
 import checkData from "./validation.js";
 import {checkProject} from "./validation.js";
 import { createEl } from "./create.js";
+
    
 
 let form = getById("task-form");
@@ -30,7 +31,7 @@ async function newTask() {
         let count = getCount(); 
         let taskId=`task${count}`;
         setToStorage(taskId, data);
-        showTask(count, data[0], data[1], data[2], data[3], data[4]);    
+        showTask(listMiddle,count, data[0], data[1], data[2], data[3], data[4]);    
         hideMenu();        
     } catch (error) {
         alert(error);

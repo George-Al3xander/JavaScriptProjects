@@ -1,7 +1,7 @@
 import { getCount} from "./count.js";
 import {newProject,newTask , showTask, removeTask } from "./newTask.js";
 import { setToStorage,getFromStorage,getById, getByClass } from "./getters.js";
-import {showElement, hideElement, showDescription,displayTasks,listMiddle } from "./dom.js";
+import {showElement, hideElement, showDescription,displayAllTasks,listMiddle,displayAllProjects,showProjectTasks } from "./dom.js";
 import { createOption } from "./create.js";
 import { setToday } from "./date.js";
 import editTask from "./change.js";
@@ -13,6 +13,9 @@ import acceptChanges from "./accept.js";
 let today = getByClass("dateToday");
 setToday(today);
 
+let newTaskSubmit = getById("new-task-submit");
+
+
 window.newTask = newTask;
 window.newProject = newProject;
 window.showDescription = showDescription;
@@ -22,6 +25,7 @@ window.removeTask = removeTask;
 window.editTask = editTask;
 window.cancel = cancel;
 window.acceptChanges = acceptChanges;
+window.showProjectTasks = showProjectTasks;
 
 let nav = getByClass("nav");
 let slideUl = document.getElementById("slide-ul").children;
@@ -36,14 +40,17 @@ nav.addEventListener("click", (e)=> {
         }
         e.target.setAttribute("class", "current-slide");
         listMiddle.innerHTML = "";
-        displayTasks();  
+        displayAllTasks();  
+        //newTaskSubmit.setAttribute("onclick", "newTask(listMiddle)");
     }
     else  if(name == "projects") {
         for(let task of slideUl) {
              task.setAttribute("class", "");
         }
         e.target.setAttribute("class", "current-slide");  
-        listMiddle.innerHTML = "";   
+        listMiddle.innerHTML = "";  
+        displayAllProjects(); 
+        //newTaskSubmit.setAttribute("onclick", "newTask(listMiddle)");
     }
 }); 
 
@@ -87,7 +94,7 @@ newProjectBtn.addEventListener("click", ()=> {
 
 //Displaying all tasks
 (function () {
-    //displayTasks();
+    displayAllTasks();   
 }());
 
 
@@ -103,4 +110,6 @@ let storageArray = getFromStorage("projects");
     };  
 
 
+let testProject = getByClass("testProject .project-hidden");
 
+console.log(testProject);

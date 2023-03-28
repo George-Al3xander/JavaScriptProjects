@@ -74,7 +74,7 @@
     background-color: var(--clr-high-light);
   }
 
-  .critical {
+  .critical{
     background-color: var(--clr-critical-light);
   }
 
@@ -95,7 +95,7 @@
   } 
 
 
-  .critical .description p {
+  .critical .description p  {
       border-bottom:3px solid var(--clr-critical-light);  
       border-inline:3px solid var(--clr-critical-light);
   }
@@ -337,11 +337,19 @@ svg:hover {
     font-size: var(--fs-average);      
     font-style: italic;
     display: none;
+    position: relative;
 }
 
 .description p{
   padding: 1rem; 
   background-color: white;
+  width: 100%;
+}
+
+.description svg {
+  position: absolute;
+  right: 1%;
+  top: 20%;
 }
 
 .new-task-form, .background-color, .new-project-form {  
@@ -453,3 +461,29 @@ legend {
   margin-left: 1rem;  
 }
 
+.project {
+  margin-block:1rem;
+  border-bottom:3px solid var(--clr-accent);  
+  border-inline:3px solid var(--clr-accent);
+}
+
+
+.project-top {
+  display: flex;
+  justify-content: space-between; 
+  padding: 1rem; 
+  font-size: 1.5rem;
+  background-color: var(--clr-accent);
+}
+
+
+
+.project-hidden {
+  display: none;
+  background-color: white;
+  padding-inline: 1rem;
+}
+
+.project-hidden  .task-project {
+  visibility: hidden !important;
+}
