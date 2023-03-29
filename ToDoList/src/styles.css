@@ -56,9 +56,9 @@
 
 
     --fs-average: 1rem;
-    --fs-medium: 1.25rem;
-    --fs-big: 1.5rem;
-    --fs-large: 2rem;
+    --fs-medium: calc(var(--fs-average) * 1.25);
+    --fs-big: calc(var(--fs-average) * 1.5rem);
+    --fs-large:calc(var(--fs-average) * 2rem); 
     
   }
 
@@ -133,7 +133,7 @@ main {
 }
 
 .list {
-    max-width: 70%;
+    
     margin-inline: auto;      
 }
 
@@ -145,7 +145,7 @@ main {
 }
 
 .list-top, .list-middle {
-    padding-inline:2rem;
+    padding-inline:3%;
 }
 
 .list-middle {
@@ -184,7 +184,7 @@ main {
 
 .buttons button {
     background-color: var(--clr-accent);
-    padding: .5rem 1.5rem;
+    padding: .5rem 10%;
     text-transform: uppercase;
 }
 
@@ -296,12 +296,11 @@ main {
     background-color: whitesmoke;
 }
 
-
-
-
 .task-main svg:first-child {
     margin-right: .5rem;
 }
+
+
 
 svg {
     opacity: .5;
@@ -360,7 +359,7 @@ svg:hover {
   
   background-color: black;
   width: 100vw;
-  height: 100vh;
+  height: calc(100% + 30vh);
   opacity: .7;
 }
 
@@ -369,7 +368,7 @@ svg:hover {
   visibility: hidden;
 }
 
-.select-project-nav select:hover {
+.nav select:hover {
   color: white;
 }
 
@@ -391,8 +390,7 @@ form {
   display: grid;
 }
 
-fieldset {
-  
+fieldset {  
   background-color: var(--clr-secondary);
   padding: 1rem;
   border-radius: 20px;
@@ -410,14 +408,14 @@ input[type=text], textarea {
   border-bottom: 1px solid black;
 }
 
-input[type=submit]:hover, select:hover,input[type=date]:hover {
+input[type=submit]:hover, select:hover,input[type=date]:hover,.close-button:hover {
   color: black;  
   cursor: pointer;
   transition: all .5s ease;
 }
 
 
-input[type=submit] {
+input[type=submit],.close-button {
   background-color:var(--clr-secondary);
   margin-inline: auto;
   padding: 1rem 3rem;
@@ -425,7 +423,7 @@ input[type=submit] {
   transition: background-color .5s ease;
 }
 
-input[type=submit]:hover {
+input[type=submit]:hover,.close-button:hover {
   background-color:var(--clr-dark);  
   transition: background-color .5s ease;
 }
@@ -442,7 +440,7 @@ option {
   left: 2.5rem;
   
   opacity: .7;
-  top: 50%;
+  bottom: 15%;
 }
 
 legend {
@@ -473,6 +471,8 @@ legend {
   justify-content: space-between; 
   padding: 1rem; 
   font-size: 1.5rem;
+  font-style: italic;
+  font-weight: bold;
   background-color: var(--clr-accent);
 }
 
@@ -487,3 +487,34 @@ legend {
 .project-hidden  .task-project {
   visibility: hidden !important;
 }
+
+
+
+
+@media (max-width: 31.25rem) {
+  :root {
+    --fs-average: 1rem;
+  } 
+  .task-main  {    
+    flex-direction: column;  
+    gap: 2rem;
+  }   
+
+  
+  .task-project {     
+    top: 30%;
+    left: 2.5rem;    
+  }
+
+  .svg-div {
+    position: absolute;
+    right: 1rem;
+    top: 20%;
+  }
+
+  .info {
+    padding-left:33px;
+  }
+  
+}
+

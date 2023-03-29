@@ -1,4 +1,4 @@
-import {getById, getByClass,getData, getFromStorage, setToStorage} from "./getters.js";
+import {getById, getFromStorage, setToStorage} from "./getters.js";
 import { cancel } from "./change.js";
 //if nothing passed
 // priority   date

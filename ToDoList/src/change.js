@@ -1,10 +1,8 @@
-import {getByClass, getById, getData, getFromStorage } from "./getters.js";
+import {getByClass, getFromStorage } from "./getters.js";
 import { createDateForm, createPriorityForm, createEl, createDiv } from "./create.js";
 
 function editTask(num) {
-    let info = getByClass(`info${num}`);
-    //for accepting info
-    // let priority = getByClass(`info${num} span`);
+    let info = getByClass(`info${num}`);   
     info.innerHTML = "";
 
     let form = createPriorityForm();
@@ -45,9 +43,7 @@ function cancel(num) {
     oldInfo.appendChild(span);
     oldInfo.appendChild(priorText);
     oldInfo.appendChild(br);
-    oldInfo.appendChild(dateSpan); 
-   
-    
+    oldInfo.appendChild(dateSpan);     
 }
 
 export default editTask

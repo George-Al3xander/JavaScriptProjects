@@ -15,8 +15,6 @@ function createDiv() {
      return obj
 }
 
-
-
 function createSvg(pathD) {
     let svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
     svg.setAttribute("xmlns","http://www.w3.org/2000/svg");
@@ -77,8 +75,7 @@ function createDateForm() {
     dateInput.setAttribute("name","date");
     dateInput.setAttribute("type","date");
     setToday(dateInput);
-
-    
+        
     return dateInput
 }
 

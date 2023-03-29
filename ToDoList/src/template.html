@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;1,100;1,300&display=swap" rel="stylesheet">
 </head>
 <body>
-
+    
     <div class="main-absolute">
         <div class="background-color"></div>
         <div class="new-task-form">
@@ -27,7 +27,7 @@
 
             <fieldset>
                 <legend class="optional">Description</legend>
-                <textarea  name="description" cols="30" rows="3"></textarea>
+                <textarea  name="description" cols="10" rows="1"></textarea>
             </fieldset>
 
             <fieldset>
@@ -50,14 +50,11 @@
                 <legend class="optional">Project</legend>
                 
                     <select class="select-project-form" name="project"  >                    
-                        <option selected="true" disabled value="Select">Select project</option>
-                                                            
-                    </select> 
-                
-                
-            </fieldset>
-            
-            <input id="new-task-submit" onclick="newTask()" type="submit">           
+                        <option selected="true" disabled value="Select">Select project</option>                  
+                    </select>   
+            </fieldset>            
+            <input id="new-task-submit" onclick="newTask()" type="submit"> 
+            <button onclick="hideMenu()" class="close-button">Close</button>          
         </form>
     </div>
 
@@ -67,12 +64,12 @@
                 <legend>Enter name of the project</legend>
                 <input  name="title" type="text">
             </fieldset>            
-            <input onclick="newProject()" type="submit">           
+            <input onclick="newProject()" type="submit">      
+            <button onclick="hideMenu()" class="close-button">Close</button>  
         </form>
-
     </div>
     </div>  
-
+    
 
     <main>
         <div class="container">
@@ -87,8 +84,8 @@
                         <ul id="slide-ul">
                             <li class="current-slide" >all</li>
                             <li>projects</li>
-                            <li><form class="select-project-nav">
-                                <select  class="select-project-nav-select" >                    
+                            <li id="dropdown-li"><form class="select-project-nav">
+                                <select id="dropdown-projects"  class="select-project-nav-select" >                    
                                     <option selected="true" disabled value="Select">Select project</option>
                                                                                 
                                 </select> 
@@ -99,88 +96,10 @@
 
                 <div class="list-middle"> 
 
-                      <!-- <div class="project testProject">
-                        <div class="project-top">
-                            <div><h1>Homework project</h1></div>
-                            <div class="project-icon">
-                                <svg onclick="showProject(1)" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480 711 240 471l56-56 184 184 184-184 56 56-240 240Z"/></svg>
-                            </div>
-                        </div>
-                        <div class="project-hidden project-hidden1">
-                                    <h1>DamnBoy</h1>
-                        </div>
-
-                        
-                        </div>
-                      </div> -->
-
-                    <!-- <div  class="task critical">
-                        <div class="task-main">
-                            <div>
-                                <svg  class="tick" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M600 816v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120 416H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440 856H200q-33 0-56.5-23.5T120 776V416Zm80 0v360h240V416H200Zm0 0v360-360Z"/></svg>
-                                
-                                <p>Pet my cat</p> 
-                                <div class="project">
-                                    <p>Beeba project</p>
-                                </div>
-                                
-                                
-                            </div> 
-                            <div>
-                                <p class="info"><span>critical</span>priority<br> due to 26.11.23</p>
-                                <svg onclick="test()" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>                         
-                            </div>
-                        </div>
-
-                       <div class="description">
-                        I just need to pet my cat
-                       </div>                                  
-                    </div>
-
-                    <div  class="task critical">
-                        <div class="task-main">
-                            <div>
-                                <svg  class="tick" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M600 816v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120 416H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440 856H200q-33 0-56.5-23.5T120 776V416Zm80 0v360h240V416H200Zm0 0v360-360Z"/></svg>
-                                
-                                <p>Pet my cat</p>   
-                            </div> 
-                            <div>
-                                <p class="info"><span>critical</span>priority<br> due to 26.11.23</p>
-                                <svg onclick="test()" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>                         
-                            </div>
-                        </div>
-
-                       <div class="description">
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis ducimus, nam consequuntur laudantium aspernatur hic quisquam facilis tenetur provident nostrum, quibusdam nulla! Id quas ab minus animi eligendi, omnis assumenda delectus eveniet aliquam placeat architecto, laboriosam vitae mollitia nostrum, expedita laudantium ut explicabo hic. Doloribus atque commodi aliquid quae repellendus neque consectetur possimus quia doloremque deleniti? Omnis earum nemo adipisci quisquam, et ex, possimus corrupti hic ab similique, quo aut facilis voluptatibus eaque totam perferendis nesciunt alias laudantium excepturi quaerat exercitationem tempora! Voluptatum, eligendi vero, maxime magnam officia sequi odio quos ipsam, sit quae veniam et. Quidem quibusdam nostrum repellat.</p>
-                       </div>
-                                  
-                    </div>
-
-                    <div  class="task critical">
-                        <div class="task-main">
-                            <div>
-                                <svg  class="tick" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M600 816v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120 416H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440 856H200q-33 0-56.5-23.5T120 776V416Zm80 0v360h240V416H200Zm0 0v360-360Z"/></svg>
-                                
-                                <p>Pet my cat</p>   
-                            </div> 
-                            <div>
-                                <p class="info"><span>critical</span>priority<br> due to 26.11.23</p>
-                                <svg onclick="test()" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>                         
-                            </div>
-                        </div>
-
-                       <div class="description">
-                        I just need to pet my cat
-                       </div>
-                                  
-                    </div> -->
-
-                 
                 </div>
             </div>
         </div>
     </main>
     <script type="module" src="index.js"></script>    
 </body>
-
 </html>

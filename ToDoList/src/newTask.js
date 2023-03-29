@@ -1,10 +1,11 @@
 import {getById, getData } from "./getters.js";
 import {getCount, incrementCount, reduceCount} from "./count.js";
 import {setToStorage, getFromStorage } from "./getters.js";
-import {showTask, hideMenu, listMiddle} from "./dom.js"
+import {hideMenu, listMiddle} from "./dom.js";
+import {showTask} from "./task.js";
 import checkData from "./validation.js";
 import {checkProject} from "./validation.js";
-import { createEl } from "./create.js";
+
 
    
 
@@ -68,4 +69,4 @@ function removeTask(num) {
 }
 
 
-export {form, newTask, newProject, showTask, removeTask}
+export {form, newTask, newProject,  removeTask}
