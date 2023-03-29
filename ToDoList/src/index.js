@@ -1,7 +1,7 @@
+import "./styles.css"
 import {newProject,newTask , removeTask } from "./newTask.js";
-import { setToStorage,getFromStorage,getById, getByClass } from "./getters.js";
+import {getFromStorage,getById, getByClass } from "./getters.js";
 import {showElement, hideElement, hideMenu,listMiddle} from "./dom.js";
-import { showTask } from "./task.js";
 import { createOption } from "./create.js";
 import { setToday } from "./date.js";
 import editTask from "./change.js";
@@ -9,7 +9,7 @@ import { cancel } from "./change.js";
 import acceptChanges from "./accept.js";
 import selectProject from "./selectProject.js";
 import { showDescription, displayAllTasks } from "./task.js";
-import { displayAllProjects,showProjectTasks,placeProjectTasks } from "./project.js";
+import { displayAllProjects,showProjectTasks} from "./project.js";
 
 
 
@@ -83,6 +83,10 @@ function message() {
     alert("Sorry no description for that task :(")
 };
 window.message = message;
+function message2() {
+    alert("That's an empy project!");
+}
+window.message2 = message2;
 
 
 //Shows new task form

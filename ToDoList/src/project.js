@@ -4,6 +4,10 @@ import { getFromStorage, setToStorage, getByClass} from "./getters.js";
 import { getCount} from "./count.js";
 import { showTask } from "./task.js";
 
+
+
+
+
 function placeProjectTasks(name, whereToDisplay) {
     let count = getCount();
     let array = [];           
@@ -21,14 +25,15 @@ function placeProjectTasks(name, whereToDisplay) {
             let arrayNum = arrayBig[1];
             showTask(whereToDisplay,arrayNum , arrayItem[0], arrayItem[1], arrayItem[2], arrayItem[3],arrayItem[4]);
     }
+    if(array.length == 0) {
+        let svg = getByClass(`${name.replaceAll(" ", "-")} .project-top svg`);
+        svg.setAttribute("onclick" , "message2()");
+    }
 }
-
-
-
 
 function showProject(whereToDisplay, name, num) {      
     let mainDiv = createDiv();
-    mainDiv.className = `project`; 
+    mainDiv.className = `project ${name.replaceAll(" ", "-")}`; 
     let divTop = createDiv();
     divTop.className = "project-top"
     let divHidden = createDiv();
@@ -50,9 +55,7 @@ function showProject(whereToDisplay, name, num) {
     divHidden.className = `project-hidden project-hidden${num}`;
     whereToDisplay.appendChild(mainDiv);
 
-    placeProjectTasks(name, divHidden);
-
-    
+    placeProjectTasks(name, divHidden);    
 }
 
 function displayAllProjects() {

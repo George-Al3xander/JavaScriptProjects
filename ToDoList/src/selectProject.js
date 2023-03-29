@@ -4,8 +4,10 @@ import { placeProjectTasks } from "./project.js";
 
 function selectProject(project, whereToDisplay) {
     whereToDisplay.innerHTML = ""; 
-    project = project.replaceAll("-", " ")
-    placeProjectTasks(project, whereToDisplay);
+    if(project != undefined) {
+        project = project.replaceAll("-", " ")
+        placeProjectTasks(project, whereToDisplay);
+    }
 }   
 
 

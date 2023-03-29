@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <title>Webpack App</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;1,100;1,300&display=swap" rel="stylesheet">
+<script defer src="bundled798d51ed5046fedbd4f.js"></script></head>
+<body>
+    
+    <div class="main-absolute">
+        <div class="background-color"></div>
+        <div class="new-task-form">
+        <form id="task-form">
+            <fieldset>
+                <legend>Title</legend>
+                <input  name="title" type="text">
+            </fieldset>
+
+            <fieldset>
+                <legend class="optional">Description</legend>
+                <textarea  name="description" cols="10" rows="1"></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>Due date</legend>
+                <input class="dateToday"  name="date" type="date">
+            </fieldset>
+
+            <fieldset>
+                <legend>Priority</legend>                
+                <select  name="priority" >                    
+                    <option selected="true" disabled value="Select">Select</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                    <option value="critical">Critical</option>
+                </select>            
+            </fieldset>
+
+            <fieldset>
+                <legend class="optional">Project</legend>
+                
+                    <select class="select-project-form" name="project"  >                    
+                        <option selected="true" disabled value="Select">Select project</option>                  
+                    </select>   
+            </fieldset>            
+            <input id="new-task-submit" onclick="newTask()" type="submit"> 
+            <button onclick="hideMenu()" class="close-button">Close</button>          
+        </form>
+    </div>
+
+    <div class="new-project-form">
+        <form id="project-form">
+            <fieldset>
+                <legend>Enter name of the project</legend>
+                <input  name="title" type="text">
+            </fieldset>            
+            <input onclick="newProject()" type="submit">      
+            <button onclick="hideMenu()" class="close-button">Close</button>  
+        </form>
+    </div>
+    </div>  
+    
+
+    <main>
+        <div class="container">
+            <div class="list">
+                <div class="list-top">
+                    <div class="buttons">
+                        <button id="newTaskBtn">new task</button>
+                        <button id="newProjectBtn">new project</button>
+                    </div>
+
+                    <div class="nav">
+                        <ul id="slide-ul">
+                            <li class="current-slide" >all</li>
+                            <li>projects</li>
+                            <li id="dropdown-li"><form class="select-project-nav">
+                                <select id="dropdown-projects"  class="select-project-nav-select" >                    
+                                    <option selected="true" disabled value="Select">Select project</option>
+                                                                                
+                                </select> 
+                            </form></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="list-middle"> 
+
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="index.js"></script>    
+</body>
+</html>
