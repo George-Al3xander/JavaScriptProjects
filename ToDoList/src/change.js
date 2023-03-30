@@ -1,5 +1,6 @@
 import {getByClass, getFromStorage,setToStorage,getById } from "./getters.js";
-import { createDateForm, createPriorityForm, createEl, createDiv, createDescriptionForm, createTitleForm} from "./create.js";
+import { createDateForm, createPriorityForm, createEl, createDiv, createDescriptionForm, createTitleForm, createSvg} from "./create.js";
+import { setProjectsOption } from "./dom.js";
 
 
 
@@ -13,14 +14,39 @@ function editTask(num) {
     descriptionDiv.style.display = "flex"; 
     isShown = true;
     setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);
-
+    
+    
     let info = getByClass(`info${num}`);   
     info.innerHTML = "";
     descriptionDiv.innerHTML = "";
     taskNameP.remove();
+    
+    let svgDots = getById(`svgDots${num}`);
+    svgDots.setAttribute("onclick","");
+    svgDots.style.cursor = "not-allowed";
+    
+    let svgDiv= getByClass(`svg-div${num}`);
+    let svgIcon = createSvg("m296 711-56-56 240-240 240 240-56 56-184-184-184 184Z");
+    svgIcon.setAttribute("onclick",`showDescription(${num})`);
+    svgDots.remove();
+    svgIcon.setAttribute("id", `svgDots${num}`); 
+    svgDiv.appendChild(svgIcon);
 
     let newDescription = createDescriptionForm(oldDescValue, num);
     let newTitle = createTitleForm(num);
+
+    let taskProject = getByClass(`task-project${num}`);
+    taskProject.remove();
+
+    let projectSelect = createEl("select","");
+    projectSelect.setAttribute("name","project");
+    let defaultSelect = createEl("option", "None");
+    defaultSelect.setAttribute("value", "");
+    defaultSelect.setAttribute("selected", true);
+    projectSelect.appendChild(defaultSelect);
+    setProjectsOption(projectSelect);
+    newTitle.appendChild(projectSelect);
+
 
     descriptionDiv.appendChild(newDescription);
     taskName.appendChild(newTitle);
@@ -36,7 +62,7 @@ function editTask(num) {
     let buttonDiv = createDiv();
     
     let cancelBtn = createEl("button","cancel");
-    cancelBtn.setAttribute("onclick",`cancel(${num})`)
+    cancelBtn.setAttribute("onclick",`cancel(${num})`);
     
     buttonDiv.appendChild(acceptBtn);
     buttonDiv.appendChild(cancelBtn);
@@ -76,6 +102,18 @@ function cancel(num) {
     formTitle.remove();
     taskDesc.innerHTML = "";
     taskDesc.appendChild(oldDesc);
+
+    if(storageTask[4] !== null) {
+        let projectDiv = createDiv();
+        projectDiv.className = `task-project task-project${num}`;
+        let projectP = createEl("p" , `${storageTask[4]} project`);
+        projectDiv.appendChild(projectP);
+        topDiv.appendChild(projectDiv);
+    }
+
+    let svgDots = getById(`svgDots${num}`);
+    svgDots.setAttribute("onclick",`showDescription(${num})`);
+    svgDots.style.cursor = "pointer";
 }
 
 export default editTask

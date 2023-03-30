@@ -117,7 +117,7 @@ function showDescription(num) {
 
             isShown = false; 
             setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);  
-            cancel(num);    
+               
             } 
         } else if(projectCheck == null) {
             let isShown = isShownObj[5];  
@@ -146,7 +146,7 @@ function showDescription(num) {
             svgDiv.appendChild(svgIcon);
             isShown = false; 
             setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]); 
-            cancel(num);      
+                 
             } 
         }        
 }

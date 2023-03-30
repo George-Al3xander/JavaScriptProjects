@@ -1,5 +1,5 @@
 
-import { getByClass, getById, getFromStorage, setToStorage} from "./getters.js";
+import { getByClass, getFromStorage} from "./getters.js";
 import { form } from "./newTask.js";
 import { createOption } from "./create.js";
 

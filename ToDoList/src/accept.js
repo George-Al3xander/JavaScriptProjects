@@ -25,27 +25,46 @@ function acceptChanges(num) {
     let formDataDescription = new FormData(descriptionForm);
 
     let title = formDataTitle.get("title");
+    let project = formDataTitle.get("project");
     let description = formDataDescription.get("description");
 
 
-    console.log(title);
-    console.log(description);
+    console.log(`Title: ${title}`);
+    console.log(`Desc: ${description}`);
+    console.log(`Prior: ${priority}`);
+    console.log(`Date: ${date}`);
+    console.log(`project: ${project}`);
     
+    
+    taskStorage[1] = description;
 
+    //Date changed
+    if(title !== "") {
+        taskStorage[0] = title;              
+    }   
+    
+    if(date !== "") {
+        taskStorage[2] = date;              
+    }  
 
-    //No changes 
-    if(priority != null && date != "") {
-        setToStorage(name,[taskStorage[0], taskStorage[1], date, priority, taskStorage[4], taskStorage[5]]);        
-    }
-    //Priority not changed
-    else if(priority === null) {
-        setToStorage(name,[taskStorage[0], taskStorage[1], date, taskStorage[3], taskStorage[4], taskStorage[5]]);         
-    }    
-    //Date not changed
-    else if(date == "") {
-        setToStorage(name,[taskStorage[0], taskStorage[1], taskStorage[2], priority, taskStorage[4], taskStorage[5]]);  
+    if(date !== null) {
+        taskStorage[2] = date;              
+    }  
+
+    if(project !== "") {
+        taskStorage[4] = project;              
+    } 
+    
+    
+    //Priority changed
+    if(priority != null) {
+        taskStorage[3] = priority;  
         taskDiv.className = `task ${priority}`;     
     }
+    setToStorage(name, taskStorage);
+    let svgDots = getById(`svgDots${num}`);
+    svgDots.setAttribute("onclick",`showDescription(${num})`);
+    svgDots.style.cursor = "pointer";
     cancel(num);    
 }
 
