@@ -80,4 +80,33 @@ function createDateForm() {
 }
 
 
-export {createEl, createSvg, createDiv, createOption, createDateForm, createPriorityForm}
+function createDescriptionForm(oldValue, num) {
+    let form = createEl("form",""); 
+    form.setAttribute("id",`descriptionForm${num}`)
+    let input = createEl("input","");
+    input.setAttribute("name","title");
+    input.setAttribute("type","text");
+    input.setAttribute("value",oldValue);
+
+    form.appendChild(input);
+
+
+    return form    
+}
+
+
+function createTitleForm(num) {
+    let form = createEl("form",""); 
+    form.setAttribute("id",`titleForm${num}`)
+    let input = createEl("input","");
+    input.setAttribute("name","title");
+    input.setAttribute("type","text");    
+
+    form.appendChild(input);
+
+
+    return form    
+}
+
+
+export {createEl, createSvg, createDiv, createOption, createDateForm, createPriorityForm,createDescriptionForm, createTitleForm}

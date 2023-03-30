@@ -1,9 +1,29 @@
-import {getByClass, getFromStorage } from "./getters.js";
-import { createDateForm, createPriorityForm, createEl, createDiv } from "./create.js";
+import {getByClass, getFromStorage,setToStorage } from "./getters.js";
+import { createDateForm, createPriorityForm, createEl, createDiv, createDescriptionForm, createTitleForm} from "./create.js";
 
-function editTask(num) {
+
+
+function editTask(num) {   
+    let isShownObj = getFromStorage(`task${num}`); 
+    let oldDescValue = isShownObj[1];
+    let isShown = isShownObj[5];
+    let descriptionDiv = getByClass(`description${num}`);    
+    let taskName = getByClass(`taskName${num} p`);                    
+    descriptionDiv.style.display = "flex"; 
+    isShown = true;
+    setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);
+
     let info = getByClass(`info${num}`);   
     info.innerHTML = "";
+    descriptionDiv.innerHTML = "";
+    taskName.innerHTML = "";
+
+    let newDescription = createDescriptionForm(oldDescValue, num);
+    let newTitle = createTitleForm(num);
+
+    descriptionDiv.appendChild(newDescription);
+    taskName.appendChild(newTitle);
+
 
     let form = createPriorityForm();
     form.setAttribute("id",`form-changes${num}`);

@@ -5,7 +5,7 @@ import { getCount} from "./count.js";
 import { cancel } from "./change.js";
 
 function showTask(whereToDisplay ,count, name, description, date, priority, project) {
-    
+
     let taskId=`task${count}`;
     let taskDiv = createDiv();
     taskDiv.className = `task ${priority}`;
@@ -23,6 +23,7 @@ function showTask(whereToDisplay ,count, name, description, date, priority, proj
     let taskName = createEl("p",name);
     topDiv.appendChild(svgDone);
     topDiv.appendChild(taskName);
+    topDiv.setAttribute("class",`taskName${count}`);
 
     if(project !== null) {
         let projectDiv = createDiv();

@@ -256,34 +256,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "hideElement": () => (/* binding */ hideElement),
 /* harmony export */   "hideMenu": () => (/* binding */ hideMenu),
 /* harmony export */   "listMiddle": () => (/* binding */ listMiddle),
+/* harmony export */   "setProjectsOption": () => (/* binding */ setProjectsOption),
 /* harmony export */   "showElement": () => (/* binding */ showElement)
 /* harmony export */ });
-/* harmony import */ var _create_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create.js */ "./src/create.js");
-/* harmony import */ var _getters_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getters.js */ "./src/getters.js");
-/* harmony import */ var _newTask_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./newTask.js */ "./src/newTask.js");
-/* harmony import */ var _count_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./count.js */ "./src/count.js");
+/* harmony import */ var _getters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getters.js */ "./src/getters.js");
+/* harmony import */ var _newTask_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./newTask.js */ "./src/newTask.js");
+/* harmony import */ var _create_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./create.js */ "./src/create.js");
 
 
 
-
-var listMiddle = (0,_getters_js__WEBPACK_IMPORTED_MODULE_1__.getByClass)("list-middle");
+var listMiddle = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getByClass)("list-middle");
+function setProjectsOption(whereToDisplay) {
+  var storageArray = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getFromStorage)("projects");
+  for (var i = 0; i < storageArray.length; i++) {
+    var option = (0,_create_js__WEBPACK_IMPORTED_MODULE_2__.createOption)(storageArray[i]);
+    whereToDisplay.appendChild(option);
+  }
+  ;
+}
 function hideMenu() {
-  var mainDiv = (0,_getters_js__WEBPACK_IMPORTED_MODULE_1__.getByClass)("main-absolute");
-  var background = (0,_getters_js__WEBPACK_IMPORTED_MODULE_1__.getByClass)("background-color");
-  var newTaskForm = (0,_getters_js__WEBPACK_IMPORTED_MODULE_1__.getByClass)("new-task-form");
+  var mainDiv = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getByClass)("main-absolute");
+  var background = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getByClass)("background-color");
+  var newTaskForm = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getByClass)("new-task-form");
   mainDiv.style.visibility = "hidden";
   background.style.visibility = "hidden";
   newTaskForm.style.visibility = "hidden";
-  var newProjectForm = (0,_getters_js__WEBPACK_IMPORTED_MODULE_1__.getByClass)("new-project-form");
+  var newProjectForm = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getByClass)("new-project-form");
   newProjectForm.style.visibility = "hidden";
-  _newTask_js__WEBPACK_IMPORTED_MODULE_2__.form.reset();
+  _newTask_js__WEBPACK_IMPORTED_MODULE_1__.form.reset();
 }
 function showElement(el) {
-  var name = (0,_getters_js__WEBPACK_IMPORTED_MODULE_1__.getByClass)(el);
+  var name = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getByClass)(el);
   name.style.visibility = "visible";
 }
 function hideElement(el) {
-  var name = (0,_getters_js__WEBPACK_IMPORTED_MODULE_1__.getByClass)(el);
+  var name = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getByClass)(el);
   name.style.visibility = "hidden";
 }
 
@@ -409,7 +416,7 @@ function _newTask() {
 }
 function newProject() {
   return _newProject.apply(this, arguments);
-}
+} //[0 - 5]
 function _newProject() {
   _newProject = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
     var formData, name, storageArray, i;
@@ -455,12 +462,19 @@ function removeTask(num) {
   var count = (0,_count_js__WEBPACK_IMPORTED_MODULE_1__.getCount)();
   var removingItemName = "task".concat(num);
   var lastItemName = "task".concat(count);
-  localStorage.removeItem(removingItemName);
-  var lastTask = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getFromStorage)(lastItemName);
-  (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.setToStorage)(removingItemName, lastTask);
-  localStorage.removeItem(lastItemName);
-  var taskDom = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getById)(removingItemName);
-  taskDom.remove();
+  var taskDomRemove = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getById)(removingItemName);
+  var taskDomLast = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getById)(lastItemName);
+  if (count != num) {
+    var lastTask = (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.getFromStorage)(lastItemName);
+    (0,_task_js__WEBPACK_IMPORTED_MODULE_3__.showTask)(_dom_js__WEBPACK_IMPORTED_MODULE_2__.listMiddle, num, lastTask[0], lastTask[1], lastTask[2], lastTask[3], lastTask[4], lastTask[5]);
+    localStorage.removeItem(lastItemName);
+    (0,_getters_js__WEBPACK_IMPORTED_MODULE_0__.setToStorage)(removingItemName, lastTask);
+    console.log(lastTask);
+    taskDomLast.remove();
+  } else if (count == num) {
+    localStorage.removeItem(removingItemName);
+  }
+  taskDomRemove.remove();
   (0,_count_js__WEBPACK_IMPORTED_MODULE_1__.reduceCount)();
 }
 
@@ -476,6 +490,7 @@ function removeTask(num) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "displayAllProjects": () => (/* binding */ displayAllProjects),
+/* harmony export */   "getSameProjectTasks": () => (/* binding */ getSameProjectTasks),
 /* harmony export */   "placeProjectTasks": () => (/* binding */ placeProjectTasks),
 /* harmony export */   "showProjectTasks": () => (/* binding */ showProjectTasks)
 /* harmony export */ });
@@ -489,9 +504,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function placeProjectTasks(name, whereToDisplay) {
-  var count = (0,_count_js__WEBPACK_IMPORTED_MODULE_3__.getCount)();
+function getSameProjectTasks(name) {
   var array = [];
+  var count = (0,_count_js__WEBPACK_IMPORTED_MODULE_3__.getCount)();
   for (var i = 1; i <= count; i++) {
     var storageItem = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getFromStorage)("task".concat(i));
     var storageProjectName = storageItem[4];
@@ -500,16 +515,32 @@ function placeProjectTasks(name, whereToDisplay) {
     }
   }
   ;
-  for (var _i = 0; _i < array.length; _i++) {
-    var arrayBig = array[_i];
+  return array;
+}
+function placeProjectTasks(name, whereToDisplay) {
+  var array = getSameProjectTasks(name);
+  for (var i = 0; i < array.length; i++) {
+    var arrayBig = array[i];
     var arrayItem = arrayBig[0];
     var arrayNum = arrayBig[1];
     (0,_task_js__WEBPACK_IMPORTED_MODULE_4__.showTask)(whereToDisplay, arrayNum, arrayItem[0], arrayItem[1], arrayItem[2], arrayItem[3], arrayItem[4]);
   }
+  if (array.length == 0) {
+    var svg = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getByClass)("".concat(name.replaceAll(" ", "-"), " .project-top svg"));
+    svg.setAttribute("onclick", "message2()");
+    // let emptyCheckArray = getFromStorage("isProjectEmpy");
+    // emptyCheckArray.push(true);
+    // setToStorage("isProjectEmpy", emptyCheckArray);        
+  } //else if(array.length > 0) {
+  //     let emptyCheckArray = getFromStorage("isProjectEmpy");
+  //     emptyCheckArray.push(false);
+  //     setToStorage("isProjectEmpy", emptyCheckArray);   
+  // }
 }
+
 function showProject(whereToDisplay, name, num) {
   var mainDiv = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createDiv)();
-  mainDiv.className = "project";
+  mainDiv.className = "project ".concat(name.replaceAll(" ", "-"));
   var divTop = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createDiv)();
   divTop.className = "project-top";
   var divHidden = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createDiv)();
@@ -583,8 +614,10 @@ __webpack_require__.r(__webpack_exports__);
 
 function selectProject(project, whereToDisplay) {
   whereToDisplay.innerHTML = "";
-  project = project.replaceAll("-", " ");
-  (0,_project_js__WEBPACK_IMPORTED_MODULE_0__.placeProjectTasks)(project, whereToDisplay);
+  if (project != undefined) {
+    project = project.replaceAll("-", " ");
+    (0,_project_js__WEBPACK_IMPORTED_MODULE_0__.placeProjectTasks)(project, whereToDisplay);
+  }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (selectProject);
 
@@ -644,13 +677,13 @@ function showTask(whereToDisplay, count, name, description, date, priority, proj
   para.appendChild(priorText);
   para.appendChild(br);
   para.appendChild(dateSpan);
-  var svgDots = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createSvg)("m298 794-56-56 121-122H80v-80h283L242 414l56-56 218 218-218 218Zm222-18v-80h360v80H520Zm0-320v-80h360v80H520Zm120 160v-80h240v80H640Z");
+  var svgDots = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createSvg)("M480 711 240 471l56-56 184 184 184-184 56 56-240 240Z");
   var svgEdit = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createSvg)("M440 936V696h80v80h320v80H520v80h-80Zm-320-80v-80h240v80H120Zm160-160v-80H120v-80h160v-80h80v240h-80Zm160-80v-80h400v80H440Zm160-160V216h80v80h160v80H680v80h-80Zm-480-80v-80h400v80H120Z");
   svgEdit.setAttribute("onclick", "editTask(".concat(count, ")"));
   var svgDiv = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createDiv)();
-  svgDiv.className = "svg-div";
+  svgDiv.className = "svg-div svg-div".concat(count);
+  svgDiv.appendChild(svgEdit);
   svgDiv.appendChild(svgDots);
-  //svgDiv.appendChild(svgEdit);
   bottomDiv.appendChild(para);
   bottomDiv.appendChild(svgDiv);
   taskMainDiv.appendChild(topDiv);
@@ -658,12 +691,14 @@ function showTask(whereToDisplay, count, name, description, date, priority, proj
   taskDiv.appendChild(taskMainDiv);
   if (description != "") {
     svgDots.setAttribute("onclick", "showDescription(".concat(count, ")"));
+    svgDots.setAttribute("id", "svgDots".concat(count));
     var descriptionDiv = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createDiv)();
     descriptionDiv.setAttribute("tabindex", "-1");
     descriptionDiv.className = "description description".concat(count);
     var descPara = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createEl)("p", description);
     descriptionDiv.appendChild(descPara);
-    descriptionDiv.appendChild(svgEdit);
+
+    //descriptionDiv.appendChild(svgEdit);  
     taskDiv.appendChild(descriptionDiv);
   } else if (description === "") {
     svgDots.setAttribute("onclick", "message()");
@@ -674,6 +709,8 @@ function showDescription(num) {
   var project = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getByClass)("task-project".concat(num));
   var isShownObj = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getFromStorage)("task".concat(num));
   var projectCheck = isShownObj[4];
+  var svgDiv = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getByClass)("svg-div".concat(num));
+  var svgDots = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getById)("svgDots".concat(num));
   if (projectCheck !== null) {
     var isShown = isShownObj[5];
     var name = "description".concat(num);
@@ -681,11 +718,21 @@ function showDescription(num) {
     if (isShown == false) {
       desc.style.display = "flex";
       project.style.display = "none";
+      var svgIcon = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createSvg)("m296 711-56-56 240-240 240 240-56 56-184-184-184 184Z");
+      svgIcon.setAttribute("onclick", "showDescription(".concat(num, ")"));
+      svgDots.remove();
+      svgIcon.setAttribute("id", "svgDots".concat(num));
+      svgDiv.appendChild(svgIcon);
       isShown = true;
       (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.setToStorage)("task".concat(num), [isShownObj[0], isShownObj[1], isShownObj[2], isShownObj[3], isShownObj[4], isShown]);
     } else if (isShown == true) {
       desc.style.display = "none";
       project.style.display = "inline";
+      var _svgIcon = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createSvg)("M480 711 240 471l56-56 184 184 184-184 56 56-240 240Z");
+      _svgIcon.setAttribute("onclick", "showDescription(".concat(num, ")"));
+      svgDots.remove();
+      _svgIcon.setAttribute("id", "svgDots".concat(num));
+      svgDiv.appendChild(_svgIcon);
       isShown = false;
       (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.setToStorage)("task".concat(num), [isShownObj[0], isShownObj[1], isShownObj[2], isShownObj[3], isShownObj[4], isShown]);
       (0,_change_js__WEBPACK_IMPORTED_MODULE_4__.cancel)(num);
@@ -696,10 +743,20 @@ function showDescription(num) {
     var _desc = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getByClass)("".concat(_name));
     if (_isShown == false) {
       _desc.style.display = "inline";
+      var _svgIcon2 = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createSvg)("m296 711-56-56 240-240 240 240-56 56-184-184-184 184Z");
+      _svgIcon2.setAttribute("onclick", "showDescription(".concat(num, ")"));
+      svgDots.remove();
+      _svgIcon2.setAttribute("id", "svgDots".concat(num));
+      svgDiv.appendChild(_svgIcon2);
       _isShown = true;
       (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.setToStorage)("task".concat(num), [isShownObj[0], isShownObj[1], isShownObj[2], isShownObj[3], isShownObj[4], _isShown]);
     } else if (_isShown == true) {
       _desc.style.display = "none";
+      var _svgIcon3 = (0,_create_js__WEBPACK_IMPORTED_MODULE_1__.createSvg)("M480 711 240 471l56-56 184 184 184-184 56 56-240 240Z");
+      _svgIcon3.setAttribute("onclick", "showDescription(".concat(num, ")"));
+      _svgIcon3.setAttribute("id", "svgDots".concat(num));
+      svgDots.remove();
+      svgDiv.appendChild(_svgIcon3);
       _isShown = false;
       (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.setToStorage)("task".concat(num), [isShownObj[0], isShownObj[1], isShownObj[2], isShownObj[3], isShownObj[4], _isShown]);
       (0,_change_js__WEBPACK_IMPORTED_MODULE_4__.cancel)(num);
@@ -728,8 +785,14 @@ function displayAllTasks() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "checkProject": () => (/* binding */ checkProject),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "checkRequiredStorageSettings": () => (/* binding */ checkRequiredStorageSettings),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "projectDisable": () => (/* binding */ projectDisable)
 /* harmony export */ });
+/* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getters */ "./src/getters.js");
+/* harmony import */ var _project_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project.js */ "./src/project.js");
+
+
 function checkData(title, date, priority) {
   return new Promise(function (resolve, reject) {
     if (title === "" || date === "" || priority == null) {
@@ -747,6 +810,39 @@ function checkProject(name, compareName) {
       resolve(name);
     }
   });
+}
+function projectDisable() {
+  var projects = (0,_getters__WEBPACK_IMPORTED_MODULE_0__.getFromStorage)("projects");
+  var _loop = function _loop() {
+    var name = projects[i];
+    var array = (0,_project_js__WEBPACK_IMPORTED_MODULE_1__.getSameProjectTasks)(name);
+    if (array.length == 0) {
+      var options = document.querySelectorAll(".nav option");
+      options.forEach(function (option) {
+        if (option.innerHTML == name) {
+          option.style.color = "grey";
+          option.setAttribute("disabled", "");
+        }
+      });
+    }
+  };
+  for (var i = 0; i < projects.length; i++) {
+    _loop();
+  }
+}
+function checkRequiredStorageSettings() {
+  var count = (0,_getters__WEBPACK_IMPORTED_MODULE_0__.getFromStorage)("count");
+  var projects = (0,_getters__WEBPACK_IMPORTED_MODULE_0__.getFromStorage)("projects");
+  var isProjectsShown = (0,_getters__WEBPACK_IMPORTED_MODULE_0__.getFromStorage)("isProjectsShown");
+  if (count == null) {
+    (0,_getters__WEBPACK_IMPORTED_MODULE_0__.setToStorage)("count", 0);
+  }
+  if (projects == null) {
+    (0,_getters__WEBPACK_IMPORTED_MODULE_0__.setToStorage)("projects", []);
+  }
+  if (isProjectsShown == null) {
+    (0,_getters__WEBPACK_IMPORTED_MODULE_0__.setToStorage)("isProjectsShown", []);
+  }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (checkData);
 
@@ -1303,13 +1399,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _newTask_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./newTask.js */ "./src/newTask.js");
 /* harmony import */ var _getters_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getters.js */ "./src/getters.js");
 /* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
-/* harmony import */ var _create_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./create.js */ "./src/create.js");
-/* harmony import */ var _date_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./date.js */ "./src/date.js");
-/* harmony import */ var _change_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./change.js */ "./src/change.js");
-/* harmony import */ var _accept_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./accept.js */ "./src/accept.js");
-/* harmony import */ var _selectProject_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./selectProject.js */ "./src/selectProject.js");
-/* harmony import */ var _task_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./task.js */ "./src/task.js");
-/* harmony import */ var _project_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./project.js */ "./src/project.js");
+/* harmony import */ var _date_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./date.js */ "./src/date.js");
+/* harmony import */ var _change_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./change.js */ "./src/change.js");
+/* harmony import */ var _accept_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./accept.js */ "./src/accept.js");
+/* harmony import */ var _selectProject_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./selectProject.js */ "./src/selectProject.js");
+/* harmony import */ var _task_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./task.js */ "./src/task.js");
+/* harmony import */ var _project_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./project.js */ "./src/project.js");
+/* harmony import */ var _validation_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./validation.js */ "./src/validation.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -1325,21 +1421,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-
+(0,_validation_js__WEBPACK_IMPORTED_MODULE_10__.checkRequiredStorageSettings)();
 // Setting today's date
 var today = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getByClass)("dateToday");
-(0,_date_js__WEBPACK_IMPORTED_MODULE_5__.setToday)(today);
+(0,_date_js__WEBPACK_IMPORTED_MODULE_4__.setToday)(today);
 window.newTask = _newTask_js__WEBPACK_IMPORTED_MODULE_1__.newTask;
 window.newProject = _newTask_js__WEBPACK_IMPORTED_MODULE_1__.newProject;
-window.showDescription = _task_js__WEBPACK_IMPORTED_MODULE_9__.showDescription;
+window.showDescription = _task_js__WEBPACK_IMPORTED_MODULE_8__.showDescription;
 window.showElement = _dom_js__WEBPACK_IMPORTED_MODULE_3__.showElement;
 window.hideElement = _dom_js__WEBPACK_IMPORTED_MODULE_3__.hideElement;
 window.removeTask = _newTask_js__WEBPACK_IMPORTED_MODULE_1__.removeTask;
-window.editTask = _change_js__WEBPACK_IMPORTED_MODULE_6__["default"];
-window.cancel = _change_js__WEBPACK_IMPORTED_MODULE_6__.cancel;
-window.acceptChanges = _accept_js__WEBPACK_IMPORTED_MODULE_7__["default"];
-window.showProjectTasks = _project_js__WEBPACK_IMPORTED_MODULE_10__.showProjectTasks;
-window.selectProject = _selectProject_js__WEBPACK_IMPORTED_MODULE_8__["default"];
+window.editTask = _change_js__WEBPACK_IMPORTED_MODULE_5__["default"];
+window.cancel = _change_js__WEBPACK_IMPORTED_MODULE_5__.cancel;
+window.acceptChanges = _accept_js__WEBPACK_IMPORTED_MODULE_6__["default"];
+window.showProjectTasks = _project_js__WEBPACK_IMPORTED_MODULE_9__.showProjectTasks;
+window.selectProject = _selectProject_js__WEBPACK_IMPORTED_MODULE_7__["default"];
 window.hideMenu = _dom_js__WEBPACK_IMPORTED_MODULE_3__.hideMenu;
 var nav = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getByClass)("nav");
 var slideUl = document.getElementById("slide-ul").children;
@@ -1362,7 +1458,7 @@ nav.addEventListener("click", function (e) {
     }
     e.target.setAttribute("class", "current-slide");
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.listMiddle.innerHTML = "";
-    (0,_task_js__WEBPACK_IMPORTED_MODULE_9__.displayAllTasks)();
+    (0,_task_js__WEBPACK_IMPORTED_MODULE_8__.displayAllTasks)();
   } else if (name == "projects") {
     var _iterator2 = _createForOfIteratorHelper(slideUl),
       _step2;
@@ -1378,7 +1474,7 @@ nav.addEventListener("click", function (e) {
     }
     e.target.setAttribute("class", "current-slide");
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.listMiddle.innerHTML = "";
-    (0,_project_js__WEBPACK_IMPORTED_MODULE_10__.displayAllProjects)();
+    (0,_project_js__WEBPACK_IMPORTED_MODULE_9__.displayAllProjects)();
   } else if (e.target.id == "dropdown-projects") {
     var _iterator3 = _createForOfIteratorHelper(slideUl),
       _step3;
@@ -1398,7 +1494,7 @@ nav.addEventListener("click", function (e) {
     dropdownForm.addEventListener("input", function () {
       value = dropdownForm.options[dropdownForm.selectedIndex].value;
     });
-    (0,_selectProject_js__WEBPACK_IMPORTED_MODULE_8__["default"])(value, _dom_js__WEBPACK_IMPORTED_MODULE_3__.listMiddle);
+    (0,_selectProject_js__WEBPACK_IMPORTED_MODULE_7__["default"])(value, _dom_js__WEBPACK_IMPORTED_MODULE_3__.listMiddle);
   }
 });
 var newTaskBtn = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getById)("newTaskBtn");
@@ -1414,6 +1510,10 @@ function message() {
 }
 ;
 window.message = message;
+function message2() {
+  alert("That's an empy project!");
+}
+window.message2 = message2;
 
 //Shows new task form
 newTaskBtn.addEventListener("click", function () {
@@ -1439,22 +1539,17 @@ newProjectBtn.addEventListener("click", function () {
 
 //Displaying all tasks
 (function () {
-  (0,_task_js__WEBPACK_IMPORTED_MODULE_9__.displayAllTasks)();
+  (0,_task_js__WEBPACK_IMPORTED_MODULE_8__.displayAllTasks)();
 })();
 
 //Adding projects to dom select form inputs
 var projectSelect = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getByClass)("select-project-nav-select");
 var formSelect = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getByClass)("select-project-form");
-var storageArray = (0,_getters_js__WEBPACK_IMPORTED_MODULE_2__.getFromStorage)("projects");
-for (var i = 0; i < storageArray.length; i++) {
-  var option = (0,_create_js__WEBPACK_IMPORTED_MODULE_4__.createOption)(storageArray[i]);
-  var option2 = (0,_create_js__WEBPACK_IMPORTED_MODULE_4__.createOption)(storageArray[i]);
-  projectSelect.appendChild(option);
-  formSelect.appendChild(option2);
-}
-;
+(0,_dom_js__WEBPACK_IMPORTED_MODULE_3__.setProjectsOption)(projectSelect);
+(0,_dom_js__WEBPACK_IMPORTED_MODULE_3__.setProjectsOption)(formSelect);
+(0,_validation_js__WEBPACK_IMPORTED_MODULE_10__.projectDisable)();
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=bundled798d51ed5046fedbd4f.js.map
+//# sourceMappingURL=bundlee54552332fca99cc75ac.js.map

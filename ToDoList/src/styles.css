@@ -262,6 +262,7 @@ main {
 
 .task form {
   border: 1px solid black;
+  background-color: lightgrey; 
 }
 
 .task form > *:not(:nth-child(3)) {
@@ -271,6 +272,12 @@ main {
 
 .task form > *:not(:nth-child(3)):hover {  
   opacity: 1;
+}
+
+.task form input[type=text] {
+  text-transform: capitalize;
+  opacity: 1;
+  font-style: normal;
 }
 
 .task-main  {

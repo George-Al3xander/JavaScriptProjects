@@ -14,6 +14,12 @@ function acceptChanges(num) {
     let priority = formData.get("priority");
     let date = formData.get("date");
 
+    let descriptionForm = getById(`descriptionForm${num}`);
+    let titleForm = getById(`titleForm${num}`);
+
+    
+
+
     //No changes 
     if(priority != null && date != "") {
         setToStorage(name,[taskStorage[0], taskStorage[1], date, priority, taskStorage[4], taskStorage[5]]);        
