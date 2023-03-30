@@ -6,18 +6,24 @@ import { showTask } from "./task.js";
 
 
 
-
-
-function placeProjectTasks(name, whereToDisplay) {
+function getSameProjectTasks(name) {
+    let array = [];
     let count = getCount();
-    let array = [];           
     for(let i=1; i<=count;i++) {
         let storageItem = getFromStorage(`task${i}`);
         let storageProjectName = storageItem[4];
         if(name == storageProjectName) {
             array.push([storageItem,i]);                
         }       
-    }; 
+    };
+    return array
+}
+
+
+function placeProjectTasks(name, whereToDisplay) {
+    
+    let array = getSameProjectTasks(name);           
+     
     
     for(let i=0; i<array.length;i++) {
             let arrayBig = array[i];
@@ -25,10 +31,19 @@ function placeProjectTasks(name, whereToDisplay) {
             let arrayNum = arrayBig[1];
             showTask(whereToDisplay,arrayNum , arrayItem[0], arrayItem[1], arrayItem[2], arrayItem[3],arrayItem[4]);
     }
+
+
     if(array.length == 0) {
         let svg = getByClass(`${name.replaceAll(" ", "-")} .project-top svg`);
-        svg.setAttribute("onclick" , "message2()");
-    }
+        svg.setAttribute("onclick" , "message2()");    
+        // let emptyCheckArray = getFromStorage("isProjectEmpy");
+        // emptyCheckArray.push(true);
+        // setToStorage("isProjectEmpy", emptyCheckArray);        
+    } //else if(array.length > 0) {
+    //     let emptyCheckArray = getFromStorage("isProjectEmpy");
+    //     emptyCheckArray.push(false);
+    //     setToStorage("isProjectEmpy", emptyCheckArray);   
+    // }
 }
 
 function showProject(whereToDisplay, name, num) {      
@@ -101,4 +116,4 @@ function showProjectTasks(num) {
         setToStorage("isProjectsShown", isProjectsShown);
     }
 }
-export {displayAllProjects,showProjectTasks,placeProjectTasks}
+export {displayAllProjects,showProjectTasks,placeProjectTasks, getSameProjectTasks}

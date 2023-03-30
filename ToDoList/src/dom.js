@@ -1,13 +1,19 @@
-import { createDiv, createEl, createSvg } from "./create.js";
+
 import { getByClass, getById, getFromStorage, setToStorage} from "./getters.js";
 import { form } from "./newTask.js";
-import { getCount } from "./count.js";
+import { createOption } from "./create.js";
 
 
 let listMiddle = getByClass("list-middle");
 
-
-
+function setProjectsOption(whereToDisplay) {    
+    let storageArray = getFromStorage("projects");    
+    for(let i=0; i < storageArray.length;i++) {          
+        let option = createOption(storageArray[i]); 
+        whereToDisplay.appendChild(option); 
+       
+    };
+}
 
 function hideMenu() {
     let mainDiv = getByClass("main-absolute");
@@ -31,7 +37,7 @@ function hideElement(el) {
     name.style.visibility = "hidden";
 }
 
-export { listMiddle, showElement, hideElement, hideMenu}
+export { listMiddle, showElement, hideElement, hideMenu,setProjectsOption}
 
 
 

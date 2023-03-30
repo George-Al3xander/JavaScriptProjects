@@ -1,4 +1,5 @@
-
+import { getFromStorage, setToStorage } from "./getters";
+import { getSameProjectTasks } from "./project.js";
 
 function checkData(title,date,priority) {
     return new Promise((resolve,reject)=>{
@@ -20,5 +21,40 @@ function checkProject(name, compareName) {
     })
 }
 
+function projectDisable() {
+    let projects = getFromStorage("projects");
+    for(let i=0; i<projects.length;i++){
+        let name = projects[i];
+        let array = getSameProjectTasks(name);
+        if(array.length == 0) {
+            let options = document.querySelectorAll(`.nav option`);
+            options.forEach(option => {
+                if(option.innerHTML == name) {
+                    option.style.color = "grey";
+                    option.setAttribute("disabled","");
+                }
+            }); 
+        }
+    }        
+}
+
+function checkRequiredStorageSettings() {
+    let count = getFromStorage("count");
+    let projects = getFromStorage("projects");
+    let isProjectsShown = getFromStorage("isProjectsShown");
+
+    if(count == null) {
+        setToStorage("count",0);
+    }
+
+    if(projects == null) {
+        setToStorage("projects", []);
+    }
+    
+    if(isProjectsShown == null) {
+        setToStorage("isProjectsShown",[]);
+    }
+}
+
 export default checkData
-export {checkProject}
+export {checkProject, projectDisable,checkRequiredStorageSettings}

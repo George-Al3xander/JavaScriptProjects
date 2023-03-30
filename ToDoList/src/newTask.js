@@ -7,6 +7,7 @@ import checkData from "./validation.js";
 import {checkProject} from "./validation.js";
 
 
+
    
 
 let form = getById("task-form");
@@ -54,17 +55,25 @@ async function newProject() {
         alert(error);        
     }
 }
+//[0 - 5]
 
 function removeTask(num) {    
     let count = getCount();
     let removingItemName = `task${num}`;  
-    let lastItemName = `task${count}`;
-    localStorage.removeItem(removingItemName);
-    let lastTask = getFromStorage(lastItemName);
-    setToStorage(removingItemName,  lastTask);
-    localStorage.removeItem(lastItemName);        
-    let taskDom = getById(removingItemName);
-    taskDom.remove();
+    let lastItemName = `task${count}`;       
+    let taskDomRemove = getById(removingItemName);
+    let taskDomLast = getById(lastItemName);    
+    if(count != num) {
+        let lastTask = getFromStorage(lastItemName);
+        showTask(listMiddle, num, lastTask[0], lastTask[1], lastTask[2], lastTask[3], lastTask[4], lastTask[5]);
+        localStorage.removeItem(lastItemName);        
+        setToStorage(removingItemName,  lastTask);
+        console.log(lastTask);        
+        taskDomLast.remove();
+    } else if(count == num) {
+        localStorage.removeItem(removingItemName);        
+    }    
+    taskDomRemove.remove();
     reduceCount();
 }
 

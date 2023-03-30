@@ -1,8 +1,7 @@
 import "./styles.css"
 import {newProject,newTask , removeTask } from "./newTask.js";
 import {getFromStorage,getById, getByClass } from "./getters.js";
-import {showElement, hideElement, hideMenu,listMiddle} from "./dom.js";
-import { createOption } from "./create.js";
+import {showElement, hideElement, hideMenu,listMiddle, setProjectsOption} from "./dom.js";
 import { setToday } from "./date.js";
 import editTask from "./change.js";
 import { cancel } from "./change.js";
@@ -10,10 +9,11 @@ import acceptChanges from "./accept.js";
 import selectProject from "./selectProject.js";
 import { showDescription, displayAllTasks } from "./task.js";
 import { displayAllProjects,showProjectTasks} from "./project.js";
+import { projectDisable,checkRequiredStorageSettings} from "./validation.js";
 
 
 
-
+checkRequiredStorageSettings();
 // Setting today's date
 let today = getByClass("dateToday");
 setToday(today);
@@ -56,7 +56,7 @@ nav.addEventListener("click", (e)=> {
         listMiddle.innerHTML = "";  
         displayAllProjects();         
     }
-    else if (e.target.id == "dropdown-projects") {
+    else if (e.target.id == "dropdown-projects") {        
         for(let task of slideUl) {
             task.setAttribute("class", "");
        }
@@ -114,24 +114,20 @@ newProjectBtn.addEventListener("click", ()=> {
 
 //Displaying all tasks
 (function () {
-    displayAllTasks();   
+    displayAllTasks();      
 }());
 
 
 //Adding projects to dom select form inputs
 let projectSelect = getByClass("select-project-nav-select");   
 let formSelect = getByClass("select-project-form"); 
-let storageArray = getFromStorage("projects");    
-    for(let i=0; i < storageArray.length;i++) {          
-        let option = createOption(storageArray[i]);      
-        let option2 = createOption(storageArray[i]);
-        projectSelect.appendChild(option); 
-        formSelect.appendChild(option2);  
-    };  
+setProjectsOption(projectSelect); 
+setProjectsOption(formSelect);  
+projectDisable();
 
     
 
-   
+
 
 
     
