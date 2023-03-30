@@ -84,7 +84,7 @@ function createDescriptionForm(oldValue, num) {
     let form = createEl("form",""); 
     form.setAttribute("id",`descriptionForm${num}`)
     let input = createEl("input","");
-    input.setAttribute("name","title");
+    input.setAttribute("name","description");
     input.setAttribute("type","text");
     input.setAttribute("value",oldValue);
 

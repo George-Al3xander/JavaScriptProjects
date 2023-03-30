@@ -1,4 +1,4 @@
-import {getByClass, getFromStorage,setToStorage } from "./getters.js";
+import {getByClass, getFromStorage,setToStorage,getById } from "./getters.js";
 import { createDateForm, createPriorityForm, createEl, createDiv, createDescriptionForm, createTitleForm} from "./create.js";
 
 
@@ -7,8 +7,9 @@ function editTask(num) {
     let isShownObj = getFromStorage(`task${num}`); 
     let oldDescValue = isShownObj[1];
     let isShown = isShownObj[5];
-    let descriptionDiv = getByClass(`description${num}`);    
-    let taskName = getByClass(`taskName${num} p`);                    
+    let descriptionDiv = getByClass(`description${num}`);
+    let taskName = getByClass(`taskName${num}`);   
+    let taskNameP = getByClass(`taskName${num} p`);                    
     descriptionDiv.style.display = "flex"; 
     isShown = true;
     setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);
@@ -16,7 +17,7 @@ function editTask(num) {
     let info = getByClass(`info${num}`);   
     info.innerHTML = "";
     descriptionDiv.innerHTML = "";
-    taskName.innerHTML = "";
+    taskNameP.remove();
 
     let newDescription = createDescriptionForm(oldDescValue, num);
     let newTitle = createTitleForm(num);
@@ -63,7 +64,18 @@ function cancel(num) {
     oldInfo.appendChild(span);
     oldInfo.appendChild(priorText);
     oldInfo.appendChild(br);
-    oldInfo.appendChild(dateSpan);     
+    oldInfo.appendChild(dateSpan);   
+    
+    let topDiv = getByClass(`taskName${num}`);
+    let taskName = createEl("p",storageTask[0]);
+    topDiv.appendChild(taskName);
+
+    let taskDesc = getByClass(`description${num}`);    
+    let oldDesc = createEl("p",storageTask[1]);
+    let formTitle = getById(`titleForm${num}`);
+    formTitle.remove();
+    taskDesc.innerHTML = "";
+    taskDesc.appendChild(oldDesc);
 }
 
 export default editTask

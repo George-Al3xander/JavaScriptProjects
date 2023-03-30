@@ -275,7 +275,7 @@ main {
 }
 
 .task form input[type=text] {
-  text-transform: capitalize;
+  text-transform: none;
   opacity: 1;
   font-style: normal;
 }

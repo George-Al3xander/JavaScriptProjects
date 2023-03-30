@@ -13,10 +13,23 @@ function acceptChanges(num) {
     let formData = new FormData(form);
     let priority = formData.get("priority");
     let date = formData.get("date");
+    
 
     let descriptionForm = getById(`descriptionForm${num}`);
     let titleForm = getById(`titleForm${num}`);
+    
 
+    
+
+    let formDataTitle = new FormData(titleForm);
+    let formDataDescription = new FormData(descriptionForm);
+
+    let title = formDataTitle.get("title");
+    let description = formDataDescription.get("description");
+
+
+    console.log(title);
+    console.log(description);
     
 
 
