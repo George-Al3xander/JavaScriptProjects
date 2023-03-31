@@ -1,8 +1,8 @@
 import { listMiddle } from "./dom.js";
 import { createEl,createDiv,createSvg, changeSvgIcon } from "./create.js";
-import { getFromStorage, setToStorage, getByClass, getById } from "./getters.js";
+import { getFromStorage, setToStorage, getByClass} from "./getters.js";
 import { getCount} from "./count.js";
-import { cancel } from "./change.js";
+
 
 function showTask(whereToDisplay ,count, name, description, date, priority, project) {
 

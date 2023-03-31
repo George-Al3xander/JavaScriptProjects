@@ -171,6 +171,8 @@ function createRemoveProjectForm(num) {
     submit.setAttribute("onclick",`acceptDelete(${num})`);
     let cancelBtn = createEl("button", "Cancel");
     cancelBtn.setAttribute("class","btn-warning-cancel");
+    cancelBtn.setAttribute("onclick",`cancelDelete()`);
+    
     form.appendChild(submit);
     form.appendChild(cancelBtn);
 

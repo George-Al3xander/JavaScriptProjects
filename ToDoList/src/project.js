@@ -3,6 +3,8 @@ import { createEl,createDiv,createSvg , createRemoveProjectForm} from "./create.
 import { getFromStorage, setToStorage, getByClass, getById} from "./getters.js";
 import { getCount} from "./count.js";
 import { showTask } from "./task.js";
+import { removeTask } from "./newTask.js";
+
 
 
 
@@ -128,9 +130,16 @@ function removeProject(num) {
     let message = document.body.appendChild(form);
     message.focus();
 }
+function cancelDelete() {
+    let message = getByClass("remove-project-warning");
+    listMiddle.innerHTML = "";
+    message.remove();
+    displayAllProjects(); 
+}
 
 function acceptDelete(num) {
     let numArray = num-1;
+    console.log(numArray);
     let form = getById(`removeProjectForm${num}`);
     let formData = new FormData(form);
 
@@ -138,15 +147,26 @@ function acceptDelete(num) {
     console.log(decision);
 
     let storageProjectsArray = getFromStorage("projects");
-
+    
+    let project = storageProjectsArray[numArray]
+    console.log(project);
     
 
     //let tasks = getSameProjectTasks(storageProjectsArray[numArray ]);
-    console.log(tasks);
+    //console.log(tasks);
     storageProjectsArray.splice(numArray, 1);
+    setToStorage("projects",storageProjectsArray);
     if(decision == "project") {
-        console.log(storageProjectsArray);
+        let count = getCount();        
+        for(let i=1; i<=count;i++) {
+            let storageItem = getFromStorage(`task${i}`);
+            console.log(`Project from tasks: ${storageItem[4]} and project from project array: ${project}`);
 
+            if(project == storageItem[4]) {
+                storageItem[4] = "";   
+                setToStorage(`task${i}`,storageItem);    
+            }       
+        };
     } 
 
     else if (decision == "all") {
@@ -154,11 +174,14 @@ function acceptDelete(num) {
         for(let i=1; i<=count;i++) {
             let storageItem = getFromStorage(`task${i}`);
             let storageProjectName = storageItem[4];
-            if( storageProjectsArray[numArray] == storageProjectName) {
-                                
+            if( project == storageProjectName) {
+                removeTask(i);                               
             }       
         };
     }
+    cancelDelete();
 }
 
-export {displayAllProjects,showProjectTasks,placeProjectTasks, getSameProjectTasks, removeProject,acceptDelete}
+
+
+export {displayAllProjects,showProjectTasks,placeProjectTasks, getSameProjectTasks, removeProject,acceptDelete, cancelDelete}
