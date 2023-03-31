@@ -47,15 +47,10 @@ function acceptChanges(num) {
         taskStorage[2] = date;              
     }  
 
-    if(date !== null) {
-        taskStorage[2] = date;              
-    }  
-
-    if(project !== "") {
+    if(project !== null || project != "") {
         taskStorage[4] = project;              
     } 
-    
-    
+        
     //Priority changed
     if(priority != null) {
         taskStorage[3] = priority;  

@@ -4,11 +4,11 @@ import {getFromStorage,getById, getByClass } from "./getters.js";
 import {showElement, hideElement, hideMenu,listMiddle, setProjectsOption} from "./dom.js";
 import { setToday } from "./date.js";
 import editTask from "./change.js";
-import { cancel } from "./change.js";
+import { cancel,  clearDescription, redoDescription } from "./change.js";
 import acceptChanges from "./accept.js";
 import selectProject from "./selectProject.js";
 import { showDescription, displayAllTasks } from "./task.js";
-import { displayAllProjects,showProjectTasks} from "./project.js";
+import { displayAllProjects,showProjectTasks, removeProject,acceptDelete} from "./project.js";
 import { projectDisable,checkRequiredStorageSettings} from "./validation.js";
 
 
@@ -32,6 +32,11 @@ window.acceptChanges = acceptChanges;
 window.showProjectTasks = showProjectTasks;
 window.selectProject = selectProject;
 window.hideMenu = hideMenu;
+window.clearDescription = clearDescription;
+window.redoDescription = redoDescription;
+window.removeProject = removeProject;
+window.acceptDelete = acceptDelete;
+
 
 let nav = getByClass("nav");
 let slideUl = document.getElementById("slide-ul").children;

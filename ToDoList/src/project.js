@@ -1,8 +1,9 @@
 import { listMiddle } from "./dom.js";
-import { createEl,createDiv,createSvg } from "./create.js";
-import { getFromStorage, setToStorage, getByClass} from "./getters.js";
+import { createEl,createDiv,createSvg , createRemoveProjectForm} from "./create.js";
+import { getFromStorage, setToStorage, getByClass, getById} from "./getters.js";
 import { getCount} from "./count.js";
 import { showTask } from "./task.js";
+
 
 
 
@@ -34,7 +35,7 @@ function placeProjectTasks(name, whereToDisplay) {
 
 
     if(array.length == 0) {
-        let svg = getByClass(`${name.replaceAll(" ", "-")} .project-top svg`);
+        let svg = getByClass(`${name.replaceAll(" ", "-")} .project-top`).children[2];
         svg.setAttribute("onclick" , "message2()");    
         // let emptyCheckArray = getFromStorage("isProjectEmpy");
         // emptyCheckArray.push(true);
@@ -55,7 +56,12 @@ function showProject(whereToDisplay, name, num) {
 
     let divH = createDiv();
     let header = createEl("h1", name);
-    divH.appendChild(header);    
+    divH.appendChild(header); 
+    
+    let svgDelete = createSvg("M600 816v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120 416H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440 856H200q-33 0-56.5-23.5T120 776V416Zm80 0v360h240V416H200Zm0 0v360-360Z");
+    svgDelete.setAttribute("class", "tick");
+    svgDelete.setAttribute("onclick", `removeProject(${num})`);
+    divTop.appendChild(svgDelete);
     divTop.appendChild(divH);
 
     let svgDiv = createDiv();
@@ -109,11 +115,50 @@ function showProjectTasks(num) {
         svgIcon.setAttribute("onclick", `showProjectTasks(${num})`);
         icon.appendChild(svgIcon);
 
-
         hidden.style.display = "none";
         isTasksShown = false;
         isProjectsShown[storageNum] = isTasksShown;
         setToStorage("isProjectsShown", isProjectsShown);
     }
 }
-export {displayAllProjects,showProjectTasks,placeProjectTasks, getSameProjectTasks}
+
+
+function removeProject(num) {
+    let form = createRemoveProjectForm(num);
+    let message = document.body.appendChild(form);
+    message.focus();
+}
+
+function acceptDelete(num) {
+    let numArray = num-1;
+    let form = getById(`removeProjectForm${num}`);
+    let formData = new FormData(form);
+
+    let decision = formData.get("project-decision");
+    console.log(decision);
+
+    let storageProjectsArray = getFromStorage("projects");
+
+    
+
+    //let tasks = getSameProjectTasks(storageProjectsArray[numArray ]);
+    console.log(tasks);
+    storageProjectsArray.splice(numArray, 1);
+    if(decision == "project") {
+        console.log(storageProjectsArray);
+
+    } 
+
+    else if (decision == "all") {
+        let count = getCount();
+        for(let i=1; i<=count;i++) {
+            let storageItem = getFromStorage(`task${i}`);
+            let storageProjectName = storageItem[4];
+            if( storageProjectsArray[numArray] == storageProjectName) {
+                                
+            }       
+        };
+    }
+}
+
+export {displayAllProjects,showProjectTasks,placeProjectTasks, getSameProjectTasks, removeProject,acceptDelete}

@@ -264,10 +264,12 @@ main {
   border: 1px solid black;
   background-color: lightgrey; 
 }
-
-.task form > *:not(:nth-child(3)) {
-  border-bottom: 1px solid black;
+.task form input, .task form  select, .task button {
   opacity: .7;
+}
+
+.task form input:not(input[type=submit]), .task form  select{
+  border-bottom: 1px solid black;
 }
 
 .task form > *:not(:nth-child(3)):hover {  
@@ -342,8 +344,7 @@ svg:hover {
 .description {    
     font-size: var(--fs-average);      
     font-style: italic;
-    display: none;
-    position: relative;
+    display: none;   
 }
 
 .description p{
@@ -395,6 +396,7 @@ svg:hover {
 form {   
   color: white;
   display: grid;
+  position: relative;
 }
 
 fieldset {  
@@ -496,6 +498,42 @@ legend {
 }
 
 
+.btn-description-redo, .btn-description-clear {
+  position: absolute;
+  border-bottom: none !important;  
+}
+
+.btn-description-redo {
+  left: 75%;  
+  
+}
+.description-form textarea{
+  border-bottom: none;
+}
+
+.description-form textarea {
+  width: 14.5rem;
+  padding-right:4rem; 
+  word-wrap:break-word ;
+  text-wrap:unrestricted; 
+}
+
+.title-form input, .description-form textarea, .title-form select  {
+    text-align: left; 
+    text-transform: none;
+    font-style: normal;   
+}
+
+.title-form select {
+  font-size: 1rem; 
+  width: 90%;
+  margin-inline: auto;
+}
+
+.title-form option {
+  text-transform: capitalize;
+}
+
 
 
 @media (max-width: 31.25rem) {
@@ -504,9 +542,11 @@ legend {
   } 
   .task-main  {    
     flex-direction: column;  
-    gap: 2rem;
+    gap: 2rem;    
   }   
 
+  
+  
   
   .task-project {     
     top: 30%;
@@ -520,8 +560,93 @@ legend {
   }
 
   .info {
-    padding-left:33px;
+    margin-left:33px;
   }
   
 }
 
+.remove-project-warning {
+  color: white;
+  background-color: grey;
+  text-align: center;
+  text-transform: none;
+  padding: 2rem;
+}
+
+.remove-project-warning > * {
+  margin-bottom: 1rem;
+}
+.remove-project-warning h1{
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.remove-project-warning form div, .remove-project-warning form button {
+  width: min-content;
+  white-space: nowrap;
+}
+
+.remove-project-warning form {
+    display: grid;       
+   
+    column-gap: 1rem;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+    "justProject tasks"
+    "submit cancel"
+    ;
+    padding: 5%;
+}
+
+.just-project-div {
+  grid-area: justProject;
+  justify-self: center;
+  
+}
+
+.tasks-div {
+  grid-area: tasks;
+  justify-self: center;
+  
+}
+
+.btn-warning-submit {
+  grid-area: submit;  
+  margin-inline: 0 !important;
+  justify-self: flex-end !important;
+  
+}
+
+.btn-warning-cancel{
+  justify-self: flex-start;
+  grid-area: cancel;  
+  
+}
+
+
+
+.remove-project-warning input[type=radio]{
+  background-color: red;
+  appearance: auto;
+}
+
+.btn-warning-cancel , .btn-warning-submit{
+  padding: 1rem 2rem !important;
+  background-color: grey !important;
+  border-radius:  50px !important;
+  
+}
+
+.btn-warning-cancel:hover , .btn-warning-submit:hover{
+  cursor: pointer;
+  color: black;
+  transition: all .5s ease;
+}
+
+.btn-warning-submit:hover {
+  background-color: green !important;   
+}
+
+.btn-warning-cancel:hover {
+  background-color: red !important;   
+}

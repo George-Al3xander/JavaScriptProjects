@@ -1,5 +1,5 @@
 import { listMiddle } from "./dom.js";
-import { createEl,createDiv,createSvg } from "./create.js";
+import { createEl,createDiv,createSvg, changeSvgIcon } from "./create.js";
 import { getFromStorage, setToStorage, getByClass, getById } from "./getters.js";
 import { getCount} from "./count.js";
 import { cancel } from "./change.js";
@@ -25,7 +25,7 @@ function showTask(whereToDisplay ,count, name, description, date, priority, proj
     topDiv.appendChild(taskName);
     topDiv.setAttribute("class",`taskName${count}`);
 
-    if(project !== null) {
+    if(project !== null && project != "") {
         let projectDiv = createDiv();
         projectDiv.className = `task-project task-project${count}`;
         let projectP = createEl("p" , `${project} project`);
@@ -60,20 +60,20 @@ function showTask(whereToDisplay ,count, name, description, date, priority, proj
     taskMainDiv.appendChild(bottomDiv);
     taskDiv.appendChild(taskMainDiv);
     
+    svgDots.setAttribute("id", `svgDots${count}`);   
     if(description != "") {          
         svgDots.setAttribute("onclick",`showDescription(${count})`);  
-        svgDots.setAttribute("id", `svgDots${count}`);   
         let descriptionDiv = createDiv();
         descriptionDiv.setAttribute("tabindex","-1");
-    
+        
         descriptionDiv.className = `description description${count}`;
         let descPara = createEl("p",description);
         descriptionDiv.appendChild(descPara);
         
         //descriptionDiv.appendChild(svgEdit);  
         taskDiv.appendChild(descriptionDiv);
-    
-       
+        
+        
     } else if (description === "") {
         svgDots.setAttribute("onclick","message()");        
     }
@@ -84,22 +84,20 @@ function showDescription(num) {
         let project = getByClass(`task-project${num}`);
         let isShownObj = getFromStorage(`task${num}`); 
         let projectCheck = isShownObj[4];  
-        let svgDiv= getByClass(`svg-div${num}`);
-        let svgDots = getById(`svgDots${num}`);
         
-
-        if( projectCheck !== null) {
+          
+           
+        if( projectCheck != null && projectCheck != "") {
             let isShown = isShownObj[5];  
             let name = `description${num}`;        
             let desc = getByClass(`${name}`);
             if(isShown == false) {               
             desc.style.display = "flex";  
             project.style.display = "none";  
-            let svgIcon = createSvg("m296 711-56-56 240-240 240 240-56 56-184-184-184 184Z");
+            let svgIcon = changeSvgIcon(num, isShown);
             svgIcon.setAttribute("onclick",`showDescription(${num})`);
-            svgDots.remove();
-            svgIcon.setAttribute("id", `svgDots${num}`); 
-            svgDiv.appendChild(svgIcon);
+            
+            
 
             isShown = true;
             setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);
@@ -108,42 +106,31 @@ function showDescription(num) {
             else if(isShown == true) { 
             desc.style.display = "none";
             project.style.display = "inline";
-            let svgIcon = createSvg("M480 711 240 471l56-56 184 184 184-184 56 56-240 240Z");
+            let svgIcon = changeSvgIcon(num, isShown);
             svgIcon.setAttribute("onclick",`showDescription(${num})`);
-            svgDots.remove();
-            svgIcon.setAttribute("id", `svgDots${num}`); 
-            svgDiv.appendChild(svgIcon);
-
 
             isShown = false; 
             setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);  
                
             } 
-        } else if(projectCheck == null) {
+        } else if(projectCheck == null || projectCheck == "") {
             let isShown = isShownObj[5];  
             let name = `description${num}`;        
             let desc = getByClass(`${name}`);
             if(isShown == false) {               
             desc.style.display = "inline";  
-            let svgIcon = createSvg("m296 711-56-56 240-240 240 240-56 56-184-184-184 184Z");
+            let svgIcon = changeSvgIcon(num, isShown);
             svgIcon.setAttribute("onclick",`showDescription(${num})`);
-            svgDots.remove();
-            svgIcon.setAttribute("id", `svgDots${num}`); 
-            svgDiv.appendChild(svgIcon);
             
             isShown = true;
             setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]);
             }
     
             else if(isShown == true) { 
-            desc.style.display = "none";   
-            
-            
-            let svgIcon = createSvg("M480 711 240 471l56-56 184 184 184-184 56 56-240 240Z");
+            desc.style.display = "none";            
+            let svgIcon = changeSvgIcon(num, isShown);
             svgIcon.setAttribute("onclick",`showDescription(${num})`);
-            svgIcon.setAttribute("id", `svgDots${num}`); 
-            svgDots.remove();
-            svgDiv.appendChild(svgIcon);
+            
             isShown = false; 
             setToStorage(`task${num}`,[isShownObj[0],isShownObj[1],isShownObj[2],isShownObj[3],isShownObj[4],isShown]); 
                  
