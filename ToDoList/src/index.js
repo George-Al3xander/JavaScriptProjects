@@ -1,6 +1,6 @@
 import "./styles.css"
 import {newProject,newTask , removeTask } from "./newTask.js";
-import {getById, getByClass } from "./getters.js";
+import {getById, getByClass, getFromStorage } from "./getters.js";
 import {showElement, hideElement, hideMenu,listMiddle, setProjectsOption} from "./dom.js";
 import { setToday } from "./date.js";
 import editTask from "./change.js";
@@ -10,7 +10,7 @@ import selectProject from "./selectProject.js";
 import { showDescription, displayAllTasks } from "./task.js";
 import { displayAllProjects,showProjectTasks, removeProject,acceptDelete, cancelDelete} from "./project.js";
 import { projectDisable,checkRequiredStorageSettings} from "./validation.js";
-
+import {message, message2 , message3} from "./message.js";
 
 
 checkRequiredStorageSettings();
@@ -37,6 +37,10 @@ window.redoDescription = redoDescription;
 window.removeProject = removeProject;
 window.acceptDelete = acceptDelete;
 window.cancelDelete = cancelDelete;
+window.message = message;
+window.message2 = message2;
+window.message3 = message3;
+
 
 let nav = getByClass("nav");
 let slideUl = document.getElementById("slide-ul").children;
@@ -84,14 +88,9 @@ let newProjectForm = getByClass("new-project-form");
 
 
 //Message when task doesn't have a description
-function message() {
-    alert("Sorry no description for that task :(")
-};
-window.message = message;
-function message2() {
-    alert("That's an empy project!");
-}
-window.message2 = message2;
+
+
+
 
 
 //Shows new task form
@@ -134,5 +133,3 @@ projectDisable();
 
 
 
-
-    

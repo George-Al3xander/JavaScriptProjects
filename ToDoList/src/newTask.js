@@ -34,7 +34,10 @@ async function newTask() {
         let taskId=`task${count}`;
         setToStorage(taskId, data);
         showTask(listMiddle,count, data[0], data[1], data[2], data[3], data[4]);    
-        hideMenu();        
+        hideMenu();     
+
+        // listMiddle.innerHTML = "";
+        // displayAllTasks();   
     } catch (error) {
         alert(error);
     }
@@ -50,7 +53,10 @@ async function newProject() {
          };  
         storageArray.push(name);
         setToStorage("projects",storageArray); 
-        hideMenu();          
+        hideMenu(); 
+
+        // listMiddle.innerHTML = "";
+        // displayAllTasks();          
     } catch (error) {
         alert(error);        
     }
@@ -65,17 +71,23 @@ function removeTask(num) {
     let taskDomLast = getById(lastItemName);    
     if(count != num) {
         let lastTask = getFromStorage(lastItemName);
+        console.log(removingItemName);       
+        console.log(`Count: ${count} and Num: ${num}`); 
+        taskDomLast.remove();
         showTask(listMiddle, num, lastTask[0], lastTask[1], lastTask[2], lastTask[3], lastTask[4], lastTask[5]);
         localStorage.removeItem(lastItemName);        
         setToStorage(removingItemName,  lastTask);
-        console.log(lastTask);        
-        taskDomLast.remove();
     } else if(count == num) {
-        localStorage.removeItem(removingItemName);        
+        console.log(lastItemName);
+        console.log(`Count: ${count} and Num: ${num}`); 
+        localStorage.removeItem(lastItemName);  
+        taskDomLast.remove();
+        
     }    
-    taskDomRemove.remove();
     reduceCount();
-}
+    taskDomRemove.remove();
+} 
+
 
 
 export {form, newTask, newProject,  removeTask}

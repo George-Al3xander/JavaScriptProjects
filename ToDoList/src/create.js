@@ -1,5 +1,5 @@
 import { setToday } from "./date.js";
-import { getById, getByClass } from "./getters.js";
+import { getById, getByClass, getFromStorage } from "./getters.js";
 
 function createEl(type,text) {
     let obj = document.createElement(type);
@@ -39,7 +39,7 @@ function createOption(value) {
     return obj
 }
 
-function createPriorityForm() {
+function createPriorityForm(num) {
     let form = createEl("form","");
     let select = createEl("select","");
     form.addEventListener("submit", (e)=>{
@@ -49,24 +49,24 @@ function createPriorityForm() {
     select.setAttribute("name","priority");
     
     let test = createOption("Select priority");
-    test.setAttribute("selected","true");
-    test.setAttribute("disabled","");
-       
-    let low = createOption("low");
-    low.className = "low"
-    let medium = createOption("medium");
-    medium.className = "medium"
-    let high = createOption("high");
-    high.className = "high"
-    let critical = createOption("critical");
-    critical.className = "critical"
-        
-    form.appendChild(select);
     select.appendChild(test);
-    select.appendChild(low);
-    select.appendChild(medium);
-    select.appendChild(high);
-    select.appendChild(critical);
+    test.setAttribute("disabled","");
+    //test.setAttribute("selected","true");
+    
+    let storageTask = getFromStorage(`task${num}`);
+    let storagePriority = storageTask[3];
+    let priorities = ["low","medium","high","critical"];
+
+    for(let i =0; i<priorities.length; i++) {
+        let option = createOption(priorities[i]);
+        option.className = priorities[i];
+        select.appendChild(option);        
+        if(priorities[i] == storagePriority) {
+            option.setAttribute("selected","true")
+        }
+
+    }
+    form.appendChild(select);
 
     return form
 }
@@ -84,10 +84,12 @@ function createInput(type, name, value) {
 }
 
 
-function createDateForm() {    
+function createDateForm(num) {    
     let dateInput = createInput("date","date");    
     setToday(dateInput);
-        
+    let storageTask = getFromStorage(`task${num}`);
+    storageTask = storageTask[2];
+    dateInput.setAttribute("value",storageTask) ;   
     return dateInput
 }
 
@@ -111,7 +113,10 @@ function createDescriptionForm(oldValue, num) {
 function createTitleForm(num) {
     let form = createEl("form",""); 
     form.setAttribute("id",`titleForm${num}`);
-    let input = createInput("text","title");  
+    let input = createInput("text","title"); 
+    let storageTask = getFromStorage(`task${num}`);
+    storageTask = storageTask[0];
+    input.setAttribute("value",storageTask);
     form.appendChild(input);
 
     return form    
@@ -177,14 +182,21 @@ function createRemoveProjectForm(num) {
     form.appendChild(cancelBtn);
 
     let messageDiv = createDiv();    
-    let heading = createEl("h1","Quick question");    
-    let message = createEl("p","Do you want to do delete just the project or project and it's tasks?");
+    let heading = createEl("h1","Quick question"); 
+    let taskName = getFromStorage(`projects`);   
+    taskName = taskName[num-1];
+    let message = createEl("p",`Do you want to do delete just the "${taskName}" project or project and it's tasks?`);
     messageDiv.appendChild(heading);
     messageDiv.appendChild(message);
     
     mainDiv.appendChild(messageDiv);
     mainDiv.appendChild(form);
 
+
+    let icons = document.querySelectorAll(".tick");
+    icons.forEach(icon => icon.setAttribute("onclick","message3()"));
+
+    
     return mainDiv
     
 }

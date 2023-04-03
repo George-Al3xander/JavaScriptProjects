@@ -56,9 +56,9 @@ function editTask(num) {
     taskName.appendChild(newTitle);
 
 
-    let form = createPriorityForm();
+    let form = createPriorityForm(num);
     form.setAttribute("id",`form-changes${num}`);
-    let date = createDateForm();
+    let date = createDateForm(num);
     let acceptBtn = createEl("input","");
     acceptBtn.setAttribute("type","submit");
     acceptBtn.setAttribute("onclick",`acceptChanges(${num})`);

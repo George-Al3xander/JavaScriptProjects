@@ -1,9 +1,9 @@
 import { listMiddle } from "./dom.js";
 import { createEl,createDiv,createSvg , createRemoveProjectForm} from "./create.js";
 import { getFromStorage, setToStorage, getByClass, getById} from "./getters.js";
-import { getCount} from "./count.js";
+import { getCount, reduceCount} from "./count.js";
 import { showTask } from "./task.js";
-import { removeTask } from "./newTask.js";
+
 
 
 
@@ -38,15 +38,8 @@ function placeProjectTasks(name, whereToDisplay) {
 
     if(array.length == 0) {
         let svg = getByClass(`${name.replaceAll(" ", "-")} .project-top`).children[2];
-        svg.setAttribute("onclick" , "message2()");    
-        // let emptyCheckArray = getFromStorage("isProjectEmpy");
-        // emptyCheckArray.push(true);
-        // setToStorage("isProjectEmpy", emptyCheckArray);        
-    } //else if(array.length > 0) {
-    //     let emptyCheckArray = getFromStorage("isProjectEmpy");
-    //     emptyCheckArray.push(false);
-    //     setToStorage("isProjectEmpy", emptyCheckArray);   
-    // }
+        svg.setAttribute("onclick" , "message2()"); 
+    } 
 }
 
 function showProject(whereToDisplay, name, num) {      
@@ -63,6 +56,7 @@ function showProject(whereToDisplay, name, num) {
     let svgDelete = createSvg("M600 816v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120 416H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440 856H200q-33 0-56.5-23.5T120 776V416Zm80 0v360h240V416H200Zm0 0v360-360Z");
     svgDelete.setAttribute("class", "tick");
     svgDelete.setAttribute("onclick", `removeProject(${num})`);
+    svgDelete.setAttribute("id",`removeProjectBtn${num}`);
     divTop.appendChild(svgDelete);
     divTop.appendChild(divH);
 
@@ -128,13 +122,18 @@ function showProjectTasks(num) {
 function removeProject(num) {
     let form = createRemoveProjectForm(num);
     let message = document.body.appendChild(form);
-    message.focus();
+    
 }
 function cancelDelete() {
     let message = getByClass("remove-project-warning");
     listMiddle.innerHTML = "";
     message.remove();
     displayAllProjects(); 
+    let projects = getFromStorage("projects");
+    for(let i=1; i<=projects.length;i++) {
+        let taskBtn = getById(`removeProjectBtn${i}`);
+        taskBtn.setAttribute("onclick", `removeProject(${i})`);
+    }
 }
 
 function acceptDelete(num) {
@@ -151,17 +150,13 @@ function acceptDelete(num) {
     let project = storageProjectsArray[numArray]
     console.log(project);
     
-
-    //let tasks = getSameProjectTasks(storageProjectsArray[numArray ]);
-    //console.log(tasks);
     storageProjectsArray.splice(numArray, 1);
     setToStorage("projects",storageProjectsArray);
     if(decision == "project") {
         let count = getCount();        
         for(let i=1; i<=count;i++) {
             let storageItem = getFromStorage(`task${i}`);
-            console.log(`Project from tasks: ${storageItem[4]} and project from project array: ${project}`);
-
+            console.log(`Project from tasks: ${storageItem[4]} and project from project array: ${project}`);            
             if(project == storageItem[4]) {
                 storageItem[4] = "";   
                 setToStorage(`task${i}`,storageItem);    
@@ -171,16 +166,42 @@ function acceptDelete(num) {
 
     else if (decision == "all") {
         let count = getCount();
-        for(let i=1; i<=count;i++) {
-            let storageItem = getFromStorage(`task${i}`);
+        let array = [];
+        for(let i=1; i<=count;i++) {            
+        let storageItem = getFromStorage(`task${i}`);
             let storageProjectName = storageItem[4];
             if( project == storageProjectName) {
-                removeTask(i);                               
+                console.log(`StorageItemName: [${storageItem}] and I: ${i}`);  
+                  
+                array.push([storageItem,i]);
             }       
         };
+        for(let item of array) {
+            let num = item[1];
+            let removingItemName = `task${num}`;
+            localStorage.removeItem(removingItemName); 
+            reduceCount();
+        } 
+
+        let array2 = [];
+        for(let i=1; i<=count;i++){        
+            let itemName = `task${i}`;
+            let itemStorage = getFromStorage(itemName);
+            if(itemStorage != null) {
+            array2.push(itemStorage);
+            localStorage.removeItem(itemName); 
+
+        }; 
+    }
+    console.log(array2);
+        for(let i=0; i<array2.length;i++) {
+            setToStorage(`task${i+1}`,array2[i]);
+        }        
+        
+        
     }
     cancelDelete();
-}
+}   
 
 
 
