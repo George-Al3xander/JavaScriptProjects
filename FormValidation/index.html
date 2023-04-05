@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;1,700&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <form id="form">
+                <fieldset>
+                    <legend>Email</legend>
+                    <input required id="input-email" placeholder="e.g. john@email.com" type="email">
+                    <span id="error-email" class="error">Please enter in valid format</span>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Country</legend>
+                    <input required id="input-country"  placeholder="e.g. Bosnia" type="text">
+                    <span id="error-country" class="error">Must be at least 3 characters</span>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Zip Code</legend>
+                    <input  required id="input-zip" placeholder="e.g. 3256" type="number">
+                    <span id="error-zip" class="error">Must be 5 characters</span>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Password</legend>
+                    <input  required id="input-password"  type="password">
+                    <span id="error-password" class="error">Must contain at least one numeric digit, one uppercase and one lowercase letter</span>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Confirm password</legend>
+                    <input required  id="input-password-confirm"  type="password">
+                    <span id="error-password-confirm" class="error">Password doesn't match</span>
+                </fieldset>
+
+                <input type="submit" onclick="checkInputs()">
+            </form>            
+        </div>
+    </main>       
+</body>
+<script src="main.js" ></script>
+</html>

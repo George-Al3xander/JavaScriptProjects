@@ -1,0 +1,55 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+main {
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
+.container  {
+    margin-inline: auto;
+    width: min(80%,40rem);
+    display: flex;
+    justify-content: center;
+}
+
+
+.error {
+    display: none;
+    color: red;
+    
+    font-size: .9em;
+    font-style: italic;
+    font-weight: 700;
+}
+
+form {
+    width: min-content;
+    display: grid;
+
+}
+
+fieldset {
+    padding: 1rem 4rem;
+}
+
+input[type=submit] {
+    padding: 1rem ;
+}
+
+
+#error-password::after {    
+    display: block;
+    font-size: .8em;
+    white-space: normal;
+    color: gray;
+}
