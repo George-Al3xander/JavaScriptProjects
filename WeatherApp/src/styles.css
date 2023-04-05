@@ -1,0 +1,261 @@
+/*** The new CSS Reset - version 1.2.0 (last updated 23.7.2021) ***/
+
+/* Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property */
+*:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
+  all: unset;
+  display: revert;
+}
+
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+  Remove list styles (bullets/numbers)
+  in case you use it with normalize.css
+*/
+ol, ul {
+  list-style: none;
+}
+
+/* For images to not be able to exceed their container */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Removes spacing between cells in tables */
+table {
+  border-collapse: collapse;
+}
+
+/* Revert the 'white-space' property for textarea elements on Safari */
+textarea {
+  white-space: revert;
+}
+
+:root {
+    --clr-primary: rgb(38, 42, 86);
+    --clr-secondary:rgb(184, 98, 27);
+    --clr-accent: rgb(227, 204, 174);
+    --clr-black: rgb(0, 0, 0);
+
+
+    --fs-default: 1rem;
+    --fs-medium: calc(var(--fs-default) * 1.5);
+    --fs-big: calc(var(--fs-default) * 2);
+    --fs-large: calc(var(--fs-default) * 2.5);
+}
+
+* {
+    font-family: 'Nunito Sans', sans-serif;
+    
+}
+
+input {
+    border: 1px solid black;
+}
+
+header {
+    background-color: var(--clr-accent);
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+header svg {
+    fill: var(--clr-secondary);
+}
+
+header form {
+    display: grid;
+    justify-items: start;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    width: min-content;
+    gap: 1rem;    
+}
+
+header form svg {
+    transition: all .5s ease;
+}
+
+header form svg:hover {
+    cursor: pointer;
+    fill: var(--clr-primary);
+    scale: 1.5;
+    transition: all .5s ease;
+}
+
+
+
+body {
+    background-color: var(--clr-primary);
+}
+
+
+main, section {
+    width: 100%;
+    color: white;    
+}
+
+section {
+    
+}
+
+.container-big {
+    margin-inline: auto;
+    display: grid;
+    justify-items: center;    
+}
+
+.container-big {
+    width: min(80%, 40rem);    
+}
+
+.container-small {
+    margin-inline: auto;
+    width: min(90%, 80rem);
+    justify-content: center;
+
+}
+
+
+.split  {
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-today h2::before{
+    content: "Today's weather";
+    display: flex;
+    font-size: .8rem;
+    font-style: italic;
+    letter-spacing: .3rem;
+}
+
+.weather-today h1, .weather-today h2, .weather-today h3, .weather-today h4{
+    font-weight: 700;
+}
+
+
+.weather-today h2{
+    font-size:var(--fs-big);    
+}
+
+
+.weather-today h1{
+    font-size: var(--fs-large);    
+}
+
+.weather-today h3{
+    font-size: var(--fs-medium);     
+}
+
+.img-div,  h4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.weather-today h4  {
+    gap: 1rem;
+}
+
+.weekday {
+    background-color: var(--clr-secondary);
+    padding: 1rem 2%;
+    border-radius: 20px;
+    font-weight: 400;    
+}
+
+.weekday h1{
+    margin: 0;
+}
+
+.weekday h3{
+    font-size: var(--fs-default);
+    font-weight: 200;
+    font-style: italic;
+}
+
+.weekday > * {
+    margin-bottom: 1rem;
+}
+
+.weekday h1 {
+    font-size: var(--fs-medium);
+}
+
+.weekday h2 {
+    font-size: var(--fs-default);
+}
+
+.weekday h4 {
+    font-size: var(--fs-default);
+}
+
+
+
+
+@media (min-width: 40rem) {
+    
+}
+
+@media (max-width: 67.5rem) {
+   :root {
+       --fs-default: 1.5rem;
+    }
+    
+   .container-small {
+    width: min(80%, 20rem);
+    }
+
+    main {
+        padding: 3rem 2rem;
+    }
+    
+    .weekday {
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    header form {        
+        justify-items: center;  
+        margin-inline: auto; 
+        scale: 1.5;         
+    }
+
+    #logo {        
+        display: none;
+    }
+
+    /* .weekday h4  {
+        font-size: var(--fs-medium);        
+    } */
+
+
+}
+
+@media (min-width: 67.5rem) {    
+    .split  {        
+        flex-direction: row;
+        gap: 2%;
+    }
+
+    .split > * {        
+        flex-basis: 100%;
+        
+    }
+
+    .container-big {
+        padding: 5rem;
+    }
+ }
+ 
+
+
+
