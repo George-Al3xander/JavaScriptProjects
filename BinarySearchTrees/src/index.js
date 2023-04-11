@@ -47,44 +47,81 @@ class Tree {
 
     
     
-    insert(value, current) {
-        if(current.right.right == null) {
-            //current.right = value;
-            console.log(current.data);
-            let node = new Node(value,null,current.right);
-            current = node;
-            console.log("Passed " + value);
-            console.log("that's the end!");
-            return;
+    insert(value, root = this.root) {
+        
+        if(root == null) {
+            root = new Node(value);
+            return root;            
         }
 
-        if(current.left.left == null) {
-            
-            let node = new Node(value, current.right);
-
-            current = node;
-
-            console.log("Passed " + value);
-            console.log("that's the end!");
-            return;
+        if(value < root.data) {
+            console.log(root.right);            
+            root.left = this.insert(value, root.left);             
+        } 
+        else if(value > root.data) {
+            console.log(root.left);            
+            root.right = this.insert(value, root.right);
         }
         
-        let data = current;      
-        data = data.data;        
-        if(value > data) {
-            console.log("Yes");
-            current = current.right;
-            this.insert(value,current);
-        } else if(value < data){
-            console.log("Nah");
-            current = current.left;
-            this.insert(value,current);
-        } 
-        //console.log(current);
+        return root;        
+    }
+
+    delete(value, root = this.root) {
+        if(root == null) {
+            return root;
+        }
+
+        if(value < root.data) {
+            root.left = this.delete(value, root.left);
+        } else if(value > root.data) {
+            root.right = this.delete(value, root.right);
+        } else {
+            if(root.left == null) {
+                return root.right;
+            } else if(root.right == null) {
+                return root.left;
+            } 
+
+            root.data = minValue(root.right);
+
+            root.right = this.delete(value, root.right);
+        }
+
+        return root;
+    }
+
+
+    minValue(root) {
+        let minv = root.data;
+        while(root.left != null) {
+            minv = root.left.data;
+            root = root.left;
+        }
+        return minv
+    }
+    
+    find(value, root = this.root) {       
+        if (root == null ||
+            root.data == value) {
+                return root;
+
+             }
+
+    if (root.data < value) {
+        return this.find(value, root.right);
+    }
+
+    return this.find(value, root.left);
+    }
+
+    levelOrder(func) {
+
     }
 
     
-
+    getRoot() {        
+        console.log(this.root)
+    }
     
 }
 
@@ -102,10 +139,12 @@ let array = [19, 1, 10, 11, 17,  30, 321, 37, 38, 40, 44, 59]; // Length = 12;
 
 let tree = new Tree(array);
 let item = tree.buildTree();
+
+
 prettyPrint(item);
-tree.insert(54, tree.root);
+tree.getRoot();
 //console.log(item);
-prettyPrint(item);
 //prettyPrint(arrayToBST(array));
+
 
 
