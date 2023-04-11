@@ -29,76 +29,83 @@ class Tree {
     //Dont forget to create "root" attribute  
     constructor(array) {
         this.array = array;
-        this.root = null  
+        this.root = null;
     }
 
-    buildTree() {
-        array = sort(array);        
-        let num;
-        if(array.length % 2 == 1) {
-            num = Math.floor(array.length / 2);         
-        } else {
-            num = Math.floor((array.length - 1) / 2);
-        }        
-        this.root = new Node(array[num], new Node(array[num-2]),new Node(array[num+2])); 
-        
-        let current = this.root;  
-        
-        console.log("Right");        
-        for(let i = num; i < array.length; i+=2) {             
-            if(i == num) {                 
-                continue;
-            };
+    buildTree(arr = this.array, left = 0, right = arr.length - 1) {
+        arr = sort(arr);
+        if(left > right) return null;
 
+        let mid = Math.floor((left + right) / 2);
+        this.root = new Node(arr[mid]);
 
-            current = current.right;            
-            if(array[i+1] == undefined) {
-                current.right = new Node(array[i-1], new Node(array[i]));  
-            } else  {
-                current.right = new Node(array[i], new Node(array[i-1]), new Node(array[i+1])); 
-            }   
-            //console.log(`Item: ${array[i]}, left: ${array[i-1]}, right:  ${array[i+1]}`);
-            
-            console.log(array[i]);
-            //console.log(i);   
-                       
-        }
-        console.log("Left");         
-        current = this.root;
-        for(let i = num; i > 0; i-=2) {              
-            if(i == num) {                
-                continue;
-            }     
-            
-            current = current.left;            
+        this.root.left = new Tree().buildTree(arr, left, mid - 1);
+        this.root.right = new Tree().buildTree(arr, mid + 1, right);
 
-             if(array[i-1] == undefined) {
-                current.left = new Node(array[i+1], null ,new Node(array[i])); 
-            } else  {
-                current.left = new Node(array[i], new Node(array[i-1]), new Node(array[i+1]));  
-            }
-            //current.left  = current; 
-            console.log(array[i]);
-        }
-        
-        console.log(`Final root: `);
-        console.log(this.root);
-        console.log(`Final root.`);        
-        return this.root;
+    return this.root;
     }
 
+    
+    
+    insert(value, current) {
+        if(current.right.right == null) {
+            //current.right = value;
+            console.log(current.data);
+            let node = new Node(value,null,current.right);
+            current = node;
+            console.log("Passed " + value);
+            console.log("that's the end!");
+            return;
+        }
+
+        if(current.left.left == null) {
+            
+            let node = new Node(value, current.right);
+
+            current = node;
+
+            console.log("Passed " + value);
+            console.log("that's the end!");
+            return;
+        }
+        
+        let data = current;      
+        data = data.data;        
+        if(value > data) {
+            console.log("Yes");
+            current = current.right;
+            this.insert(value,current);
+        } else if(value < data){
+            console.log("Nah");
+            current = current.left;
+            this.insert(value,current);
+        } 
+        //console.log(current);
+    }
+
+    
+
+    
 }
 
-//           0   1   2   3   4   5   6   7  8   9  10   11  
-let array = [1, 10, 11, 17, 19, 30, 31, 37, 38, 40, 44, 59]; // Length = 12;
+//           0   1   2   3   4   5   6     7  8   9  10   11  
+let array = [19, 1, 10, 11, 17,  30, 321, 37, 38, 40, 44, 59]; // Length = 12;
+
+
+
+
+
+
+
 
 
 
 let tree = new Tree(array);
-
 let item = tree.buildTree();
-
-console.log(item);
-
 prettyPrint(item);
+tree.insert(54, tree.root);
+//console.log(item);
+prettyPrint(item);
+//prettyPrint(arrayToBST(array));
+
 
