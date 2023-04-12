@@ -167,7 +167,7 @@ class Tree {
         return array;
     }
 
-    preorder(root = this.root) {
+    preorder(root = this.root, func) {
         let tempArray = [];
         let current = root;
         let queue = [];
@@ -177,23 +177,47 @@ class Tree {
         while(current.left != null) {
             previous = current;            
             queue.push(previous);
-            current = current.left;
-            console.log(current); 
+            current = current.left;           
             tempArray.push(current.data);
         }
         if(current.left == null) {            
-            for(let i = queue.length-1; i >= 0; i--) {
-                console.log(queue[i].right);
+            for(let i = queue.length-1; i >= 0; i--) {                
                 tempArray.push(queue[i].right.data);
                 tempArray.push(this.preorder(queue[i].right));
             }                      
-        } else {
-            return tempArray;
-        }
+        } 
         tempArray = tempArray.flat();
-        return  noDuplicats(tempArray);
+        tempArray = noDuplicats(tempArray);        
+        if(func == undefined) {
+            return  tempArray;
+        } else if(func != undefined){
+            for(let item of tempArray) {
+                console.log(func(item));
+            }
+        }
     }
 
+
+    inorder(root = this.root) {
+        let pointer = root;
+        let array = [];
+        let queue = [];
+        while(pointer != null) {
+            if(pointer.left == null) {
+                array.push(pointer.data);
+                //console.log( pointer);                                
+            }
+            queue.push(pointer);
+            pointer = pointer.left ;
+        };        
+        for(let i = queue.length-1; i >= 0; i--) {  
+            array.push(this.inorder(queue[i].right));
+            //console.log(queue[i]);
+        }          
+        console.log(queue);
+        array = array.flat();
+        return array;
+    }
     
     
     getRoot() {        
@@ -224,7 +248,7 @@ let item = tree.buildTree();
 
 prettyPrint(item);
 //tree.getRoot();
-console.log(tree.preorder());
+console.log(tree.inorder());
 //console.log(item);
 //prettyPrint(arrayToBST(array));
 
