@@ -1,5 +1,5 @@
 import sort from "./sort";
-
+import { noDuplicats } from "./sort";
 const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node === null) {
        return;
@@ -12,8 +12,6 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
       prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
   }
-
-
 
 class Node {
     constructor(data, left = null, right = null) {
@@ -30,6 +28,7 @@ class Tree {
     constructor(array) {
         this.array = array;
         this.root = null;
+        this.tempArray = []
     }
 
     buildTree(arr = this.array, left = 0, right = arr.length - 1) {
@@ -114,10 +113,88 @@ class Tree {
     return this.find(value, root.left);
     }
 
-    levelOrder(func) {
-
+    levelOrder(func, root = this.root) {
+        
+        let array = [];        
+        let h = this.height(root);
+        let i;
+        for(i = 1; i <= h; i++) {
+            let item = this.currentLevel(root, i);
+            array.push(item);
+        }
+        array = array.flat(h);
+        if(func == undefined) {
+            return array;
+        } else {
+            for(let item of array) {
+                console.log(func(item));
+            }
+        }
     }
 
+    height(root = this.root) {
+        if(root == null) {
+            return 0;
+        }
+
+        else {
+            let lheight = this.height(root.left);
+            let rheight = this.height(root.right);
+
+            if(lheight > rheight) {
+                return (lheight + 1)
+            }
+            else {
+                return (rheight + 1);
+            }
+        }
+    }
+
+    currentLevel(root, level) {
+        let array = [];
+        if(root == null) {
+            return array;
+        }
+
+        if(level == 1) {           
+            array.push(root.data);
+        }
+        else if(level > 1) {            
+           array.push(this.currentLevel(root.left, level - 1));
+           array.push(this.currentLevel(root.right, level - 1));
+        }
+
+        return array;
+    }
+
+    preorder(root = this.root) {
+        let tempArray = [];
+        let current = root;
+        let queue = [];
+        let previous = current;        
+        tempArray.push(current.data);
+        
+        while(current.left != null) {
+            previous = current;            
+            queue.push(previous);
+            current = current.left;
+            console.log(current); 
+            tempArray.push(current.data);
+        }
+        if(current.left == null) {            
+            for(let i = queue.length-1; i >= 0; i--) {
+                console.log(queue[i].right);
+                tempArray.push(queue[i].right.data);
+                tempArray.push(this.preorder(queue[i].right));
+            }                      
+        } else {
+            return tempArray;
+        }
+        tempArray = tempArray.flat();
+        return  noDuplicats(tempArray);
+    }
+
+    
     
     getRoot() {        
         console.log(this.root)
@@ -126,10 +203,14 @@ class Tree {
 }
 
 //           0   1   2   3   4   5   6     7  8   9  10   11  
-let array = [19, 1, 10, 11, 17,  30, 321, 37, 38, 40, 44, 59]; // Length = 12;
+let array = [19, 1, 10, 12,11, 17,  30, 321, 37, 38, 40, 44, 59,325,154]; // Length = 12;
 
 
+function getSquare(num) {
+    num = num * num;
 
+    return num
+}
 
 
 
@@ -142,7 +223,8 @@ let item = tree.buildTree();
 
 
 prettyPrint(item);
-tree.getRoot();
+//tree.getRoot();
+console.log(tree.preorder());
 //console.log(item);
 //prettyPrint(arrayToBST(array));
 

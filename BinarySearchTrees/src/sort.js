@@ -14,20 +14,28 @@ function mergeSort(array) {
     return array
 }
 
-
-
-function sort(array) {
-    array = mergeSort(array);
+function noDuplicats(array) {
     let tempArray = [];
+
     for(let i = 0; i < array.length; i++) {
         let item = array[i];
         let item2 = array[i+1];        
         if( item != item2 ) {
             tempArray.push(item);
         }        
-    }    
+    }
+
     return tempArray;
 }
 
 
+function sort(array) {
+    array = mergeSort(array);
+              
+      
+    return noDuplicats(array);
+}
+
+
 export default sort
+export {noDuplicats}
