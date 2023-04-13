@@ -198,25 +198,68 @@ class Tree {
     }
 
 
-    inorder(root = this.root) {
+    inorder(root = this.root, func) {
         let pointer = root;
+        let previous;
         let array = [];
         let queue = [];
-        while(pointer != null) {
-            if(pointer.left == null) {
-                array.push(pointer.data);
-                //console.log( pointer);                                
-            }
+        if(pointer.right == null && pointer.left == null) {
+            array.push(pointer.data);
+            return array;
+        }  
+        while(pointer.left != null) {            
             queue.push(pointer);
-            pointer = pointer.left ;
-        };        
-        for(let i = queue.length-1; i >= 0; i--) {  
-            array.push(this.inorder(queue[i].right));
-            //console.log(queue[i]);
-        }          
-        console.log(queue);
+            previous = pointer;
+            pointer = pointer.left;
+        };
+        if(pointer.left == null) {           
+            array.push(pointer.data);          
+            for(let i = queue.length-1; i >= 0; i--) {
+                array.push(queue[i].data);               
+                array.push(this.inorder(queue[i].right));
+            }
+        }  
         array = array.flat();
-        return array;
+        if(func == undefined) {
+            return array;
+        } else if(func != undefined){           
+            for(let num of  array) {
+                console.log(func(num));
+            }
+        }
+    }
+
+    postorder(root = this.root, func) {
+        let pointer =  root;   
+        let array = [];   
+        let queue = [];
+        let previous;
+        if(pointer.right == null) {
+            return pointer.data;
+        }
+        while(pointer.left != null) {
+            previous = pointer;
+            queue.push(previous);
+            pointer = pointer.left;
+        }
+        if(pointer.left == null) {
+            array.push(pointer.data);
+        }
+        
+        for(let i = queue.length-1; i >= 0; i--) {           
+           array.push(this.postorder(queue[i].right));
+           array.push(queue[i].data);
+        }
+
+        //console.log(array);
+        array = array.flat();
+        if(func == undefined) {
+            return array;
+        } else if(func != undefined){           
+            for(let num of  array) {
+                console.log(func(num));
+            }
+        }
     }
     
     
@@ -227,10 +270,10 @@ class Tree {
 }
 
 //           0   1   2   3   4   5   6     7  8   9  10   11  
-let array = [19, 1, 10, 12,11, 17,  30, 321, 37, 38, 40, 44, 59,325,154]; // Length = 12;
+let array = [19, 1, 10, 12,11, 17,  30, 321, 37, 38, 40, 44, 59,325,154]; // Length = 15;
 
 
-function getSquare(num) {
+function toSquare(num) {
     num = num * num;
 
     return num
@@ -248,7 +291,7 @@ let item = tree.buildTree();
 
 prettyPrint(item);
 //tree.getRoot();
-console.log(tree.inorder());
+console.log(tree.postorder());
 //console.log(item);
 //prettyPrint(arrayToBST(array));
 
