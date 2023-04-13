@@ -261,6 +261,36 @@ class Tree {
             }
         }
     }
+    depth(node , root = this.root) {          
+        if(node == null) {
+            return null;
+        }
+
+       let counter = 0;
+       let current = root;
+    
+       if(current.data == node.data) {
+           return counter;
+        }        
+        console.log("We're here");
+        console.log("Current " + current.data);
+        console.log("Root " + root.data);
+
+       if(node.data < root.data) {
+            console.log("Root's bigger!");
+            counter++;
+            current = current.left;   
+            counter += this.depth(node, current);
+            
+       } else if(node.data > root.data){
+            console.log("Given data's bigger!");
+            counter++;
+            current = current.right;
+            counter += this.depth(node, current);
+           
+       } 
+       return counter;      
+    }
     
     
     getRoot() {        
@@ -287,11 +317,12 @@ function toSquare(num) {
 
 let tree = new Tree(array);
 let item = tree.buildTree();
-
-
+let test = tree.find(59);
 prettyPrint(item);
+console.log(tree.depth(test));
+
 //tree.getRoot();
-console.log(tree.postorder());
+
 //console.log(item);
 //prettyPrint(arrayToBST(array));
 
