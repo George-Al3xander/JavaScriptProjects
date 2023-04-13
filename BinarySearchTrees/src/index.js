@@ -199,8 +199,7 @@ class Tree {
 
 
     inorder(root = this.root, func) {
-        let pointer = root;
-        let previous;
+        let pointer = root;       
         let array = [];
         let queue = [];
         if(pointer.right == null && pointer.left == null) {
@@ -271,19 +270,13 @@ class Tree {
     
        if(current.data == node.data) {
            return counter;
-        }        
-        console.log("We're here");
-        console.log("Current " + current.data);
-        console.log("Root " + root.data);
+        } 
 
-       if(node.data < root.data) {
-            console.log("Root's bigger!");
+       if(node.data < root.data) {            
             counter++;
             current = current.left;   
-            counter += this.depth(node, current);
-            
-       } else if(node.data > root.data){
-            console.log("Given data's bigger!");
+            counter += this.depth(node, current);            
+       } else if(node.data > root.data){            
             counter++;
             current = current.right;
             counter += this.depth(node, current);
@@ -296,11 +289,26 @@ class Tree {
     getRoot() {        
         console.log(this.root)
     }
+
+    isBalanced() {
+        let left = this.height(this.root.left);
+        let right = this.height(this.root.right); 
+        if(Math.abs(left-right) == 1  || left == right) {
+            return true;
+        } else  {
+            return false;
+        }
+
+    }
+
+    rebalance () {
+        
+    }
     
 }
 
 //           0   1   2   3   4   5   6     7  8   9  10   11  
-let array = [19, 1, 10, 12,11, 17,  30, 321, 37, 38, 40, 44, 59,325,154]; // Length = 15;
+let array = [19, 1, 10, 12,11, 17,  30, 321, 37, 38, 40, 122, 44, 59,325,154]; // Length = 15;
 
 
 function toSquare(num) {
@@ -317,8 +325,14 @@ function toSquare(num) {
 
 let tree = new Tree(array);
 let item = tree.buildTree();
-let test = tree.find(59);
+tree.insert(22);
+tree.insert(21);
+tree.insert(23);
+tree.insert(24);
+
 prettyPrint(item);
+let test = tree.find(23);
+console.log(tree.isBalanced());
 console.log(tree.depth(test));
 
 //tree.getRoot();
