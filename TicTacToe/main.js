@@ -1,7 +1,7 @@
 import gameboardCreate from "./gameboard.js";
 import startGame, {form, p1, p2} from "./start.js";
 
-const letters = /^[A-Za-z]+$/;
+const letters = /^[A-Za-z]*$/;
 
 
 const span1 = document.getElementById("span1");

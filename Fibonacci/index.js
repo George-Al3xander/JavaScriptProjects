@@ -105,27 +105,27 @@
 
 //We make function that iterates first array item through whole array not stopping even if the number being replaced, func stops(meaning continues to do but on the second item and so on until array finishes) only when iterates through whole array without being replace
 
-let arrayTest = [
-  85,
-  45,
-  78,
-  59,
-  75,
-  77,
-  50,
-  96
-];
+let arrayTest = [511,122,3];
 // arrayTest = [7, 1]
 //console.log(arrayTest.slice(1))
 
 function mergeSort(array) {
     for(let i = 0; i < array.length; i++) {
-        let item = array[i];       
-          for(let x = i + 1; x <=array.length; x++) {               
+                    //85 
+        let item = array[i];  
+
+          for(let x = i + 1; x <=array.length; x++) { 
+
+                  //85   //45              
               if(item > array[x]) {
-                  array[i] = array[x];                
+
+                  //85 takes 45 place
+                  array[i] = array[x]; 
+                  //45 becomes item in that case thats 45             
                   array[x] = item;
-                  item = array[i];        
+                  //item becomes 45
+                  item = array[i]; 
+                  //and then whole procces repeats but starting with second number       
                   mergeSort(array.slice(i));
               } 
           }     
