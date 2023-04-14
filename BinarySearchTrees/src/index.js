@@ -1,3 +1,5 @@
+import getRandomArray from "./random.js";
+
 const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node === null) {
        return;
@@ -205,7 +207,7 @@ class Tree {
     inorder(root = this.root, func) {
         let pointer = root;       
         let array = [];
-        let previous;
+        
         let queue = [];
         if(pointer.right == null && pointer.left == null) {
             array.push(pointer.data);
@@ -213,18 +215,20 @@ class Tree {
         }  
         while(pointer.left != null) {            
             queue.push(pointer);
-            previous = pointer;
+           
+            
             pointer = pointer.left;
-        };       
+        };          
+        array.push(pointer.data); 
         if(pointer.left == null && pointer.right != null) {           
-            array.push(pointer.data);          
             for(let i = queue.length-1; i >= 0; i--) {
                 array.push(pointer.right.data);
-                array.push(queue[i].data);               
+                array.push(queue[i].data);          
+                array.push(queue[i].right.right.data) ;    
                 array.push(this.inorder(queue[i].right));
             }
-        }  else if(pointer.left == null && pointer.right == null) {           
-            array.push(pointer.data);          
+        }  else if(pointer.left == null && pointer.right == null) {          
+                   
             for(let i = queue.length-1; i >= 0; i--) {                
                 array.push(queue[i].data);               
                 array.push(this.inorder(queue[i].right));
@@ -299,12 +303,7 @@ class Tree {
            
        } 
        return counter;      
-    }
-    
-    
-    getRoot() {        
-        console.log(this.root)
-    }
+    }  
 
     isBalanced() {
         let left = this.height(this.root.left);
@@ -331,20 +330,35 @@ class Tree {
     
 }
 
-//           0   1   2   3   4   5   6     7  8   9   10  11  12  13
-let array =[19, 1, 10, 12,11, 17,  30, 321, 37, 38, 40, 122, 44, 59,325,154,22,23,24,21]; // Length = 14;
+         
+let array =getRandomArray();// [12, 20, 21, 30, 47, 60, 62, 73, 77, 80, 97]
 
-
+//funcion to test (pre/in/post)order
 function toSquare(num) {
     num = num * num;
-
     return num
 }
 
-
 let tree = new Tree(array);
 tree.buildTree();
-prettyPrint(tree.root);
+// console.log(tree.isBalanced());
+// console.log(tree.levelOrder());
+// console.log(tree.preorder());
+// console.log(tree.postorder());
+// console.log(tree.inorder());
+// tree.insert(102);
+// tree.insert(103);
+// tree.insert(104);
+// console.log(tree.isBalanced());
+// tree.rebalance();
+// console.log(tree.isBalanced());
+// console.log(tree.preorder());
+// console.log(tree.postorder());
+// console.log(tree.inorder());
+// prettyPrint(tree.root);
+// console.log(tree.array.length);
+
+
 
 
 
