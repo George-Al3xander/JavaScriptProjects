@@ -1,5 +1,3 @@
-import sort from "./sort";
-import { noDuplicats } from "./sort";
 const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node === null) {
        return;
@@ -25,14 +23,15 @@ class Node {
 
 class Tree {
     //Dont forget to create "root" attribute  
-    constructor(array) {
-        this.array = array;
+    constructor(array) {      
+        this.array =  [...new Set(array)].sort((a, b) => a - b);          
         this.root = null;
         this.tempArray = []
     }
 
     buildTree(arr = this.array, left = 0, right = arr.length - 1) {
-        arr = sort(arr);
+        
+        
         if(left > right) return null;
 
         let mid = Math.floor((left + right) / 2);
@@ -41,7 +40,7 @@ class Tree {
         this.root.left = new Tree().buildTree(arr, left, mid - 1);
         this.root.right = new Tree().buildTree(arr, mid + 1, right);
 
-    return this.root;
+        return this.root;
     }
 
     
@@ -180,14 +179,19 @@ class Tree {
             current = current.left;           
             tempArray.push(current.data);
         }
-        if(current.left == null) {            
-            for(let i = queue.length-1; i >= 0; i--) {                
-                tempArray.push(queue[i].right.data);
+       
+        if(current.left == null && current.right == null) {            
+            for(let i = queue.length-1; i >= 0; i--) { 
                 tempArray.push(this.preorder(queue[i].right));
             }                      
-        } 
+        } else if(current.right != null) {
+            tempArray.push(current.right.data);
+            for(let i = queue.length-1; i >= 0; i--) { 
+                tempArray.push(this.preorder(queue[i].right));
+            }
+        }
         tempArray = tempArray.flat();
-        tempArray = noDuplicats(tempArray);        
+        //tempArray = [...new Set(tempArray)];        
         if(func == undefined) {
             return  tempArray;
         } else if(func != undefined){
@@ -201,6 +205,7 @@ class Tree {
     inorder(root = this.root, func) {
         let pointer = root;       
         let array = [];
+        let previous;
         let queue = [];
         if(pointer.right == null && pointer.left == null) {
             array.push(pointer.data);
@@ -211,14 +216,25 @@ class Tree {
             previous = pointer;
             pointer = pointer.left;
         };
-        if(pointer.left == null) {           
+        console.log(queue);
+        if(pointer.left == null && pointer.right != null) {           
             array.push(pointer.data);          
             for(let i = queue.length-1; i >= 0; i--) {
+                array.push(pointer.right.data);
                 array.push(queue[i].data);               
                 array.push(this.inorder(queue[i].right));
             }
-        }  
+        }  else if(pointer.left == null && pointer.right == null) {
+            console.log("Damn")
+            array.push(pointer.data);          
+            for(let i = queue.length-1; i >= 0; i--) {                
+                array.push(queue[i].data);               
+                array.push(this.inorder(queue[i].right));
+            }
+        }   
+
         array = array.flat();
+        array =  [...new Set(array)];
         if(func == undefined) {
             return array;
         } else if(func != undefined){           
@@ -240,6 +256,10 @@ class Tree {
             previous = pointer;
             queue.push(previous);
             pointer = pointer.left;
+        }
+        if(pointer.left == null && pointer.right != null) {
+            //console.log("damn");
+            array.push(pointer.right.data);
         }
         if(pointer.left == null) {
             array.push(pointer.data);
@@ -307,8 +327,8 @@ class Tree {
     
 }
 
-//           0   1   2   3   4   5   6     7  8   9  10   11  
-let array = [19, 1, 10, 12,11, 17,  30, 321, 37, 38, 40, 122, 44, 59,325,154]; // Length = 15;
+//           0   1   2   3   4   5   6     7  8   9   10  11  12  13
+let array = [98, 93, 80, 61, 64, 70, 73, 64, 71, 86, 22 ,44, 123, 224]; // Length = 14;
 
 
 function toSquare(num) {
@@ -325,15 +345,19 @@ function toSquare(num) {
 
 let tree = new Tree(array);
 let item = tree.buildTree();
-tree.insert(22);
-tree.insert(21);
-tree.insert(23);
-tree.insert(24);
+// tree.insert(22);
+// tree.insert(21);
+// tree.insert(23);
+// tree.insert(24);
 
 prettyPrint(item);
-let test = tree.find(23);
-console.log(tree.isBalanced());
-console.log(tree.depth(test));
+//let test = tree.find(23);
+//console.log(tree.preorder());
+//console.log(tree.inorder());
+console.log(tree.postorder());
+
+
+
 
 //tree.getRoot();
 
