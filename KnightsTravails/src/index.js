@@ -2,58 +2,7 @@
 //First item's "Y" coordinate must be greater by 2 of second item;
 //And second item's "X" coordinate must be greater by 1 of first item;
 
-class Node{
-    constructor(data, prev = null) {
-        this.data = data;
-        this.prev = prev;
-        this.next = [];
-        this.setNext();
-            
-        
-    }
-
-    setNext(current = this.data) {
-        let item;
-        let invalid;
-        for(let num = 0; num < 8; num++) {
-            if(num == 0) {
-                item = [current[0]+2,current[1]-1]                
-            } 
-            else if(num == 1) {
-                item = [current[0]+2,current[1]+1]                
-            } 
-            else if(num == 2) {
-                item = [current[0]+1,current[1]+2]                
-            }
-            else if(num == 3) {
-                item = [current[0]-1,current[1]+2]                
-            }
-            else if(num == 4) {
-                item = [current[0]-2,current[1]+1]                
-            }
-            else if(num == 5) {
-                item = [current[0]-2,current[1]-1]                
-            }
-            else if(num == 6) {
-                item = [current[0]-1,current[1]-2]                
-            }
-            else if(num == 7) {
-                item = [current[0]+1,current[1]-2]
-            }
-            invalid = item.some(num => num > 8 || num <= 0);
-            if(!invalid) {                
-                this.next.push(item);
-            }
-                        
-        }
-
-    }
-
-    getData() {
-        return this.next;
-    }
-}
-
+import Node from "./node";
 
 
 function makeMove(current) {
@@ -71,128 +20,114 @@ function makeMove(current) {
 
 
 
-function knightMoves(start, end)  {
+function knightMoves(start, end) { 
     let moves = [];
-    for(let nxtItem of start.next) {
-                //console.log(nxtItem);
-                if(nxtItem[0] == end[0] && nxtItem[1] == end[1]) {
-                    moves.push(nxtItem);
-                    console.log("I'm first")
-                    return moves;
-                } else {
-                                        
-                    return;
-                }
-            }  
+    moves.push(start);
+    
+    
+    if(start.data[0] < end[0] && start.data[1] < end[1]) {
+        let tempArray = [];
+        for(let nxtItem of start.next) {            
+            if(nxtItem[0] > start.data[0] && nxtItem[1] > start.data[1]) {
+                tempArray.push(nxtItem);
+            }
+        }
+        start.next = tempArray;
+    } 
+    else if(start.data[0] > end[0] && start.data[1] < end[1]) {
+        let tempArray = [];
+        for(let nxtItem of start.next) {           
+            if(nxtItem[0] < start.data[0] && nxtItem[1] > start.data[1]) {
+                tempArray.push(nxtItem);
+            }
+        }
+        start.next = tempArray;
+    } 
+    else if(start.data[0] > end[0] && start.data[1] == end[1]) {
+        let tempArray = [];
+        for(let nxtItem of start.next) {            
+            if(nxtItem[0] < start.data[0]) {
+                tempArray.push(nxtItem);
+            }
+        }
+        start.next = tempArray;
+    } 
+    else if(start.data[0] > end[0] && start.data[1] > end[1]) {
+        let tempArray = [];
+        for(let nxtItem of start.next) {            
+            if(nxtItem[0] < start.data[0] && nxtItem[1] < start.data[1]) {
+                tempArray.push(nxtItem);
+            }
+        }
+        start.next = tempArray;
+    } 
+    else if(start.data[0] == end[0] && start.data[1] > end[1]) {
+        let tempArray = [];
+        for(let nxtItem of start.next) {            
+            if(nxtItem[1] < start.data[1]) {
+                tempArray.push(nxtItem);
+            }
+        }
+        start.next = tempArray;
+    }
+    else if(start.data[0] == end[0] && start.data[1] < end[1]) {
+        let tempArray = [];
+        for(let nxtItem of start.next) {            
+            if(Math.abs(nxtItem[1] - start.data[1]) == 1) {
+                tempArray.push(nxtItem);
+            }
+        }
+        start.next = tempArray;
+    }
+    else if(start.data[0] < end[0] && start.data[1] == end[1]) {
+        let tempArray = [];
+        for(let nxtItem of start.next) {           
+            if(nxtItem[0] > start.data[0]) {
+                tempArray.push(nxtItem);
+            }
+        }
+        start.next = tempArray;
+    }  
+    else if(Math.abs(start.data[0] - end[0]) == 1 || start.data[1] - end[1] == 0) {
+        let tempArray = [];
+        for(let nxtItem of start.next) {            
+            tempArray.push(nxtItem);           
+        }
+        start.next = tempArray;
+    }  
 
+    else if(Math.abs(start.data[0] - end[0]) == 1 && Math.abs(start.data[1] - end[1]) == 1) {
+        let tempArray = [];
+        for(let nxtItem of start.next) {            
+            tempArray.push(nxtItem);           
+        }
+        start.next = tempArray;
+    }  
+    
+    for(let nxtItem of start.next) {        
+        if(nxtItem[0] == end[0] && nxtItem[1] == end[1]) {
+            moves.push(new Node(nxtItem));            
+            return moves.flat();
+        } 
+    }
+    
+    let next = makeMove(start);    
+    let item = knightMoves(next, end);    
+    moves.push(item);
+    
+    return moves.flat();
+}
+
+function showRes(array) {
+    for(let item of array) {
+        console.log(item.data);
+    }
 }
 
 
-// function knightMoves(start, end) {     
-//     // let invalid = start.some(num => num > 8 || num <= 0) || end.some(num => num > 8 || num <= 0);
-//     // if(invalid) {
-//     //     return false;
-//     // } 
-//     let moves = [] ;
-//     moves.push(start.data);
-//     for(let nxtItem of start.next) {
-//         //console.log(nxtItem);
-//         if(nxtItem[0] == end[0] && nxtItem[1] == end[1]) {
-//             moves.push(nxtItem);
-//             console.log("I'm first")
-//             return moves;
-//         } else {
-//             knightMoves(nxtItem, end)
-//         }
-//     }
-//     if(start.data[0] < end[0] && start.data[1] < end[1]) {
-//         let tempArray = [];
-//         for(let nxtItem of start.next) {
-//             //console.log(nxtItem);
-//             if(nxtItem[0] > start.data[0] && nxtItem[1] > start.data[1]) {
-//                 tempArray.push(nxtItem);
-//             }
-//         }
-//         start.next = tempArray;
-//     } 
-//     else if(start.data[0] > end[0] && start.data[1] < end[1]) {
-//         let tempArray = [];
-//         for(let nxtItem of start.next) {
-//             //console.log(nxtItem);
-//             if(nxtItem[0] < start.data[0] && nxtItem[1] > start.data[1]) {
-//                 tempArray.push(nxtItem);
-//             }
-//         }
-//         start.next = tempArray;
-//     } 
-//     else if(start.data[0] > end[0] && start.data[1] == end[1]) {
-//         let tempArray = [];
-//         for(let nxtItem of start.next) {
-//             //console.log(nxtItem);
-//             if(nxtItem[0] < start.data[0]) {
-//                 tempArray.push(nxtItem);
-//             }
-//         }
-//         start.next = tempArray;
-//     } 
-//     else if(start.data[0] > end[0] && start.data[1] > end[1]) {
-//         let tempArray = [];
-//         for(let nxtItem of start.next) {
-//             //console.log(nxtItem);
-//             if(nxtItem[0] < start.data[0] && nxtItem[1] < start.data[1]) {
-//                 tempArray.push(nxtItem);
-//             }
-//         }
-//         start.next = tempArray;
-//     } 
-//     else if(start.data[0] == end[0] && start.data[1] > end[1]) {
-//         let tempArray = [];
-//         for(let nxtItem of start.next) {
-//             //console.log(nxtItem);
-//             if(nxtItem[1] < start.data[1]) {
-//                 tempArray.push(nxtItem);
-//             }
-//         }
-//         start.next = tempArray;
-//     }
-//     else if(start.data[0] < end[0] && start.data[1] == end[1]) {
-//         let tempArray = [];
-//         for(let nxtItem of start.next) {
-//             //console.log(nxtItem);
-//             if(nxtItem[0] > start.data[0]) {
-//                 tempArray.push(nxtItem);
-//             }
-//         }
-//         start.next = tempArray;
-//     }  
-//     else if(Math.abs(start.data[1] - end[1]) == 1 || start.data[1] - end[1] == 0) {
-//         let tempArray = [];
-//         for(let nxtItem of start.next) {
-//             //console.log(nxtItem);
-//             tempArray.push(nxtItem);           
-//         }
-//         start.next = tempArray;
-//     }  
-//     let next = makeMove(start);    
-//     moves.push(next.data);
-//     let item = knightMoves(next, end);
-//     console.log("I'm last")
-//     moves.push(item);
-//     return item;
-// }
 
+let test = knightMoves(new Node([1,1]), [1,8])
+console.log();
 
-
-//console.log(makeMove([4, 4]));
-console.log(knightMoves(new Node([1,1]), [4,4]));
-
-
-
-// let start = new Node([5,4]);
-
-// for(let i = 0; i < 5; i++) {
-//     console.log(start.data);
-//     start = makeMove(start);
-// }
-
+showRes(test);
 
