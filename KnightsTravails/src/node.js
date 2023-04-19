@@ -8,8 +8,7 @@ class Node{
         
     }
 
-    setNext(current = this.data) {
-        console.log("We have problem with " + this.data);
+    setNext(current = this.data) {        
         let item;
         let invalid;
         for(let num = 0; num < 8; num++) {
