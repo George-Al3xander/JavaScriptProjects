@@ -1,7 +1,15 @@
+
+
+
+
 const gameboard = function() {
     let missed = [];
     let hit = []; 
     let ships = [];
+
+    const createGameboard = () => {
+
+    }
     
     let carrier = newShip(5);
     let battleship = newShip(4);
