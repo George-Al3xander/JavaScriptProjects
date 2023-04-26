@@ -71,6 +71,17 @@ function generateShip(start,dir ,length) {
     return [newShip(length),coord];
 }
 
+
+function generatedGameboard() {
+    let carrier =  generateShip(["D",1], "hor", 5);
+    let battleship = generateShip(["F",6], "vert", 4);
+    let cruiser = generateShip(["B",9], "vert", 3);
+    let submarine = generateShip(["H",9], "vert", 3);
+    let destroyer = generateShip(["H",2], "hor", 2);  
+    
+    return [carrier, battleship, cruiser ,submarine ,destroyer];
+}
+
 //Ships can't have any identical coordinate and its 
 
 function generateAllShipsRandom(coords = []) {
@@ -113,11 +124,10 @@ function generateAllShipsRandom(coords = []) {
         coords.push(destroyer);
     }    
     
-    console.log(coords,checkGameboardValid(coords));
-    return coords;
+       return coords;
 }
 
 
 
 
-export {generateHorShipCoord, generateVertShipCoord, generateShip, generateAllShipsRandom}
+export {generateHorShipCoord, generateVertShipCoord, generateShip, generateAllShipsRandom,generatedGameboard}

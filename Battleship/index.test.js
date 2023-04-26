@@ -3,6 +3,7 @@ import { getRandomX, getRandomY } from "./getters";
 import newShip from "./ship"
 import { checkGameboardValid, checkTwoCoord } from "./validation";
 import alphabet from "./alpha";
+import gameboard from "./gameboard";
 
 // test("Ship must be sunk" , () => {
 //     let ship = newShip(3);  
@@ -83,4 +84,12 @@ test("Testing gameboard validation: false", ()=> {
     let array = [carrier, battleship, cruiser ,submarine ,destroyer];
 
     expect(checkGameboardValid(array)).toBe(false);
+});
+
+
+test("Small test" , ()=> {
+    let test = gameboard();
+    test.createGameboard();
+    expect(test.getShips()).toBe(null || undefined);
 })
+
