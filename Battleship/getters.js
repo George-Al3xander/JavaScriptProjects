@@ -20,5 +20,13 @@ function getRandomDir() {
     }
 }
 
-export {getRandomStartNum, getRandomLetter, getRandomDir};
+function getLastItem(array) {
+    return array[array.length-1];
+}
+
+function getMiddleItem(array) {
+    return array[Math.floor((array.length - 1) / 2)];
+}
+
+export {getRandomStartNum, getRandomLetter, getRandomDir, getLastItem, getMiddleItem};
 

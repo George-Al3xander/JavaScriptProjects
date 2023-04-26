@@ -1,4 +1,5 @@
 import alphabet from "./alpha.js";
+import { getLastItem, getMiddleItem } from "./getters.js";
 
 
 
@@ -78,22 +79,21 @@ function checkTwoCoord(first, second) {
 
 
 function checkGameboardValid(array) {
-    
     let finalArr = [];
-    for(let i=0; i <= array.length;i++) {
-        let num = i;
-        if(array[num] != undefined) {
-            for(let item of array[num][1]) {
-                if(array[num+1] != undefined) {
-                    for(let item2 of array[num+1][1]) {                
-                        console.log(item, item2)
-                        finalArr.push(checkTwoCoord(item, item2));               
-                    }
-                }
+    array.forEach(ship => {        
+        for(let i =0; i < array.length-1; i++) {
+            if(array.indexOf(ship) == i) {
+                continue;
             }
-        }
-    }
-    console.log(finalArr);
+            let item1 = ship[1];
+            let item2 = array[i][1];
+            
+            
+            finalArr.push(checkTwoCoord(item1[0], item2[0]));
+            finalArr.push(checkTwoCoord(getMiddleItem(item1), getMiddleItem(item2)));
+            finalArr.push(checkTwoCoord(getLastItem(item1), getLastItem(item2)));
+        }            
+    });   
     if(finalArr.includes(false)) {
         return false;
     } else {

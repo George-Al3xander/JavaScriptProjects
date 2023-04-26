@@ -42,7 +42,7 @@ test("Case 3:  true" , () => {
 });
 
 test("Far coords:  true" , () => {
-    expect(checkTwoCoord(["D",5],["F",6])).toBe(true);
+    expect(checkTwoCoord(["B",9],["F",6])).toBe(true);
 });
 
 
@@ -60,13 +60,27 @@ test("False" , () => {
 });
 
 
+test("Testing gameboard validation: true", ()=> {
+    let carrier =  generateShip(["D",1], "hor", 5);
+    let battleship = generateShip(["F",6], "vert", 4);
+    let cruiser = generateShip(["B",9], "vert", 3);
+    let submarine = generateShip(["H",9], "vert", 3);
+    let destroyer = generateShip(["H",2], "hor", 2);  
+    
+    let array = [carrier, battleship, cruiser ,submarine ,destroyer];
 
-test("Big test" , () => {
-            let carrier =  generateShip(["D",1], "hor", 5);
-            let battleship = generateShip(["F",6], "vert", 4);
-            let cruiser = generateShip(["B",9], "vert", 3);
-            let submarine = generateShip(["F",7], "vert", 3);
-            let destroyer = generateShip(["H",2], "hor", 2);
-    let arr = [carrier, battleship, cruiser ,submarine ,destroyer];
-    expect(checkGameboardValid(arr)).toBe(true);
+    expect(checkGameboardValid(array)).toBe(true);
+});
+
+
+test("Testing gameboard validation: false", ()=> {
+    let carrier =  generateShip(["D",1], "hor", 5);
+    let battleship = generateShip(["F",6], "vert", 4);
+    let cruiser = generateShip(["A",6], "vert", 3);
+    let submarine = generateShip(["H",9], "vert", 3);
+    let destroyer = generateShip(["H",2], "hor", 2);   
+    
+    let array = [carrier, battleship, cruiser ,submarine ,destroyer];
+
+    expect(checkGameboardValid(array)).toBe(false);
 })

@@ -1,6 +1,7 @@
 import { getRandomStartNum, getRandomLetter, getRandomDir } from "./getters.js";
 import alphabet from "./alpha.js";
 import newShip from "./ship.js";
+import { checkGameboardValid } from "./validation.js";
 //import { validate } from "./validation.js";
 
 
@@ -72,18 +73,48 @@ function generateShip(start,dir ,length) {
 
 //Ships can't have any identical coordinate and its 
 
-function generateAllShipsRandom() {
-    let tempCoords = [];
-
-    let carrier =  generateShip("random", getRandomDir(), 5);
-    let battleship = generateShip("random", getRandomDir(), 4);
-    let cruiser = generateShip("random", getRandomDir(), 3);
-    let submarine = generateShip("random", getRandomDir(), 3);
-    let destroyer = generateShip("random", getRandomDir(), 2);   
+function generateAllShipsRandom(coords = []) {
     
-    //validate([carrier, battleship, cruiser ,submarine ,destroyer]);
+    let carrier =  generateShip("random", getRandomDir(), 5);
+    coords.push(carrier);
+    let battleship = generateShip("random", getRandomDir(), 4);
+    coords.push(battleship);
 
-    return [carrier, battleship, cruiser ,submarine ,destroyer]
+    while(checkGameboardValid(coords) == false) {
+        coords.pop();
+        battleship = generateShip("random", getRandomDir(), 4);
+        coords.push(battleship);
+    }
+    
+    let cruiser = generateShip("random", getRandomDir(), 3);
+    coords.push(cruiser);
+    
+    while(checkGameboardValid(coords) == false) {
+        coords.pop();
+        cruiser = generateShip("random", getRandomDir(), 3);
+        coords.push(cruiser);
+    }
+    
+    let submarine = generateShip("random", getRandomDir(), 3);
+    coords.push(submarine);
+
+    while(checkGameboardValid(coords) == false) {
+        coords.pop();
+        submarine = generateShip("random", getRandomDir(), 3);
+        coords.push(submarine);
+    }
+    
+    let destroyer = generateShip("random", getRandomDir(), 2);   
+   coords.push(destroyer);
+
+   while(checkGameboardValid(coords) == false) {
+        coords.pop();
+        destroyer = generateShip("random", getRandomDir(), 2);
+        coords.push(destroyer);
+    }    
+    
+    console.log(coords,checkGameboardValid(coords));
+    return coords;
 }
 
 
