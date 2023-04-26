@@ -1,0 +1,67 @@
+:root {
+    --ff-default:  'Source Sans Pro', sans-serif;
+
+
+    --fs-default: 1rem;
+    --fs-big: calc(var(--fs-default) * 2);
+}
+
+body {
+    font-family: var(--ff-default);
+}
+
+main {
+    padding: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    flex-direction: row;    
+}
+
+
+table {
+    box-sizing: content-box;
+   font-size: var(--fs-big); 
+}
+
+th {
+    text-align: center; 
+    
+}
+.letter {
+    padding-left: -2rem;
+
+}
+
+
+td {
+    border: 1px solid black;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    text-align: center;
+    
+    
+}
+
+.gameboard-player {
+    color: green;
+}
+
+.gameboard-enemy {
+    color: red;
+
+}
+
+.gameboard-enemy td {
+    color: black;
+}
+
+
+
+.gameboard-enemy td:hover {
+    cursor: pointer;
+    background-color: 	rgb(255,0,0, 70%);
+    transition: all .5s ease;
+}
+

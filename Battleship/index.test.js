@@ -1,4 +1,4 @@
-import { generateShip } from "./generators";
+import { gameboardPattern, generateShip, patternGameboard } from "./generators";
 import { getRandomX, getRandomY } from "./getters";
 import newShip from "./ship"
 import { checkGameboardValid, checkTwoCoord } from "./validation";
@@ -90,6 +90,11 @@ test("Testing gameboard validation: false", ()=> {
 test("Small test" , ()=> {
     let test = gameboard();
     test.createGameboard();
-    expect(test.getShips()).toBe(null || undefined);
+    expect(test.getShips()).not.toBe(null || undefined);
 })
+
+test("Pattern game board test" , ()=> {
+    expect(gameboardPattern()).not.toBe(null || undefined);
+})
+
 

@@ -86,12 +86,21 @@ function checkGameboardValid(array) {
                 continue;
             }
             let item1 = ship[1];
-            let item2 = array[i][1];
-            
+            let item2 = array[i][1];            
             
             finalArr.push(checkTwoCoord(item1[0], item2[0]));
             finalArr.push(checkTwoCoord(getMiddleItem(item1), getMiddleItem(item2)));
             finalArr.push(checkTwoCoord(getLastItem(item1), getLastItem(item2)));
+
+            finalArr.push(checkTwoCoord(item1[0], getLastItem(item2)));
+            finalArr.push(checkTwoCoord(item1[0], getMiddleItem(item2)));
+            finalArr.push(checkTwoCoord(item2[0], getMiddleItem(item1)));
+            finalArr.push(checkTwoCoord(getLastItem(item1), item2[0]));
+
+            finalArr.push(checkTwoCoord(getLastItem(item1), getMiddleItem(item2)));
+            finalArr.push(checkTwoCoord(getLastItem(item2), getMiddleItem(item1)));
+
+
         }            
     });   
     if(finalArr.includes(false)) {

@@ -4,7 +4,6 @@ import newShip from "./ship.js";
 import { checkGameboardValid } from "./validation.js";
 //import { validate } from "./validation.js";
 
-
 function generateHorShipCoord(length,letter,startNum) {
     let coord = [];
 
@@ -18,8 +17,7 @@ function generateHorShipCoord(length,letter,startNum) {
     }
     
     for(let i=0; i<length; i++) {        
-        coord.push([letter, startNum]);
-        console.log();
+        coord.push([letter, startNum]);        
         startNum += 1;
     }
     return coord;
@@ -71,17 +69,6 @@ function generateShip(start,dir ,length) {
     return [newShip(length),coord];
 }
 
-
-function generatedGameboard() {
-    let carrier =  generateShip(["D",1], "hor", 5);
-    let battleship = generateShip(["F",6], "vert", 4);
-    let cruiser = generateShip(["B",9], "vert", 3);
-    let submarine = generateShip(["H",9], "vert", 3);
-    let destroyer = generateShip(["H",2], "hor", 2);  
-    
-    return [carrier, battleship, cruiser ,submarine ,destroyer];
-}
-
 //Ships can't have any identical coordinate and its 
 
 function generateAllShipsRandom(coords = []) {
@@ -127,7 +114,17 @@ function generateAllShipsRandom(coords = []) {
        return coords;
 }
 
+function gameboardPattern() {
+    let carrier =  generateShip(["D",1], "hor", 5);
+    let battleship = generateShip(["F",6], "vert", 4);
+    let cruiser = generateShip(["B",9], "vert", 3);
+    let submarine = generateShip(["H",9], "vert", 3);
+    let destroyer = generateShip(["H",2], "hor", 2);  
+    
+    return [carrier, battleship, cruiser ,submarine ,destroyer];
+}
 
 
 
-export {generateHorShipCoord, generateVertShipCoord, generateShip, generateAllShipsRandom,generatedGameboard}
+
+export {generateHorShipCoord, generateVertShipCoord, generateShip, generateAllShipsRandom,gameboardPattern}
