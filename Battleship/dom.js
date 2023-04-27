@@ -1,13 +1,13 @@
 import { createEl } from "./create.js";
 import alphabet from "./alpha.js";
 import { getById } from "./getters.js";
-import { hit } from "./index.js";
-import { enemy , main} from "./index.js";
 
 
-function displayGameboard(type, coords) {
+
+function displayGameboard(obj, type) {
+    let coords = obj.getShips();
     let section = createEl("section");
-    section.className = type;
+    section.className = `gameboard-${type}`;
     let table = createEl("table");  
 
     section.appendChild(table);
@@ -27,29 +27,23 @@ function displayGameboard(type, coords) {
         for(let x =1; x<=10;x++) {
             let td = tr.appendChild(createEl("td"));
             let id = alphabet[i]+x;
-            td.setAttribute("id",id);
-            if(type == "gameboard-enemy") {
-               // td.setAttribute("onclick", `hit(${id})`);
+            if(type == "player") {
+                td.setAttribute("id","p-"+id);
+            } else {
+                td.setAttribute("id","opp-"+id);
+            }
+            if(type == "enemy") {               
                td.addEventListener("click", ()=> {
-                    if(enemy.checkLost() == true) {
-                        main.innerHTML = "ENEMY LOST"
-                    }  else {
-                        if(enemy.receiveAttack([alphabet[i],x]) == true) {
-                            
-                            td.style.backgroundColor = "red";
-                        } else {
-                            td.innerHTML = "X";
-                        }                 
-                    }
-               });
+                   obj.receiveAttack([alphabet[i],x]);  
+                   displayMoves(obj,type);                                   
+                });
             }
 
-            if(type == "gameboard-player") {
+            if(type == "player" && coords != undefined) {
                 for(let item of coords) { 
                     for(let item2 of item[1]) {
                         if(item2[0] == alphabet[i] && item2[1] == x) {
                             td.style.backgroundColor = "green";
-                            //console.log("WHAT!");
                         }                    
                     }
                 }
@@ -61,10 +55,34 @@ function displayGameboard(type, coords) {
     return section;
 }
 
-function displayAll () {
 
+function displayMoves(obj,type) {
+    let hit = obj.getHit();
+    let missed = obj.getMissed();
+
+    for(let miss of missed) {
+        let id;
+        if(type == "player") {
+        id = "p-"
+        } else if(type =="enemy"){
+            id = "opp-"
+        }
+        id += miss.toString().replace(",", "");
+        getById(id).innerHTML = "X";
+    }
+
+    for(let item of hit) {
+        let id;
+        if(type == "player") {
+        id = "p-"
+        id += item.toString().replace(",", "");
+        getById(id).style.backgroundColor = "grey";
+        } else if(type =="enemy"){
+            id = "opp-"
+            id += item.toString().replace(",", "");
+            getById(id).style.backgroundColor = "red";
+        }
+    }
 }
 
-export {
-    displayGameboard
-}
+export {displayGameboard, displayMoves}
