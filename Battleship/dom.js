@@ -2,10 +2,19 @@ import { createEl } from "./create.js";
 import alphabet from "./alpha.js";
 import { getById } from "./getters.js";
 
+import { enemyTurn } from "./startGame.js";
+
 
 
 function displayGameboard(obj, type) {
-    let coords = obj.getShips();
+    let player = obj[0];
+    let enemy = obj[1];
+    let coords ;
+    if(type == "player") {
+        coords = player.getShips();
+    } else if(type =="enemy") {
+        coords = enemy.getShips();        
+    }
     let section = createEl("section");
     section.className = `gameboard-${type}`;
     let table = createEl("table");  
@@ -34,8 +43,9 @@ function displayGameboard(obj, type) {
             }
             if(type == "enemy") {               
                td.addEventListener("click", ()=> {
-                   obj.receiveAttack([alphabet[i],x]);  
-                   displayMoves(obj,type);                                   
+                   enemy.receiveAttack([alphabet[i],x]);  
+                   displayMoves(enemy,type);  
+                   enemyTurn(obj);                                                   
                 });
             }
 

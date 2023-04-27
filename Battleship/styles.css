@@ -84,8 +84,11 @@ td {
     /* pointer-events: auto; */
 }
 
-.gameboard-enemy td:hover {
+.gameboard-enemy td {
     cursor: pointer;
+}
+
+.gameboard-enemy td:hover {   
     background-color: 	var(--clr-enemy);
     transition: all .5s ease;
 }
