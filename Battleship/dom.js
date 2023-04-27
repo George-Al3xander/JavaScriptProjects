@@ -1,6 +1,6 @@
 import { createEl } from "./create.js";
 import alphabet from "./alpha.js";
-import { getById } from "./getters.js";
+import { getById, getByClass } from "./getters.js";
 
 import { enemyTurn } from "./startGame.js";
 
@@ -8,13 +8,10 @@ import { enemyTurn } from "./startGame.js";
 
 function displayGameboard(obj, type) {
     let player = obj[0];
-    let enemy = obj[1];
+    let enemy = obj[1];    
     let coords ;
-    if(type == "player") {
-        coords = player.getShips();
-    } else if(type =="enemy") {
-        coords = enemy.getShips();        
-    }
+    coords = player.getShips();
+    
     let section = createEl("section");
     section.className = `gameboard-${type}`;
     let table = createEl("table");  
@@ -95,4 +92,74 @@ function displayMoves(obj,type) {
     }
 }
 
-export {displayGameboard, displayMoves}
+
+function disableGameboard(opacity1, opacity2, pointer, span, color) {
+    getByClass("gameboard-player").style.opacity = opacity1;
+    getByClass("gameboard-enemy").style.opacity = opacity2;
+    getByClass("gameboard-enemy").style.pointerEvents = pointer;    
+    let header = getById("turn");
+    document.querySelector("#turn span").innerHTML = span;
+    header.style.backgroundColor = color; 
+}
+
+function disableGameboardPlayer() {    
+    disableGameboard("1",".4","none","Enemy's","var(--clr-enemy)");
+}
+
+function disableGameboardEnemy() {   
+    disableGameboard(".4","1","auto","Your","var(--clr-player)");
+
+}
+
+
+function changeHeaderFooter(content ,type) {
+    let header = document.querySelector("header");
+    let footer = document.querySelector("footer");
+    header.innerHTML = "";
+
+    for(let i=0; i < 5;i++) {
+        if(type == "enemy" && i > 2) {           
+            break;
+        }
+        let item1 = createEl("h1",content);
+        let item2 = createEl("h1",content);
+        if(type == "player") {
+            item1.className = "congrats-h1 win";
+            item2.className = "congrats-h1 win";
+        } 
+        else {
+            item1.className = "congrats-h1 lose";
+            item2.className = "congrats-h1 lose";
+        }
+        header.appendChild(item1);
+        footer.appendChild(item2);
+    }
+
+}
+
+function displayWinner(type) {
+    let main = document.querySelector("main");
+    main.innerHTML = "";
+    main.style.textAlign = "center";
+    main.style.backgroundColor = "var(--clr-primary)";
+    main.style.display = "flex";
+    main.style.flexDirection = "column";   
+    let heading;
+    if(type == "player") {
+        changeHeaderFooter("🎉 Congrats 🎉",type);
+        heading = createEl("h1", "You won!");
+        heading.className = "congrats-main-h win";
+    }  else if(type == "enemy") {
+        changeHeaderFooter("Better luck next time?",type);
+        heading = createEl("h1", "You lost...");
+        heading.className = "congrats-main-h lose";
+    }
+
+    let button = createEl("button", "rematch");
+
+    main.appendChild(heading);
+    main.appendChild(button);
+    button.className = "congrats-btn";
+} 
+
+export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner}
