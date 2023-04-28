@@ -160,6 +160,9 @@ function displayWinner(type) {
     main.appendChild(heading);
     main.appendChild(button);
     button.className = "congrats-btn";
+    button.addEventListener("click", () => {
+        location.reload();
+    });
 } 
 
 export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner}

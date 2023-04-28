@@ -9,7 +9,7 @@ import { displayGameboard, displayWinner } from "./dom.js";
 startGame();
 
 
-//displayWinner("player");
+//displayWinner("enemy");
 
      
     //let time = Math.floor(Math.random() * ((1500 - 500) + 500));

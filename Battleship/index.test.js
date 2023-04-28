@@ -1,7 +1,7 @@
 import { gameboardPattern, generateShip, patternGameboard } from "./generators";
 import { getRandomX, getRandomY } from "./getters";
 import newShip from "./ship"
-import { checkGameboardValid, checkTwoCoord } from "./validation";
+import { checkGameboardValid, checkTwoCoord, decideTwoCoordsMove } from "./validation";
 import alphabet from "./alpha";
 import gameboard from "./gameboard";
 
@@ -87,14 +87,19 @@ test("Testing gameboard validation: false", ()=> {
 });
 
 
-test("Small test" , ()=> {
-    let test = gameboard();
-    test.createGameboard();
-    expect(test.getShips()).not.toBe(null || undefined);
-})
+
 
 test("Pattern game board test" , ()=> {
     expect(gameboardPattern()).not.toBe(null || undefined);
 })
 
 
+test("Two coords decision" , ()=> {
+    let test = gameboard(gameboardPattern());
+    let coord = ["D",2];
+    let coord1 = ["D",3];
+    let coord2 = ["D",1];
+    test.receiveAttack(coord);
+    test.receiveAttack(coord1);
+    expect(decideTwoCoordsMove(coord1,coord2,test)).toBe(coord2);
+})

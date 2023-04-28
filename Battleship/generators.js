@@ -127,4 +127,5 @@ function gameboardPattern() {
 
 
 
-export {generateHorShipCoord, generateVertShipCoord, generateShip, generateAllShipsRandom,gameboardPattern}
+
+export {generateHorShipCoord, generateVertShipCoord, generateShip, generateAllShipsRandom,gameboardPattern }

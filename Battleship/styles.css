@@ -93,7 +93,7 @@ td {
 }
 
 .gameboard-enemy td:hover {   
-    background-color: 	var(--clr-enemy);
+    background-color: 	grey;
     transition: all .5s ease;
 }
 

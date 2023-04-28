@@ -1,5 +1,5 @@
 import alphabet from "./alpha.js";
-import { getLastItem, getMiddleItem } from "./getters.js";
+import { getLastItem, getMiddleItem ,  getRandomLetter ,getRandomStartNum} from "./getters.js";
 
 
 
@@ -110,7 +110,70 @@ function checkGameboardValid(array) {
     }
 }
 
-export {checkTwoCoord, checkGameboardValid}
+function checkCoord(coord, obj) {
+    while(obj.getHit().every((hit) => {
+        return hit.toString() != coord.toString();
+    }) == false) {        
+        coord = [getRandomLetter(), getRandomStartNum()];
+    };
+
+    while(obj.getMissed().every((miss) => {
+        return miss.toString() != coord.toString()
+    }) == false) {           
+        coord = [getRandomLetter(), getRandomStartNum()];            
+    };
+
+    return coord
+}
+
+
+function decideTwoCoordsMove(coord1, coord2, obj) {
+    let tempCoord;    
+    tempCoord = coord1;        
+    coord1 = checkCoord(coord1,obj);
+    if(coord1.toString() == tempCoord.toString()) {
+       return coord1 
+    } else {       
+        tempCoord = coord2;
+        coord2 = checkCoord(coord2, obj);
+        if(coord2.toString() == tempCoord.toString()) {
+            return coord2;
+        } 
+        else {
+            return checkCoord([getRandomLetter(), getRandomStartNum()],obj);
+        }
+    }
+}
+
+
+// function checkIfTwoCoords(coord1, coord2, obj) {
+//     let tempCoord;
+//     coord1 = [lastHit[0], lastHit[1]+1];
+//     tempCoord = coord1;        
+//     coord1 = checkCoord(coord1,obj);
+
+//     if(coord1.toString() == tempCoord.toString()) {
+//        return coord1 
+//     } else {
+//         coord2 = [lastHit[0], lastHit[1]-1]; 
+//         tempCoord = coord2;
+//         coord2 = checkCoord(coord2, obj);
+//         if(coord2.toString() == tempCoord.toString()) {
+//             return coord2;
+//         } 
+//         else {
+//             return checkCoord([getRandomLetter(), getRandomStartNum()],obj);
+//         }
+
+//     }
+
+// }
+
+
+
+
+
+export {checkTwoCoord, checkGameboardValid, checkCoord, decideTwoCoordsMove}
 
 
 

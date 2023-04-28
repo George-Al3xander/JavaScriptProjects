@@ -7,13 +7,14 @@ import { getByClass, getById, getRandomLetter, getRandomStartNum } from "./gette
 import gameboard from "./gameboard.js";
 import sleep from "./sleep.js";
 import alphabet from "./alpha.js";
+import { checkCoord, decideTwoCoordsMove } from "./validation.js";
+import { gameboardPattern } from "./generators.js";
 
 
 
 function playerTurn(enemy) {
     if(enemy.checkLost() == true) {
-        displayWinner("player");
-        return;
+        displayWinner("player");        
     }
     
     disableGameboardEnemy();
@@ -41,55 +42,71 @@ async function enemyTurn(arr) {
     let enemy = arr[1];  
     
     if(player.checkLost() == true) {
-        displayWinner("enemy");      
-        
+        displayWinner("enemy");
     }
     let time = Math.floor(Math.random() * ((2000 - 1500) + 1500)); 
     let coord;
+    let missed= player.getMissed();
     let num = Math.floor(Math.random() * 4);
-    
-    // if(player.getHit().length > 0) {
-    //     console.log("Yeah, im bigger")
-    //     let lastHit = player.getHit()[player.getHit().length-1];
-    //     console.log(lastHit);
-    //     if(num == 0 && lastHit[1] < 10) {
-    //         coord = [lastHit[0], lastHit[1]+1];
-    //     } 
-    //     else if(num ==1 && lastHit[1] > 0)  {
-    //         coord = [lastHit[0], lastHit[1]-1];
-    //     }
-    //     else if(num ==2)  {
-    //         coord = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
-    //     }
-    //     else if(num ==3)  {
-    //         coord = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
-    //     }
-    // } else {
-        coord = [getRandomLetter(), getRandomStartNum()];
-    //}
+    let playerHit = player.getHit();
+    let lastHit = playerHit[playerHit.length-1];
+    let penultHit = playerHit[playerHit.length-2];
+    let cond2 = playerHit.length > 1 && (lastHit[0] ==  penultHit[0] || lastHit[1] ==  penultHit[1]);
+    let cond1 = playerHit.length > 0 && !cond2;
 
+    if(cond1) {
+        console.log("We're in cond 1") ;       
 
-    
-    while(player.getHit().every((hit) => {
-        return hit[0] != coord[0] && hit[1] != coord[1]
-    }) == false) {        
-        coord = [getRandomLetter(), getRandomStartNum()];
-    };
+        if(lastHit[1] < 10 && lastHit[1] > 1) {
+            coord = decideTwoCoordsMove([lastHit[0], lastHit[1]+1],[lastHit[0], lastHit[1]-1],player);         
+        }   
+        
+        else if(lastHit[1] < 10 && lastHit[1] > 1 && (missed.every((miss) => {
+            return miss.toString() != [lastHit[0], lastHit[1]+1].toString()
+        }) == true) &&  (missed.every((miss) => {
+            return miss.toString() != [lastHit[0], lastHit[1]-1].toString()
+        }) == true)) {
+            let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
+            let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
+            coord = decideTwoCoordsMove(coord1,coord2,player); 
+        }
+        else if (alphabet.indexOf(lastHit[0]) < 9 && alphabet.indexOf(lastHit[0]) > 0) {
+            let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
+            let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
+            coord = decideTwoCoordsMove(coord1,coord2,player);        
+        }         
+        else {
+            coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);
+        }
 
-    while(player.getMissed().every((miss) => {
-        return miss[0] != coord[0] && miss[1] != coord[1]
-    }) == false) {           
-        coord = [getRandomLetter(), getRandomStartNum()];
-        playerTurn(enemy);
-    };    
-    //Disable player gameboard
+    }
+    else if(cond2) {
+        console.log("We're in cond 2") ;       
+        if(lastHit[0] ==  penultHit[0]) {
+            coord = decideTwoCoordsMove([lastHit[0], lastHit[1]+1],[lastHit[0], lastHit[1]-1],player);
+        } else  if(lastHit[1] ==  penultHit[1]) {
+            let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
+            let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
+            coord = decideTwoCoordsMove(coord1,coord2,player);
+        }        
+    } else {
+        console.log("We're in else")
+        coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);
+        
+    }
+    //console.log([lastHit[0], lastHit[1]+1]);
+    //console.log([lastHit[0], lastHit[1]-1]);
+    //console.log([alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]]);
+    //console.log([alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]]);
+
+  
+
     disableGameboardPlayer();
     player.receiveAttack(coord);
     await sleep(time);
     displayMoves(player,"player"); 
     await sleep(time / 2);
-    playerTurn(enemy); 
-    
+    playerTurn(enemy);     
 }
 
 
@@ -97,7 +114,7 @@ async function enemyTurn(arr) {
 
 function startGame() {
     let main = document.querySelector("main");
-    let player = gameboard();
+    let player = gameboard(gameboardPattern());
     let enemy = gameboard();   
     let arr = [player, enemy] ;
     main.appendChild(displayGameboard(arr,"player"));
