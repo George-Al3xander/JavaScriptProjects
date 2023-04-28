@@ -4,6 +4,10 @@ import { getById, getByClass } from "./getters.js";
 
 import { enemyTurn } from "./startGame.js";
 
+let header = document.querySelector("header");
+let footer = document.querySelector("footer");
+let main = document.querySelector("main");
+    
 
 
 function displayGameboard(obj, type) {
@@ -113,8 +117,7 @@ function disableGameboardEnemy() {
 
 
 function changeHeaderFooter(content ,type) {
-    let header = document.querySelector("header");
-    let footer = document.querySelector("footer");
+    
     header.innerHTML = "";
 
     for(let i=0; i < 5;i++) {
@@ -138,7 +141,7 @@ function changeHeaderFooter(content ,type) {
 }
 
 function displayWinner(type) {
-    let main = document.querySelector("main");
+    
     main.innerHTML = "";
     main.style.textAlign = "center";
     main.style.backgroundColor = "var(--clr-primary)";
@@ -165,4 +168,16 @@ function displayWinner(type) {
     });
 } 
 
-export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner}
+
+function displayHeaderGame() {
+    header.innerHTML = "";
+    header.appendChild(createEl("h1","Your board"));
+    let turn = createEl("h1");
+    turn.appendChild(createEl("span","Your"));
+    turn.setAttribute("id","turn");
+    turn.appendChild(document.createTextNode(" turn!"));
+    header.appendChild(turn);
+    header.appendChild(createEl("h1","Enemy's board"));
+}
+
+export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner, displayHeaderGame}

@@ -1,7 +1,7 @@
 import { gameboardPattern, generateShip, patternGameboard } from "./generators";
 import { getRandomX, getRandomY } from "./getters";
 import newShip from "./ship"
-import { checkGameboardValid, checkTwoCoord, decideTwoCoordsMove } from "./validation";
+import { checkGameboardValid, checkNear, checkTwoCoord, decideTwoCoordsMove } from "./validation";
 import alphabet from "./alpha";
 import gameboard from "./gameboard";
 
@@ -94,12 +94,28 @@ test("Pattern game board test" , ()=> {
 })
 
 
-test("Two coords decision" , ()=> {
+test("Check if side path are missed: false" , ()=> {
     let test = gameboard(gameboardPattern());
-    let coord = ["D",2];
-    let coord1 = ["D",3];
-    let coord2 = ["D",1];
+    let coord = ["B",9];
+    let coord1 = ["B",8];
+    let coord2 = ["B",5];
     test.receiveAttack(coord);
     test.receiveAttack(coord1);
-    expect(decideTwoCoordsMove(coord1,coord2,test)).toBe(coord2);
+    test.receiveAttack(coord2);
+    expect(checkNear(test,"hor")).toBe(false);
+});
+
+
+test("Check if level path are missed: true" , ()=> {
+    let test = gameboard(gameboardPattern());
+    let coord = ["D",1];
+    let coord1 = ["E",1];
+    let coord2 = ["C",1];
+    test.receiveAttack(coord);
+    test.receiveAttack(coord1);
+    test.receiveAttack(coord2);
+    expect(checkNear(test, "vert")).toBe(true);
 })
+
+
+

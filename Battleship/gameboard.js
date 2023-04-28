@@ -1,6 +1,5 @@
 import { generateAllShipsRandom, generateShip, gameboardPattern } from "./generators.js";
 
-
 const gameboard = function(coords = generateAllShipsRandom()) {
     let missed = [];
     let hit = []; 
@@ -22,6 +21,17 @@ const gameboard = function(coords = generateAllShipsRandom()) {
             return ship[0].getIsSunk() == true;
         }) 
     }
+
+    // const checkShipSunk = (coord) => {         
+    //     for(let ship of getShips()) {           
+    //         for(let i=0;i < ship[1].length;i++) {                
+    //             if(ship[1][i][0] == coord[0] && ship[1][i][1] == coord[1]) {  
+    //                let sunkStat = ship.getIsSunk()
+    //                 return ship;
+    //             }                 
+    //         }
+    //     }
+    // }
 
     const receiveAttack = (coord) => {
         for(let ship of getShips()) {           

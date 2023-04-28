@@ -18,10 +18,36 @@
 </head>
 <body>
     <header>
-       <h1>Your board</h1> <h1 id="turn"><span></span> turn!</h1><h1>Enemy's board</h1>
+        <h1 id="turn">Battleship by George V.</h1>
+       <!-- <h1>Your board</h1> <h1 id="turn"><span></span> turn!</h1><h1>Enemy's board</h1> -->
     </header>
     <main>
-        
+        <form>
+            <legend>Welcome!</legend>
+            <p>Please, locate your ship by typing coordinates or generate random!</p>
+           <fieldset id="form-starting-num">
+            <legend>Starting point: </legend><input placeholder="D" type="text">
+            <input placeholder="1" type="number">
+           </fieldset> 
+           <fieldset>
+            <legend>Direction</legend>
+            <select name="dir" id="direction">
+                <option value="hor">Horizontal</option>
+                <option value="vert">Vertical</option>
+            </select>
+           </fieldset>
+
+           <fieldset>
+            <legend>Length</legend>
+            <select name="length" id="length">
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+            </select>
+           </fieldset>
+        </form>
     </main>
 
     <footer>

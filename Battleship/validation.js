@@ -145,6 +145,40 @@ function decideTwoCoordsMove(coord1, coord2, obj) {
     }
 }
 
+function checkNear(obj, dir) {
+    let missed = obj.getMissed();
+    let lastHit = obj.getHit()[obj.getHit().length-1];
+            
+    let item1;
+    let item2;
+    if(dir == "hor") {
+        item1 = [lastHit[0], lastHit[1]+1];
+        item2 = [lastHit[0], lastHit[1]-1];  
+    } 
+    else if(dir == "vert") {
+        item1= [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]]
+        item2= [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
+    }
+    
+    console.log(lastHit);
+    //[lastHit[0], lastHit[1]+1]
+    let cond1 = false;
+    let cond2 = true;
+    for(let miss of missed) {
+        if(miss[0] == item1[0] && miss[1] == item1[1]) {
+            cond1 = true;
+        }
+        if(miss[0] == item2[0] && miss[1] == item2[1]) {
+            cond2 = true;
+        }
+    }    
+    if(cond1 == true &&  cond2 == true) {
+        return true
+    } else  {
+        return false;
+    }
+}
+
 
 // function checkIfTwoCoords(coord1, coord2, obj) {
 //     let tempCoord;
@@ -173,7 +207,7 @@ function decideTwoCoordsMove(coord1, coord2, obj) {
 
 
 
-export {checkTwoCoord, checkGameboardValid, checkCoord, decideTwoCoordsMove}
+export {checkTwoCoord, checkGameboardValid, checkCoord, decideTwoCoordsMove, checkNear}
 
 
 
