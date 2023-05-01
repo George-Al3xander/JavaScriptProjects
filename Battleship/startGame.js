@@ -3,16 +3,18 @@
 // }  
 
 import { displayMoves,displayGameboard, disableGameboardEnemy, disableGameboardPlayer,displayWinner  } from "./dom.js";
-import { getByClass, getById, getRandomLetter, getRandomStartNum } from "./getters.js";
+import { getByClass, getById, getCell, getRandomLetter, getRandomStartNum } from "./getters.js";
 import gameboard from "./gameboard.js";
 import sleep from "./sleep.js";
 import alphabet from "./alpha.js";
-import { checkCoord, checkNear, decideTwoCoordsMove } from "./validation.js";
+import { checkCoord, checkHitMiss, checkMissIncludes, checkNear, checkTail, decideTwoCoordsMove } from "./validation.js";
 import { gameboardPattern } from "./generators.js";
+import { displayHeaderGame } from "./dom.js";
 
 
 
 function playerTurn(enemy) {
+    
     if(enemy.checkLost() == true) {
         displayWinner("player");        
     }
@@ -26,15 +28,35 @@ function playerTurn(enemy) {
         }        
     }
 
+    
+
     if(enemy.getHit().length > 0) {
         for(let hit of enemy.getHit()) {         
             let id = "opp-"+hit.toString().replace(",", "");
             getById(id).style.pointerEvents = "none"; 
+            console.log(hit);
         }        
     }
 }
 
+/*
+    Start hit [E, 6]:
+    Disable: 
+    [F,7]
+    [D,7;]
+    [F,5]
+    [D,5;]
 
+
+    for(let hit of player.getHit()) {
+        player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]+1]);        
+        player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]+1]); 
+        player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]-1]);        
+        player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]-1]);
+    }
+
+
+    */
 
 
 async function enemyTurn(arr) { 
@@ -44,6 +66,8 @@ async function enemyTurn(arr) {
     if(player.checkLost() == true) {
         displayWinner("enemy");
     }
+    
+
     let time = Math.floor(Math.random() * ((2000 - 1500) + 1500)); 
     let coord;
     let missed= player.getMissed();
@@ -99,11 +123,13 @@ async function enemyTurn(arr) {
             let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
             let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
             coord = decideTwoCoordsMove(coord1,coord2,player);
-        }        
+        }   
+        else if(IsLetterNotExtreme && lastHit[1] ==  penultHit[1] && checkMissIncludes(player,[alphabet[alphabet.indexOf(lastHit[0])+1],lastHit[1]])) {
+            coord = checkTail(player, lastHit, "top");
+        }       
     } else {
         console.log("We're in else")
-        coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);
-        
+        coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);        
     }
     //console.log([lastHit[0], lastHit[1]+1]);
     //console.log([lastHit[0], lastHit[1]-1]);
@@ -114,17 +140,39 @@ async function enemyTurn(arr) {
 
     disableGameboardPlayer();
     player.receiveAttack(coord);
+    for(let hit of player.getHit()) {
+        if(alphabet.indexOf(hit[0]) - 1 >= 0 && hit[1]+1 <= 10) {
+            getCell([alphabet[alphabet.indexOf(hit[0])-1], hit[1]+1]).style.opacity = ".4"
+            player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]+1]);  
+        } 
+        if(alphabet.indexOf(hit[0]) + 1 <= 9 && hit[1]+1 <= 10) {
+            getCell([alphabet[alphabet.indexOf(hit[0])+1], hit[1]+1]).style.opacity = ".4"
+            player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]+1]); 
+        }
+        if(alphabet.indexOf(hit[0]) - 1 >= 0 && hit[1]+1 <= 10) {
+            getCell([alphabet[alphabet.indexOf(hit[0])-1], hit[1]-1]).style.opacity = ".4"
+            player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]-1]); 
+        }
+        if(alphabet.indexOf(hit[0]) + 1 <=9 && hit[1]-1 >= 0) {
+            getCell([alphabet[alphabet.indexOf(hit[0])+1], hit[1]-1]).style.opacity = ".4"
+            player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]-1]);
+        }
+        
+    }
     await sleep(time);
     displayMoves(player,"player"); 
-    await sleep(time / 2);
-    playerTurn(enemy);     
+    await sleep(time / 2);    
+    playerTurn(enemy);   
+
 }
 
 
 
 
 function startGame() {
+    displayHeaderGame();
     let main = document.querySelector("main");
+    main.innerHTML = "";
     let player = gameboard(gameboardPattern());
     let enemy = gameboard();   
     let arr = [player, enemy] ;

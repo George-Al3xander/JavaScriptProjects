@@ -41,5 +41,13 @@ function getMiddleItem(array) {
     return array[Math.floor((array.length - 1) / 2)];
 }
 
-export {getRandomStartNum, getRandomLetter, getRandomDir, getLastItem, getMiddleItem,getByClass, getById};
+
+function getCell(coord) {
+    let id = "player-"+coord.toString().replace(",", "");
+    let obj = getById(id);
+
+    return obj
+}
+
+export {getRandomStartNum, getRandomLetter, getRandomDir, getLastItem, getMiddleItem,getByClass, getById ,getCell };
 

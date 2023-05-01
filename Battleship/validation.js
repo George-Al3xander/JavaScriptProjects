@@ -122,7 +122,9 @@ function checkCoord(coord, obj) {
     }) == false) {           
         coord = [getRandomLetter(), getRandomStartNum()];            
     };
-
+    if(coord[1] > 10 || coord[1] < 0) {
+        coord = [coord[0], getRandomStartNum()]; 
+    }
     return coord
 }
 
@@ -180,6 +182,87 @@ function checkNear(obj, dir) {
 }
 
 
+function checkMissIncludes(obj, coord) {
+    for(let miss of obj.getMissed()) {
+        if(miss[0] == coord[0] && miss[1] == coord[1]) {
+            return true
+        }
+    }
+    return false;
+}
+
+
+
+function checkHitIncludes(obj, coord) {
+    for(let hit of obj.getHit()) {
+        if(hit[0] == coord[0] && hit[1] == coord[1]) {
+            return true
+        }
+    }
+    return false;
+}
+
+function checkHitMiss(obj, coord) {
+    if(!checkHitIncludes(obj, coord) && !checkMissIncludes(obj,coord)) {
+        return false;
+    } else {
+        return true
+    }
+}
+
+function checkTail(obj, coord,dir) {    
+
+
+    /*
+
+    dir:
+
+   
+    left,
+    top
+
+    */
+    let index;
+    let extremeNum;
+    let prev;
+    if(dir == "top") {
+        index = alphabet.indexOf(coord[0]);
+        extremeNum = 9;
+    } else if(dir == "left") {
+        index = coord[1];
+        extremeNum = 10;
+    }
+
+    
+
+    while(index <= extremeNum) { 
+        prev = coord;       
+        index -= 1;
+        if(dir =="top") {
+            coord = [alphabet[index], coord[1]];
+        } else if(dir == "left") {
+            coord = [coord[0], index];
+        }
+           
+        for(let miss of obj.getMissed()) {
+            if(dir == "top") {
+                if(miss[0] == alphabet[index] && miss[1] == coord[1]) {
+                    return prev;                
+                }
+            } else if(dir == "left") {
+                if(miss[0] == coord[0] && miss[1] == coord[index]) {
+                    return prev;                
+                } else if(index == 1 && !checkHitIncludes(obj,[coord[0],index] )) {
+                    return coord;
+                }
+            }
+        }        
+    }     
+    
+    return checkCoord(coord,obj);
+}
+
+
 // function checkIfTwoCoords(coord1, coord2, obj) {
 //     let tempCoord;
 //     coord1 = [lastHit[0], lastHit[1]+1];
@@ -207,7 +290,7 @@ function checkNear(obj, dir) {
 
 
 
-export {checkTwoCoord, checkGameboardValid, checkCoord, decideTwoCoordsMove, checkNear}
+export {checkTwoCoord, checkGameboardValid, checkCoord, decideTwoCoordsMove, checkNear, checkMissIncludes, checkHitIncludes, checkHitMiss, checkTail}
 
 
 
