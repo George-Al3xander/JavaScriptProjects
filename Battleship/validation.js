@@ -211,17 +211,6 @@ function checkHitMiss(obj, coord) {
 }
 
 function checkTail(obj, coord,dir) {    
-
-
-    /*
-
-    dir:
-
-   
-    left,
-    top
-
-    */
     let index;
     let extremeNum;
     let prev;
@@ -230,11 +219,9 @@ function checkTail(obj, coord,dir) {
         extremeNum = 9;
     } else if(dir == "left") {
         index = coord[1];
-        extremeNum = 10;
+        extremeNum = 1;
     }
-
     
-
     while(index <= extremeNum) { 
         prev = coord;       
         index -= 1;
@@ -248,13 +235,16 @@ function checkTail(obj, coord,dir) {
             if(dir == "top") {
                 if(miss[0] == alphabet[index] && miss[1] == coord[1]) {
                     return prev;                
+                } else if(index == extremeNum) { 
+                    console.log(coord);
+                    return coord;                    
                 }
             } else if(dir == "left") {
                 if(miss[0] == coord[0] && miss[1] == coord[index]) {
                     return prev;                
-                } else if(index == 1 && !checkHitIncludes(obj,[coord[0],index] )) {
+                } else if(index == 1 && !checkHitIncludes(obj,[coord[0],index])) {
                     return coord;
-                }
+                } 
             }
         }        
     }     

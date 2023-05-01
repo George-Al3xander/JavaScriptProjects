@@ -22,31 +22,75 @@
        <!-- <h1>Your board</h1> <h1 id="turn"><span></span> turn!</h1><h1>Enemy's board</h1> -->
     </header>
     <main>
-        <form>
-            <legend>Welcome!</legend>
+        <form id="form">
+            <div class="greet">
+                <legend>Welcome!</legend>
             <p>Please, locate your ship by typing coordinates or generate random!</p>
-           <fieldset id="form-starting-num">
-            <legend>Starting point: </legend><input placeholder="D" type="text">
-            <input placeholder="1" type="number">
-           </fieldset> 
+            </div>
            <fieldset>
-            <legend>Direction</legend>
-            <select name="dir" id="direction">
-                <option value="hor">Horizontal</option>
-                <option value="vert">Vertical</option>
-            </select>
-           </fieldset>
+                <legend>Carrier</legend>
+                <div>Starting point: [<input id="carr-letter" placeholder="D" name="carr-letter" type="text"> , <input min="1" placeholder ="1" max="10" id="carr-num" name="carr-num" type="num">]</div>
+                <div>
+                    Direction: <select name="carr-dir" id="carr-dir">
+                        <option disabled selected="true">Select direction</option>
+                        <option value="vert">Vertical</option>
+                        <option value="hor">Horizontal</option>
+                    </select>
+                </div>
+           </fieldset> 
 
            <fieldset>
-            <legend>Length</legend>
-            <select name="length" id="length">
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-            </select>
-           </fieldset>
+                <legend>Battleship</legend>
+                <div>Starting point: [<input placeholder="D" id="bs-letter" name="bs-letter" type="text"> , <input       min="1" placeholder ="1" max="10" name="bs-num" id="bs-num" type="num">]</div>
+                <div>
+                    Direction: <select name="bs-dir" id="bs-dir">
+                        <option disabled selected="true">Select direction</option>
+                    <option value="vert">Vertical</option>
+                    <option value="hor">Horizontal</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Cruiser</legend>
+                <div>Starting point: [<input placeholder="D" name="cru-letter" id="cru-letter" type="text"> , <input       min="1" placeholder ="1" max="10" name="cru-num" id="cru-num" type="num">]</div>
+                <div>
+                    Direction: <select name="cru-dir" id="cru-dir">
+                        <option disabled selected="true">Select direction</option>
+                    <option value="vert">Vertical</option>
+                    <option value="hor">Horizontal</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Submarine</legend>
+                <div>Starting point:[<input placeholder="D" name="sub-letter" id="sub-letter" type="text"> , <input       min="1" placeholder ="1" max="10" name="sub-num" id="sub-num" type="num">]</div>
+                <div>
+                    Direction: <select name="sub-dir" id="sub-dir">
+                        <option disabled selected="true">Select direction</option>
+                    <option value="vert">Vertical</option>
+                    <option value="hor">Horizontal</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Destroyer</legend>
+                <div>Starting point: [<input placeholder="D" name="dest-letter" id="dest-letter"  type="text"> , <input       min="1" placeholder ="1" max="10" name="dest-num" id="dest-num" type="num">]</div>
+                <div>
+                    Direction: <select name="dest-dir" id="dest-dir">
+                        <option disabled selected="true">Select direction</option>
+                    <option value="vert">Vertical</option>
+                    <option value="hor">Horizontal</option>
+                    </select>
+                </div>
+            </fieldset>
+           
+           <div class="buttons">
+            <button>Random</button>
+            <input type="submit" value="Play">
+           </div>           
         </form>
     </main>
 

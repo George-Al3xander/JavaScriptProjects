@@ -87,7 +87,7 @@ async function enemyTurn(arr) {
             coord = decideTwoCoordsMove([lastHit[0], lastHit[1]+1],[lastHit[0], lastHit[1]-1],player);         
         }   
         
-        else if(IsNumNotExtreme && checkNear(player,"hor")) {
+        else if(IsNumNotExtreme && checkNear(player,"hor") == true) {
             let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
             let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
             coord = decideTwoCoordsMove(coord1,coord2,player); 
@@ -117,16 +117,31 @@ async function enemyTurn(arr) {
         let IsLetterNotExtreme = alphabet.indexOf(lastHit[0]) < 9 && alphabet.indexOf(lastHit[0]) > 0;
 
         console.log("We're in cond 2") ;       
+
+        
         if(IsNumNotExtreme && lastHit[0] ==  penultHit[0]) {
             coord = decideTwoCoordsMove([lastHit[0], lastHit[1]+1],[lastHit[0], lastHit[1]-1],player);
-        } else  if(IsLetterNotExtreme && lastHit[1] ==  penultHit[1]) {
+        }
+        else  if(IsLetterNotExtreme && lastHit[1] ==  penultHit[1]) {
             let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
             let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
             coord = decideTwoCoordsMove(coord1,coord2,player);
         }   
-        else if(IsLetterNotExtreme && lastHit[1] ==  penultHit[1] && checkMissIncludes(player,[alphabet[alphabet.indexOf(lastHit[0])+1],lastHit[1]])) {
-            coord = checkTail(player, lastHit, "top");
-        }       
+        else if( IsNumNotExtreme && lastHit[0] ==  penultHit[0] && checkMissIncludes(player,[lastHit[0],lastHit[1]+1]) && !checkMissIncludes(player,[lastHit[0],lastHit[1]-1]))     {
+            coord = [lastHit[0], lastHit[1]-1];
+        } else if(lastHit[1]-1 == 1 && lastHit[0] ==  penultHit[0] ) {
+            coord = [lastHit[0], lastHit[1]-1];
+        }
+        else if( IsNumNotExtreme && lastHit[1] ==  penultHit[1] && checkMissIncludes(player,[alphabet[alphabet.indexOf(lastHit[0])+1],lastHit[1]])) {
+            coord = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
+        }  
+        else if(alphabet[alphabet.indexOf(lastHit[0])]-1 == 0 && lastHit[1] ==  penultHit[1]) {
+            coord = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
+        }
+        //else if(penultHit[1] - 1 == 1 && lastHit[0] ==  penultHit[0]) {
+        //     coord = [penultHit[0], penultHit[1]-1];
+        // }
+       
     } else {
         console.log("We're in else")
         coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);        
@@ -139,25 +154,26 @@ async function enemyTurn(arr) {
   
 
     disableGameboardPlayer();
-    player.receiveAttack(coord);
-    for(let hit of player.getHit()) {
-        if(alphabet.indexOf(hit[0]) - 1 >= 0 && hit[1]+1 <= 10) {
-            getCell([alphabet[alphabet.indexOf(hit[0])-1], hit[1]+1]).style.opacity = ".4"
-            player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]+1]);  
-        } 
-        if(alphabet.indexOf(hit[0]) + 1 <= 9 && hit[1]+1 <= 10) {
-            getCell([alphabet[alphabet.indexOf(hit[0])+1], hit[1]+1]).style.opacity = ".4"
-            player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]+1]); 
+    player.receiveAttack(coord);   
+    if(player.getHit().length > 0) {
+        for(let hit of player.getHit()) {
+            if(alphabet.indexOf(hit[0]) - 1 >= 0 && hit[1]+1 <= 10) {
+                player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]+1]);  
+                getCell([alphabet[alphabet.indexOf(hit[0])-1], hit[1]+1]).style.opacity = ".4";
+            } 
+            if(alphabet.indexOf(hit[0]) + 1 <= 9 && hit[1]+1 <= 10) {
+                player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]+1]); 
+                getCell([alphabet[alphabet.indexOf(hit[0])+1], hit[1]+1]).style.opacity = ".4";
+            }
+            if(alphabet.indexOf(hit[0]) - 1 >= 0 && hit[1]-1 > 0) {
+                player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]-1]); 
+                getCell([alphabet[alphabet.indexOf(hit[0])-1], hit[1]-1]).style.opacity = ".4"
+            }
+            if(alphabet.indexOf(hit[0]) + 1 <=9 && hit[1]-1 > 0) {
+                player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]-1]);
+                getCell([alphabet[alphabet.indexOf(hit[0])+1], hit[1]-1]).style.opacity = ".4"
+            }
         }
-        if(alphabet.indexOf(hit[0]) - 1 >= 0 && hit[1]+1 <= 10) {
-            getCell([alphabet[alphabet.indexOf(hit[0])-1], hit[1]-1]).style.opacity = ".4"
-            player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]-1]); 
-        }
-        if(alphabet.indexOf(hit[0]) + 1 <=9 && hit[1]-1 >= 0) {
-            getCell([alphabet[alphabet.indexOf(hit[0])+1], hit[1]-1]).style.opacity = ".4"
-            player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]-1]);
-        }
-        
     }
     await sleep(time);
     displayMoves(player,"player"); 

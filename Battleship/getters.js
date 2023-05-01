@@ -42,9 +42,9 @@ function getMiddleItem(array) {
 }
 
 
-function getCell(coord) {
-    let id = "player-"+coord.toString().replace(",", "");
-    let obj = getById(id);
+function getCell(coord) {    
+    let id = "p-"+coord.toString().replace(",", "");
+    let obj = getById(id);    
 
     return obj
 }
