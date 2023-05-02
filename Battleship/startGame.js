@@ -230,7 +230,7 @@ async function enemyTurn(arr) {
         }
     } else if(horDir) {
         console.log("We're in hor cond");         
-        if(IsNumNotExtreme) { 
+        if(IsNumNotExtreme && IsLetterNotExtreme) { 
             //From left to right           
             if(penultHit[1] < lastHit[1]) {
                 if(!checkMissIncludes(player,[lastHit[0],lastHit[1]+1])) {
@@ -250,7 +250,7 @@ async function enemyTurn(arr) {
             }
         }
 
-        else if(!IsNumNotExtreme) {
+        else if(!IsNumNotExtreme && IsLetterNotExtreme) {
             //MUST COMPLETE!!!
             coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);
         }
