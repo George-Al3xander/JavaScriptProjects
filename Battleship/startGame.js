@@ -13,11 +13,8 @@ import { displayHeaderGame } from "./dom.js";
 
 
 
-function playerTurn(enemy) {
+function playerTurn(enemy) {  
     
-    if(enemy.checkLost() == true) {
-        displayWinner("player");        
-    }
     
     disableGameboardEnemy();
        
@@ -63,9 +60,7 @@ async function enemyTurn(arr) {
     let player = arr[0];
     let enemy = arr[1];  
     
-    if(player.checkLost() == true) {
-        displayWinner("enemy");
-    }
+    
     
 
     let time = Math.floor(Math.random() * ((2000 - 1500) + 1500)); 
@@ -86,7 +81,10 @@ async function enemyTurn(arr) {
     let IsLetterNotExtreme = alphabet.indexOf(lastHit[0]) < 9 && alphabet.indexOf(lastHit[0]) > 0;
         console.log("We're in cond 1") ;      
         if(IsNumNotExtreme && IsLetterNotExtreme) {
-            if(checkNear(player,"vert")) {
+            if(!checkNear(player,"hor") && !checkNear(player,"vert")) {
+                coord = decideTwoCoordsMove([lastHit[0], lastHit[1]+1],[lastHit[0], lastHit[1]-1],player);
+            }
+            if(checkNear(player,"vert") ) {
                 coord = decideTwoCoordsMove([lastHit[0], lastHit[1]+1],[lastHit[0], lastHit[1]-1],player);         
             }   
             
@@ -110,28 +108,68 @@ async function enemyTurn(arr) {
             else if(checkNear(player,"hor") && checkMissIncludes(player,[alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]])) {
                 coord = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
             }
+            else {
+                coord = decideTwoCoordsMove([lastHit[0], lastHit[1]+1],[lastHit[0], lastHit[1]-1],player); 
+            }
         }
-        else if(IsLetterNotExtreme) {
-             if (IsLetterNotExtreme) {
+        else if(IsLetterNotExtreme && !IsNumNotExtreme) {
+             if (lastHit[1] == 1 && !checkNear(player, "vert") && checkMissIncludes(player,[lastHit[0], lastHit[1]+1]))  {
                 let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
                 let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
                 coord = decideTwoCoordsMove(coord1,coord2,player);        
             }   
-            
-            else if(lastHit[1] == 1) {
-                if(checkNear(player,"vert")) {
-                    coord = [lastHit[0], lastHit[1]+1];
-                }               
-                else {
-                    coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);
-                }
-            }   
+            else if(lastHit[1] == 1 && checkNear(player, "vert") && !checkMissIncludes(player,[lastHit[0], lastHit[1]+1])) {
+                coord = [lastHit[0],lastHit[1]+1];
+            }  
+            else if (lastHit[1] == 10 && !checkNear(player, "vert") && checkMissIncludes(player,[lastHit[0], lastHit[1]-1]))  {
+                let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
+                let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
+                coord = decideTwoCoordsMove(coord1,coord2,player);        
+            }    
+            else if(lastHit[1] == 10 && checkNear(player, "vert") && !checkMissIncludes(player,[lastHit[0], lastHit[1]-1])) {
+                coord = [lastHit[0],lastHit[1]-1];
+            }          
             else {
                 coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);
             }
         }
-       
+        else if(!IsLetterNotExtreme && IsNumNotExtreme) {
+            if(lastHit[0] == "A" && checkNear(player,"vert")) {
+                coord = checkCoord([alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]],player);
+            }
 
+            else if(lastHit[0] == "A" && !checkNear(player,"vert")) {
+                coord = decideTwoCoordsMove([lastHit[0], lastHit[1]+1],[lastHit[0], lastHit[1]-1],player); 
+            }
+
+            else if(lastHit[0] == "J" && checkNear(player,"vert")) {
+                coord = checkCoord([alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]],player);
+            }
+
+            else if(lastHit[0] == "A" && !checkNear(player,"vert")) {
+                coord = decideTwoCoordsMove([lastHit[0], lastHit[1]+1],[lastHit[0], lastHit[1]-1],player); 
+            }
+            else {
+                coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);
+            }
+        }
+        else if(!IsLetterNotExtreme && !IsNumNotExtreme) {
+            if(lastHit[0] == "A" && lastHit[1] == 1) {
+                coord = decideTwoCoordsMove(["B", 1],["A", 2], player);
+            }
+            else if(lastHit[0] == "A" && lastHit[1] == 10) {
+                coord = decideTwoCoordsMove(["B", 10],["A", 9], player);
+            } 
+            else if(lastHit[0] == "J" && lastHit[1] == 1) {
+                coord = decideTwoCoordsMove(["I", 1],["J", 2], player);
+            }
+            else if(lastHit[0] == "J" && lastHit[1] == 10) {
+                coord = decideTwoCoordsMove(["I", 10],["J", 9], player);
+            } 
+            else {
+                coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);
+            }
+        }
     }
     else if(vertDir) {
         let IsNumNotExtreme = lastHit[1] < 10 && lastHit[1] > 1;
@@ -213,7 +251,8 @@ async function enemyTurn(arr) {
         }
 
         else if(!IsNumNotExtreme) {
-            
+            //MUST COMPLETE!!!
+            coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);
         }
         
     }    
@@ -229,7 +268,10 @@ async function enemyTurn(arr) {
   
 
     disableGameboardPlayer();
-    player.receiveAttack(coord);   
+    player.receiveAttack(coord);  
+    if(player.checkLost() == true) {
+        displayWinner("enemy");
+    } 
     if(player.getHit().length > 0) {
         for(let hit of player.getHit()) {
             if(alphabet.indexOf(hit[0]) - 1 >= 0 && hit[1]+1 <= 10) {

@@ -44,7 +44,10 @@ function displayGameboard(obj, type) {
             }
             if(type == "enemy") {               
                td.addEventListener("click", ()=> {
-                   enemy.receiveAttack([alphabet[i],x]);  
+                   enemy.receiveAttack([alphabet[i],x]); 
+                   if(enemy.checkLost() == true) {
+                    displayWinner("player");        
+                    } 
                    displayMoves(enemy,type);  
                    enemyTurn(obj);                                                   
                 });
