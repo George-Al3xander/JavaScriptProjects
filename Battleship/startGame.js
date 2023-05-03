@@ -260,7 +260,7 @@ async function enemyTurn(arr) {
         console.log("We're in else")
         coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);        
     }   
-    
+
     disableGameboardPlayer();
     player.receiveAttack(coord);  
     if(player.checkLost() == true) {
@@ -296,11 +296,11 @@ async function enemyTurn(arr) {
 
 
 
-function startGame() {
+function startGame(coords) {
     displayHeaderGame();
     let main = document.querySelector("main");
     main.innerHTML = "";
-    let player = gameboard();
+    let player = gameboard(coords);
     let enemy = gameboard();   
     let arr = [player, enemy] ;
     main.appendChild(displayGameboard(arr,"player"));

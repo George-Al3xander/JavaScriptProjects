@@ -1,10 +1,9 @@
+import { getById } from "./getters.js";
 import setupGame from "./setUpGame.js";
 
 
 
-setupGame();
-
-
+console.log(setupGame().getShips());
 
 
 

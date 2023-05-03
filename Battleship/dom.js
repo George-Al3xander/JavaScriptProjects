@@ -218,4 +218,15 @@ function markShip(e,coords) {
     } 
 }
 
-export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner, displayHeaderGame, markShip}
+function changePlaceholders(coords) {
+    let shipsNum = ["carr","bs","cru","sub","dest"];
+    for(let i = 0; i< coords.length;i++) {
+        let startLetter = coords[i][1][0][0];
+        let startNum = coords[i][1][0][1];
+        getById(shipsNum[i]+"-letter").placeholder = startLetter;
+        getById(shipsNum[i]+"-num").placeholder = startNum;
+    }
+
+}
+
+export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner, displayHeaderGame, markShip, changePlaceholders}
