@@ -5,7 +5,7 @@ import setupGame from "./setUpGame.js";
 
 console.log(setupGame().getShips());
 
-let letters = /^[A-Ja-j]+$/;
+
 
 
 

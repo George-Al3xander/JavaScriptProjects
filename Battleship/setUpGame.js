@@ -1,6 +1,5 @@
 import gameboard, { setupDir, setupLetter, setupNum } from "./gameboard.js";
 import { changePlaceholders, displayGameboard, markShip } from "./dom.js";
-import {   generateAllShipsRandom,  generateHorShipCoord,  generateVertShipCoord,generateShip} from "./generators.js";
 import { getByClass, getById} from "./getters.js";
 import { checkGameboardValid } from "./validation.js";
 import startGame from "./startGame.js";
@@ -78,11 +77,8 @@ function setupGame() {
         } 
         else {
            getByClass("validation-check").style.display = "block"
-        }
-        //console.log(player.getShips());
-    })
-
-    //console.log(final)
+        }       
+    });    
     return player
 }
 

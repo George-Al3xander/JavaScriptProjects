@@ -211,85 +211,9 @@ function checkHitIncludes(obj, coord) {
     return false;
 }
 
-function checkHitMiss(obj, coord) {
-    if(!checkHitIncludes(obj, coord) && !checkMissIncludes(obj,coord)) {
-        return false;
-    } else {
-        return true
-    }
-}
-
-function checkTail(obj, coord,dir) {    
-    let index;
-    let extremeNum;
-    let prev;
-    if(dir == "top") {
-        index = alphabet.indexOf(coord[0]);
-        extremeNum = 9;
-    } else if(dir == "left") {
-        index = coord[1];
-        extremeNum = 1;
-    }
-    
-    while(index <= extremeNum) { 
-        prev = coord;       
-        index -= 1;
-        if(dir =="top") {
-            coord = [alphabet[index], coord[1]];
-        } else if(dir == "left") {
-            coord = [coord[0], index];
-        }
-           
-        for(let miss of obj.getMissed()) {
-            if(dir == "top") {
-                if(miss[0] == alphabet[index] && miss[1] == coord[1]) {
-                    return prev;                
-                } else if(index == extremeNum) { 
-                    console.log(coord);
-                    return coord;                    
-                }
-            } else if(dir == "left") {
-                if(miss[0] == coord[0] && miss[1] == coord[index]) {
-                    return prev;                
-                } else if(index == 1 && !checkHitIncludes(obj,[coord[0],index])) {
-                    return coord;
-                } 
-            }
-        }        
-    }     
-    
-    return checkCoord(coord,obj);
-}
 
 
-// function checkIfTwoCoords(coord1, coord2, obj) {
-//     let tempCoord;
-//     coord1 = [lastHit[0], lastHit[1]+1];
-//     tempCoord = coord1;        
-//     coord1 = checkCoord(coord1,obj);
-
-//     if(coord1.toString() == tempCoord.toString()) {
-//        return coord1 
-//     } else {
-//         coord2 = [lastHit[0], lastHit[1]-1]; 
-//         tempCoord = coord2;
-//         coord2 = checkCoord(coord2, obj);
-//         if(coord2.toString() == tempCoord.toString()) {
-//             return coord2;
-//         } 
-//         else {
-//             return checkCoord([getRandomLetter(), getRandomStartNum()],obj);
-//         }
-
-//     }
-
-// }
-
-
-
-
-
-export {checkTwoCoord, checkGameboardValid, checkCoord, decideTwoCoordsMove, checkNear, checkMissIncludes, checkHitIncludes, checkHitMiss, checkTail}
+export {checkTwoCoord, checkGameboardValid, checkCoord, decideTwoCoordsMove, checkNear, checkMissIncludes, checkHitIncludes, }
 
 
 

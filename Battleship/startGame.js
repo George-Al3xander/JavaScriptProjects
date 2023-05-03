@@ -1,14 +1,11 @@
-// if(enemy.checkLost() == true) {
-//     main.innerHTML = "ENEMY LOST"
-// }  
 
 import { displayMoves,displayGameboard, disableGameboardEnemy, disableGameboardPlayer,displayWinner  } from "./dom.js";
-import { getByClass, getById, getCell, getRandomLetter, getRandomStartNum } from "./getters.js";
+import { getById, getCell, getRandomLetter, getRandomStartNum } from "./getters.js";
 import gameboard from "./gameboard.js";
 import sleep from "./sleep.js";
 import alphabet from "./alpha.js";
-import { checkCoord, checkHitMiss, checkMissIncludes, checkNear, checkTail, decideTwoCoordsMove } from "./validation.js";
-import { gameboardPattern } from "./generators.js";
+import { checkCoord,  checkMissIncludes, checkNear, decideTwoCoordsMove } from "./validation.js";
+
 import { displayHeaderGame } from "./dom.js";
 
 
@@ -36,32 +33,10 @@ function playerTurn(enemy) {
     }
 }
 
-/*
-    Start hit [E, 6]:
-    Disable: 
-    [F,7]
-    [D,7;]
-    [F,5]
-    [D,5;]
-
-
-    for(let hit of player.getHit()) {
-        player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]+1]);        
-        player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]+1]); 
-        player.receiveAttack([alphabet[alphabet.indexOf(hit[0])-1], hit[1]-1]);        
-        player.receiveAttack([alphabet[alphabet.indexOf(hit[0])+1], hit[1]-1]);
-    }
-
-
-    */
-
-
 async function enemyTurn(arr) { 
     let player = arr[0];
     let enemy = arr[1];  
-    
-    
-    
+   
 
     let time = Math.floor(Math.random() * ((2000 - 1500) + 1500)); 
     let coord;
@@ -192,10 +167,7 @@ async function enemyTurn(arr) {
             }
             // If we moving from start to bottom
             else if(alphabet.indexOf(lastHit[0]) > alphabet.indexOf(penultHit[0])) {
-                if(!checkMissIncludes(player,[alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]])) {
-                    // let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
-                    // let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
-                    // coord = decideTwoCoordsMove(coord1,coord2,player);  
+                if(!checkMissIncludes(player,[alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]])) {                     
                     coord =   [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
                     
                 } else {
@@ -209,10 +181,7 @@ async function enemyTurn(arr) {
     let IsLetterNotExtreme = alphabet.indexOf(lastHit[0]) < 9 && alphabet.indexOf(lastHit[0]) > 0;
             //From bottom to top
             if(alphabet.indexOf(lastHit[0]) < alphabet.indexOf(penultHit[0])) {
-                if(!checkMissIncludes(player,[alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]])) {
-                    // let coord2 = [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
-                    // let coord1 = [alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]];
-                    // coord = decideTwoCoordsMove(coord1,coord2,player);  
+                if(!checkMissIncludes(player,[alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]])) {                   
                     coord =   [alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]];
                     
                 } else {
