@@ -22,10 +22,10 @@
        <!-- <h1>Your board</h1> <h1 id="turn"><span></span> turn!</h1><h1>Enemy's board</h1> -->
     </header>
     <main>
-        <form id="form">
+        <form autocomplete="off" id="form">
             <div class="greet">
                 <legend>Welcome!</legend>
-            <p>Please, locate your ship by typing coordinates or generate random!</p>
+            <p>Please, locate your ships by typing coordinates or generate random!</p>
             </div>
            <fieldset>
                 <legend>Carrier</legend>
@@ -88,8 +88,8 @@
             </fieldset>
            
            <div class="buttons">
-            <button>Random</button>
-            <input type="submit" value="Play">
+            <button id="btn-random">Random</button>
+            <input id="btn-play" type="submit" value="Play">
            </div>           
         </form>
     </main>

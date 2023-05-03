@@ -259,14 +259,8 @@ async function enemyTurn(arr) {
     else {
         console.log("We're in else")
         coord = checkCoord([getRandomLetter(), getRandomStartNum()],player);        
-    }
-    //console.log([lastHit[0], lastHit[1]+1]);
-    //console.log([lastHit[0], lastHit[1]-1]);
-    //console.log([alphabet[alphabet.indexOf(lastHit[0])+1], lastHit[1]]);
-    //console.log([alphabet[alphabet.indexOf(lastHit[0])-1], lastHit[1]]);
-
-  
-
+    }   
+    
     disableGameboardPlayer();
     player.receiveAttack(coord);  
     if(player.checkLost() == true) {

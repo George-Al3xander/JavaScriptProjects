@@ -1,6 +1,6 @@
 import { createEl } from "./create.js";
 import alphabet from "./alpha.js";
-import { getById, getByClass } from "./getters.js";
+import { getById, getByClass, getCell } from "./getters.js";
 
 import { enemyTurn } from "./startGame.js";
 
@@ -183,4 +183,39 @@ function displayHeaderGame() {
     header.appendChild(createEl("h1","Enemy's board"));
 }
 
-export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner, displayHeaderGame}
+
+function markShip(e,coords) {
+    let val = e.target.id;
+    val = val.split("-");
+    //let type = val[1]
+    val = val[0]; 
+
+    for(let i = 0; i< coords.length;i++) {
+        for(let cell of coords[i][1]) {
+            getCell(cell).style.backgroundColor = "green";
+        }
+    }
+    
+    let ship;
+    if(val == "carr") {
+        ship = coords[0][1];
+    }
+    else if(val == "bs") {
+        ship = coords[1][1];
+    }
+    else if(val == "cru") {
+        ship = coords[2][1];
+    }
+    else if(val == "sub") {
+        ship = coords[3][1];
+    }
+    else if(val == "dest") {
+        ship = coords[4][1];
+    }
+
+    for(let cell of ship) {        
+        getCell(cell).style.backgroundColor = "red";
+    } 
+}
+
+export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner, displayHeaderGame, markShip}
