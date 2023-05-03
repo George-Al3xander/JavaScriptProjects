@@ -223,3 +223,28 @@ input[type=submit]:hover, .buttons button:hover {
     
 
 }
+
+
+.validation-check {
+    display: none;
+    margin: 1rem;
+    border: 3px dashed red;
+    padding: 1rem 2rem;
+}
+
+.validation-check h1 {
+    margin: 1rem;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: var(--fs-medium);
+    font-weight: 700;
+}
+
+.validation-check ol li {
+    font-weight: 400;
+    margin-block: 1rem;
+}
+
+.validation-check ol {
+    list-style-type: circle;
+}

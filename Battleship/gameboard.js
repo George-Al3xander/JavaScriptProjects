@@ -113,8 +113,7 @@ function setupDir(coords, type) {
     }
     else if(dir == "vert") {
         coords[num][1] = generateVertShipCoord(length,startLetter,startNum);
-    }           
-    
+    }     
 }
 
 

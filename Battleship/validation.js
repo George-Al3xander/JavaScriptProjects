@@ -80,8 +80,17 @@ function checkTwoCoord(first, second) {
 
 function checkGameboardValid(array) {
     let finalArr = [];
+    let letters = /^[A-Ja-j]+$/;
     array.forEach(ship => {        
         for(let i =0; i < array.length-1; i++) {
+
+           for(let coord of ship[1]) {
+                //for(let smallCoord of coord) {
+                    //console.log();
+                    finalArr.push(letters.test(coord[0]));                      
+                    finalArr.push(coord[1] > 0 && coord[1] <=10)                 
+                //}
+           }
             if(array.indexOf(ship) == i) {
                 continue;
             }
@@ -99,7 +108,7 @@ function checkGameboardValid(array) {
 
             finalArr.push(checkTwoCoord(getLastItem(item1), getMiddleItem(item2)));
             finalArr.push(checkTwoCoord(getLastItem(item2), getMiddleItem(item1)));
-
+            //finalArr.test()
 
         }            
     });   
