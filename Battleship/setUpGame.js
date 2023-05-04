@@ -1,5 +1,5 @@
 import gameboard, { setupDir, setupLetter, setupNum } from "./gameboard.js";
-import { changePlaceholders, displayGameboard, markShip } from "./dom.js";
+import { changePlaceholders, displayForm, displayGameboard, markShip } from "./dom.js";
 import { getByClass, getById} from "./getters.js";
 import { checkGameboardValid } from "./validation.js";
 import startGame from "./startGame.js";
@@ -7,6 +7,7 @@ import startGame from "./startGame.js";
 
 
 function setupGame() {    
+    displayForm();
     let player = gameboard();
     let enemy = gameboard();   
     let arr = [player, enemy];    
@@ -14,12 +15,8 @@ function setupGame() {
     let form = getById("form");
     let main = document.querySelector("main");
     changePlaceholders(coords);
-
-    form.addEventListener("submit", (e)=> {    
-        e.preventDefault();
-    });
-
-        main.appendChild(displayGameboard(arr,"player")); 
+    
+    main.appendChild(displayGameboard(arr,"player")); 
 
     form.addEventListener("input", (e)=> {    
         let val = e.target.id;
@@ -56,19 +53,15 @@ function setupGame() {
     fieldsets.forEach(fieldset => {
         fieldset.addEventListener("click", (e)=> {
             markShip(e,coords);
-       });
+        });
     });
       
     
     let play = getById("btn-play");
     let random = getById("btn-random");
-    random.addEventListener("click",()=> {        
-        player = gameboard();   
-        coords = player.getShips();   
-        coordsTemp = coords;         
-        changePlaceholders(coords);
-        getByClass("gameboard-player").remove();
-        document.querySelector("main").appendChild(displayGameboard([player,enemy],"player"));  
+    random.addEventListener("click",()=> {                  
+        main.innerHTML = "";
+        setupGame();        
     });
 
     play.addEventListener("click", ()=> {        

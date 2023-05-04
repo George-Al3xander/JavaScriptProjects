@@ -54,9 +54,10 @@ header h1,footer h1 {
 
 #turn {
     font-style: normal;
-    text-transform: uppercase;
+    text-transform: uppercase;    
     /* background-color: 	rgb(93, 156, 89); */
 }
+
 
 
 table {
@@ -176,11 +177,11 @@ input {
     width: 2rem;
 }
 
-::placeholder,input[type=text], input[type=num] {
+::placeholder,input[type=text], input[type=number] {
     text-align: center;
 }
 
-input[type=text], input[type=num] {
+input[type=text], input[type=number] {
     text-transform: uppercase;
     border-bottom: 1px solid black;
 }

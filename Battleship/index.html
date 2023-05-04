@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,98 +19,12 @@
 </head>
 <body>
     <header>
-        <h1 id="turn">Battleship by George V.</h1>
-       <!-- <h1>Your board</h1> <h1 id="turn"><span></span> turn!</h1><h1>Enemy's board</h1> -->
+        <h1  id="turn">Battleship by George V.</h1> 
     </header>
-    <main>
-        <form autocomplete="off" id="form">
-            <div class="greet">
-                <legend>Welcome!</legend>
-            <p>Please, locate your ships by typing coordinates or generate random!</p>
-            </div>
-           <fieldset>
-                <legend>Carrier</legend>
-                <div>Starting point: [<input id="carr-letter" placeholder="D" name="carr-letter" type="text"> , <input min="1" placeholder ="1" max="10" id="carr-num" name="carr-num" type="num">]</div>
-                <div>
-                    Direction: <select name="carr-dir" id="carr-dir">
-                        <option disabled selected="true">Select direction</option>
-                        <option value="vert">Vertical</option>
-                        <option value="hor">Horizontal</option>
-                    </select>
-                </div>
-           </fieldset> 
-
-           <fieldset>
-                <legend>Battleship</legend>
-                <div>Starting point: [<input placeholder="F" id="bs-letter" name="bs-letter" type="text"> , <input       min="1" placeholder ="6" max="10" name="bs-num" id="bs-num" type="num">]</div>
-                <div>
-                    Direction: <select name="bs-dir" id="bs-dir">
-                        <option disabled selected="true">Select direction</option>
-                    <option value="vert">Vertical</option>
-                    <option value="hor">Horizontal</option>
-                    </select>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Cruiser</legend>
-                <div>Starting point: [<input placeholder="B" name="cru-letter" id="cru-letter" type="text"> , <input       min="1" placeholder ="9" max="10" name="cru-num" id="cru-num" type="num">]</div>
-                <div>
-                    Direction: <select name="cru-dir" id="cru-dir">
-                        <option disabled selected="true">Select direction</option>
-                    <option value="vert">Vertical</option>
-                    <option value="hor">Horizontal</option>
-                    </select>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Submarine</legend>
-                <div>Starting point:[<input placeholder="H" name="sub-letter" id="sub-letter" type="text"> , <input       min="1" placeholder ="9" max="10" name="sub-num" id="sub-num" type="num">]</div>
-                <div>
-                    Direction: <select name="sub-dir" id="sub-dir">
-                        <option disabled selected="true">Select direction</option>
-                    <option value="vert">Vertical</option>
-                    <option value="hor">Horizontal</option>
-                    </select>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Destroyer</legend>
-                <div>Starting point: [<input placeholder="H" name="dest-letter" id="dest-letter"  type="text"> , <input       min="1" placeholder ="2" max="10" name="dest-num" id="dest-num" type="num">]</div>
-                <div>
-                    Direction: <select name="dest-dir" id="dest-dir">
-                        <option disabled selected="true">Select direction</option>
-                    <option value="vert">Vertical</option>
-                    <option value="hor">Horizontal</option>
-                    </select>
-                </div>
-            </fieldset>
-           
-            <div class="validation-check">
-                <h1>Check all of your inputs!</h1>
-                <ol>
-                    <li>You can only use letters from "A" to "J" and numbers from 1 to 10;</li>
-                    <li>Or you trying to make invalid gameboard: </li>
-                    <li> Your ships must have at least 1 cell space from another ship in every direction.</li>
-                    <li> Ships can't overflow gameboard!</li>
-                     
-                    
-                   
-                </ol>
-            </div>         
-            <div class="buttons">
-             <button id="btn-random">Random</button>
-             <input id="btn-play" type="submit" value="Play">
-            </div>  
-        </form>
-    </main>
+    
+    <main></main>
 
     <footer></footer>
-
-
-
    <script type="module" src="index.js"  ></script>   
 </body>
 </html>

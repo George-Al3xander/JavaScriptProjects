@@ -219,14 +219,107 @@ function markShip(e,coords) {
 }
 
 function changePlaceholders(coords) {
-    let shipsNum = ["carr","bs","cru","sub","dest"];
+    let shipsNum = ["carr","bs","cru","sub","dest"];    
     for(let i = 0; i< coords.length;i++) {
         let startLetter = coords[i][1][0][0];
         let startNum = coords[i][1][0][1];
         getById(shipsNum[i]+"-letter").placeholder = startLetter;
         getById(shipsNum[i]+"-num").placeholder = startNum;
+        getById(shipsNum[i]+"-num").value = startNum;
     }
 
 }
 
-export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner, displayHeaderGame, markShip, changePlaceholders}
+function displayForm() {
+    let shipsName = ["Carrier","Battleship","Cruiser","Submarine","Destroyer"];
+    let shipsId = ["carr","bs","cru","sub","dest"];
+    let form = createEl("form");
+    form.setAttribute("autocomplete","off");
+    form.setAttribute("id","form");
+    main.appendChild(form);
+
+    let greetDiv = createEl("div");
+    greetDiv.className = "greet";
+    greetDiv.appendChild(createEl("legend","Welcome"));
+    greetDiv.appendChild(createEl("p","Please, locate your ships by typing coordinates or generate random!"));
+    form.appendChild(greetDiv);
+
+
+    for(let i = 0; i < shipsId.length; i++) {
+        let fieldset = createEl("fieldset");
+        let legend = createEl("legend", shipsName[i]);
+        fieldset.appendChild(legend);
+        let div1 = createEl("div");
+        div1.appendChild(document.createTextNode("Starting point: ["));
+        let input_letter = createEl("input");
+        input_letter.setAttribute("id",`${shipsId[i]}-letter`);
+        input_letter.setAttribute("type","text");
+        div1.appendChild(input_letter);
+        div1.appendChild(document.createTextNode(" , ")); 
+        
+        let input_num = createEl("input");
+        input_num.setAttribute("id",`${shipsId[i]}-num`);
+        input_num.setAttribute("type","number");
+        input_num.setAttribute("min",1);
+        input_num.setAttribute("max",10);
+        div1.appendChild(input_num);
+        div1.appendChild(document.createTextNode("]")); 
+
+
+        let div2 = createEl("div");
+        div2.appendChild(document.createTextNode("Direction: "));        
+        let select =createEl("select");
+        select.setAttribute("id",`${shipsId}-dir`);
+        div2.appendChild(select);
+
+        let option_def = createEl("option","Select direction");
+        let option_vert = createEl("option","Vertical");
+        let option_hor = createEl("option","Horizontal");
+        option_def.disabled = true;    
+        option_def.setAttribute("selected",true);
+        
+        option_hor.setAttribute("value","hor");
+        option_vert.setAttribute("value","vert");
+
+        select.appendChild(option_def);
+        select.appendChild(option_vert);
+        select.appendChild(option_hor);
+
+        fieldset.appendChild(div1);
+        fieldset.appendChild(div2);
+        form.appendChild(fieldset);
+    }
+
+
+    let validationDiv = createEl("div");
+    validationDiv.className = "validation-check";
+    validationDiv.appendChild(createEl("h1","Check all of your inputs!"));
+    let ol = createEl("ol");
+    validationDiv.appendChild(ol);
+    ol.appendChild(createEl("li",'You can only use letters from "A" to "J" and numbers from 1 to 10;'));
+    ol.appendChild(createEl("li","Or you trying to make invalid gameboard: "));
+    ol.appendChild(createEl("li","Your ships must have at least 1 cell space from another ship in every direction."));
+    ol.appendChild(createEl("li"," Ships can't overflow gameboard!"));
+    form.appendChild(validationDiv);
+
+    let btnDiv  = createEl("div");
+    btnDiv.className = "buttons";
+    let btn_random = createEl("button","Random");
+    btn_random.setAttribute("id","btn-random");
+    let input_submit = createEl("input");
+    input_submit.setAttribute("type","submit");
+    input_submit.setAttribute("id","btn-play");
+    input_submit.setAttribute("value","Play");
+
+    btnDiv.appendChild(btn_random);
+    btnDiv.appendChild(input_submit);
+    form.appendChild(btnDiv);
+
+    form.addEventListener("submit", (e)=> {    
+        e.preventDefault();
+    });
+
+
+}
+
+export {displayGameboard, displayMoves, disableGameboardPlayer, disableGameboardEnemy, displayWinner, displayHeaderGame, markShip, changePlaceholders, displayForm}
